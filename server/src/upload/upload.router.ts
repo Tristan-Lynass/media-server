@@ -1,8 +1,7 @@
-import express, { Request, Response }  from "express";
+import express from 'express';
+import * as controller from './upload.controller';
 
 export const router = express.Router();
 
-router.post('/', async (req: Request, res: Response) => {
-  console.log(req);
-  res.status(200).send();
-});
+router.route('/')
+	.post(controller.save)
