@@ -1,8 +1,15 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const requiredString = { type: String, required: true };
-const requiredNumber = { type: Number, required: true }; 
-const requiredDate   = { type: Date,   required: true };
+/**
+ * Obviously duplicating model information like this presents significant maintenance overhead.
+ * Because the model of this project is not expected to grow significantly (famous last words), 
+ * I've decided to go ahead with this approach.
+ */
+
+const requiredString  = { type: String,  required: true };
+const requiredNumber  = { type: Number,  required: true }; 
+const requiredDate    = { type: Date,    required: true };
+const requiredBoolean = { type: Boolean, required: true };
 
 const mediaSchema = new mongoose.Schema({
   file: {
@@ -10,8 +17,8 @@ const mediaSchema = new mongoose.Schema({
       name:       requiredString,
       extension:  requiredString,
       size:       requiredNumber,
-      createdAt:    requiredDate,
-      modifiedAt:   requiredDate,
+      // createdAt:  requiredDate,
+      // modifiedAt: requiredDate,
       hash:       requiredString,
       temporal: new mongoose.Schema({
         duration: requiredNumber
@@ -23,34 +30,36 @@ const mediaSchema = new mongoose.Schema({
     }),
     required: true
   },
-  deleted:  { type: Boolean,  required: true, default: false },
-  views:    { type: Number,   required: true, default: 0 },
-  tags:     { type: [String], required: true, default: [] },
-  starred:  { type: Boolean, required: true, default: false },
-  uploadedAt: { type: Date, required: true, default: Date.now },
-  lastView: Date
+  deleted:      { ...requiredBoolean, default: false },
+  views:        { ...requiredNumber, default: 0 },
+  tags:         { type: [String], required: true, default: [] },
+  starred:      { ...requiredBoolean, default: false },
+  uploadedAt:   { ...requiredDate, default: new Date() },
+  lastViewedAt: Date
 });
 
+export default mongoose.model<MediaDocument, mongoose.Model<MediaDocument>>('Media', mediaSchema);
 
-export default mongoose.model<Media, mongoose.Model<Media>>('media', mediaSchema);
+interface MediaDocument extends Media, mongoose.Document {
+}
 
-export interface Media extends mongoose.Document {
-  id?: number;            // Unique (globally)
+export interface Media {
+  // id?: number;            // Unique (globally)
   file: FileAttribute;
   deleted: boolean;      // Default to false
   views: number;         // Default to 0
   tags: string[];        // Unique (cell-wise), Default to []
   starred: boolean;      // Default to false,
   uploadedAt: Date;
-  lastView: Date;
+  lastViewedAt?: Date;
 }
 
 export interface FileAttribute {
   name: string;
   extension: string;
   size: number;
-  created: Date;
-  modified: Date;
+  // createdAt: Date;
+  // modifiedAt: Date;
   hash: string;
   temporal?: TemporalAttribute;
   visual?: VisualAttribute;

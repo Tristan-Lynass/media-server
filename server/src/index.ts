@@ -4,9 +4,9 @@ import helmet from "helmet";
 import bodyParser from 'body-parser';
 import mongoose from "mongoose";
 import multer from 'multer';
-import * as media from "./media/media.router";
-import * as upload from "./upload/upload.router";
-import * as dotenvutil from './util/dotenv'
+import * as media from "@app/media/media.router";
+import * as upload from "@app/upload/upload.router";
+import * as dotenvutil from '@app/util/dotenv'
 
 dotenv.config();
 
@@ -15,7 +15,7 @@ const uploads = multer({ dest: '../files/uploads/' });
 
 const app = express();
 
-mongoose.connect(`mongodb://localhost/${ dotenvutil.load('DATABASE_IP') }`);
+mongoose.connect(`mongodb://localhost/${ dotenvutil.load('DATABASE_IP') }`, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Middleware
 app.use(helmet());
