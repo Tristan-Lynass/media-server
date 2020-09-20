@@ -3,5 +3,7 @@ server/dist/
 server/.env
 files
 
+.idea/workspace.xml
+
 **/.DS_Store
 **/Thumbs.db
