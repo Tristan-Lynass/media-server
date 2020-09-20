@@ -1,11 +1,11 @@
-import * as dotenv from "dotenv";
-import express from "express"; 
-import helmet from "helmet";
 import bodyParser from 'body-parser';
+import * as dotenv from 'dotenv';
+import express from 'express';
+import helmet from 'helmet';
 import multer from 'multer';
-import * as media from "./media/media.router";
-import * as upload from "./upload/upload.router";
-import * as dotenvutil from './util/dotenv'
+import * as media from './media/media.router';
+import * as upload from './upload/upload.router';
+import * as dotenvutil from './util/dotenv';
 
 dotenv.config();
 
@@ -19,8 +19,8 @@ app.use(helmet());
 app.use(bodyParser.json());
 
 // Routes
-app.use("/media", media.router);
-app.use('/upload', uploads.array('media'), upload.router)
+app.use('/media', media.router);
+app.use('/upload', uploads.array('media'), upload.router);
 
 // Start Server
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
