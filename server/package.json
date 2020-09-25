@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "start-manual": "node dist/index",
-    "start": "webpack --config webpack.config.ts"
+    "start-webpack": "webpack --config webpack.config.ts",
+    "start": "ts-node src/index.ts"
   },
   "author": "Tristan Lynass",
   "license": "ISC",
@@ -15,8 +16,11 @@
     "ffprobe": "^1.1.0",
     "helmet": "^3.21.3",
     "md5-file": "^5.0.0",
-    "mongoose": "^5.9.4",
-    "multer": "^1.4.2"
+    "multer": "^1.4.2",
+    "reflect-metadata": "^0.1.13",
+    "sqlite3": "^5.0.0",
+    "typeorm": "^0.2.26",
+    "uuid": "^8.3.0"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.0",
@@ -24,17 +28,18 @@
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.3",
     "@types/helmet": "0.0.45",
-    "@types/mongoose": "^5.7.6",
     "@types/multer": "^1.4.3",
     "@types/node": "^13.9.1",
+    "@types/uuid": "^8.3.0",
     "dotenv": "^8.2.0",
     "nodemon": "^2.0.2",
     "nodemon-webpack-plugin": "^4.3.1",
     "ts-loader": "^6.2.1",
+    "ts-node": "^9.0.0",
     "typescript": "^3.8.3",
     "webpack": "^4.42.0",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3",
+    "webpack-dev-server": "^3.11.0",
     "webpack-node-externals": "^1.7.2"
   }
 }

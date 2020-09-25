@@ -1,6 +1,5 @@
-import express from "express";
-import * as controller from '@app/media/media.controller';
-
+import express from 'express';
+import * as controller from './media.controller';
 export const router = express.Router();
 
 router.route('/')
