@@ -1,12 +1,12 @@
-import { Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
-import { Media } from "./Media";
+import { Media } from '../entity/Media';
+import { Entity, ManyToOne, PrimaryColumn } from 'typeorm';
 
+// TODO: Make sure these delete on cascase
 @Entity()
 export class Tag {
 
-  @PrimaryColumn()
-  @ManyToOne(() => Media)
-  @JoinColumn()
+  // https://github.com/typeorm/typeorm/issues/3238
+  @ManyToOne(() => Media,  { primary: true })
   public readonly media: Media;
 
   @PrimaryColumn()

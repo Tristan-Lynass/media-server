@@ -3,12 +3,12 @@ import { Column } from 'typeorm';
 export class Dimension {
 
   @Column()
-  public readonly width: boolean;
+  public readonly width: number;
 
   @Column()
-  public readonly height: boolean;
+  public readonly height: number;
 
-  constructor(width: boolean, height: boolean) {
+  constructor(width: number, height: number) {
     this.width = width;
     this.height = height;
   }

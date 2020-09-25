@@ -18,7 +18,7 @@ export class FileData {
   @Column()
   public readonly uploadedAt: Date;
 
-  @Column()
+  @Column(() => Number)
   public readonly duration: number | null;
 
   @Column(() => Dimension)
