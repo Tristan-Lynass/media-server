@@ -1,10 +1,12 @@
+import { findAll, findOne } from '@app/media/media.controller';
 import express from 'express';
-import * as controller from './media.controller';
+// import * as controller from './media.controller';
+
 export const router = express.Router();
 
 router.route('/')
-	.get(controller.findAll);
-  // .post(controller.create);
+  .get(findAll);
+// .post(controller.create);
 
 router.route('/:id')
-  .get(controller.findOne);
+  .get(findOne);

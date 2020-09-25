@@ -1,12 +1,12 @@
-import { Media } from '../entity/Media';
 import { Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Media } from '@app/entity/Media';
 
-// TODO: Make sure these delete on cascase
+// TODO: Make sure these delete on cascade
 @Entity()
 export class Tag {
 
   // https://github.com/typeorm/typeorm/issues/3238
-  @ManyToOne(() => Media,  { primary: true })
+  @ManyToOne(() => Media, { primary: true, cascade: true })
   public readonly media: Media;
 
   @PrimaryColumn()

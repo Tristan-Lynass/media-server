@@ -1,6 +1,6 @@
+import { Dimension } from '@app/entity/Dimension';
+import { FileData } from '@app/entity/FileData';
 import { Column, Entity, PrimaryColumn } from 'typeorm';
-import { Dimension } from './Dimension';
-import { FileData } from './FileData';
 
 @Entity()
 export class Media {

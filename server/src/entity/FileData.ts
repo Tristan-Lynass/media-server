@@ -1,5 +1,5 @@
+import { Dimension } from '@app/entity/Dimension';
 import { Column } from 'typeorm';
-import { Dimension } from './Dimension';
 
 export class FileData {
 

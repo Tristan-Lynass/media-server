@@ -1,9 +1,9 @@
+import { Dimension } from '@app/entity/Dimension';
+import { Media } from '@app/entity/Media';
+import { handler } from '@app/util/routers';
+import { uuid } from '@app/util/uuid';
 import { Request, Response } from 'express';
-import { uuid } from '../util/uuid';
-import { Dimension } from '../entity/Dimension';
 import { getRepository } from 'typeorm';
-import { Media } from '../entity/Media';
-import { handler } from '../util/routers';
 
 const respository = () => getRepository(Media);
 

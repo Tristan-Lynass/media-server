@@ -5,9 +5,9 @@ import helmet from 'helmet';
 import multer from 'multer';
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
-import * as media from './media/media.router';
-import * as upload from './upload/upload.router';
-import * as dotenvutil from './util/dotenv';
+import * as media from '@app/media/media.router';
+import * as upload from '@app/upload/upload.router';
+import * as dotenvutil from '@app/util/dotenv';
 
 dotenv.config();
 const ENV = dotenvutil.load('NODE_ENV');
