@@ -19,16 +19,18 @@ module.exports = {
     filename: 'index.js'
   },
   resolve: {
-    extensions: ['.ts', '.js'],
+    extensions: [ '.ts', '.js' ]
   },
   externals: [ nodeExternals() ],
   plugins: [ new NodemonPlugin() ],
   module: {
-    rules: [{
-      test: /\.ts$/,
-      use: 'ts-loader' 
-//    exclude: /node_modules/  // Unsure if I need this, nodeExternals() should already be doing this right?
-    }]
+    rules: [
+      {
+        test: /\.ts$/,
+        use: 'ts-loader'
+        //    exclude: /node_modules/  // Unsure if I need this, nodeExternals() should already be doing this right?
+      }
+    ]
   },
   watch: NODE_ENV === 'development'
-}
+};

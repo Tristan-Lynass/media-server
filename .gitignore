@@ -2,6 +2,9 @@ server/node_modules/
 server/dist/
 server/.env
 files
+db
+
+.idea/workspace.xml
 
 **/.DS_Store
 **/Thumbs.db
