@@ -5,7 +5,7 @@
   "scripts": {
     "start-manual": "node dist/index",
     "start-webpack": "webpack --config webpack.config.ts",
-    "start": "ts-node src/index.ts"
+    "start": "ts-node -r tsconfig-paths/register src/index.ts"
   },
   "author": "Tristan Lynass",
   "license": "ISC",
@@ -36,6 +36,7 @@
     "nodemon-webpack-plugin": "^4.3.1",
     "ts-loader": "^6.2.1",
     "ts-node": "^9.0.0",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^3.8.3",
     "webpack": "^4.42.0",
     "webpack-cli": "^3.3.11",

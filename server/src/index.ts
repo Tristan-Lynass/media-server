@@ -28,7 +28,7 @@ app.use('/upload', uploads.array('media'), upload.router);
 // https://stackoverflow.com/questions/42186674/typeorm-how-to-use-connection-as-standalone-object-with-types
 createConnection({
   type: 'sqlite',
-  database: 'db/store.db',
+  database: 'db/store.sqlite',
   entities: [ 'src/entity/**/*.ts' ],
   migrations: [ 'src/migration/**/*.ts' ],
   synchronize: ENV !== 'production'
