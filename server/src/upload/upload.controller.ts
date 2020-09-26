@@ -4,12 +4,11 @@ import { ffprobe } from '@app/util/ffmpeg';
 import { isDefined } from '@app/util/filters';
 import { handler } from '@app/util/routers';
 import { uuid } from '@app/util/uuid';
-import { Request, Response } from 'express';
+import { Request } from 'express';
+import { FfprobeData, FfprobeStream } from 'fluent-ffmpeg';
 import md5 from 'md5-file';
 import path from 'path';
-import { getRepository } from 'typeorm';
-import { FfprobeData, FfprobeStream } from 'fluent-ffmpeg';
-
+import { EntityManager, getConnection } from 'typeorm';
 
 // const VIDEO_TYPES = [ 'm4v', 'mkv', 'mov', 'mp4', 'webm', 'ogv', 'mpg', 'rm', 'gif', 'wmv' ];
 
@@ -17,30 +16,21 @@ import { FfprobeData, FfprobeStream } from 'fluent-ffmpeg';
 
 // const TEMPORAL_TYPES = [ 'mp3', 'm4a', 'wav' ].concat(VIDEO_TYPES);
 
-const repository = () => getRepository(Media);
+const repository = (em: EntityManager) => em.getRepository(Media);
 
-// TODO: Transaction
-export const handle = handler(async (req: Request, res: Response) => {
-  const multerFiles = req.files as Express.Multer.File[];
-  const media = await Promise.all(multerFiles.map(parse));
-  await repository().save(media);
-  res.status(200).send();
-});
+// TODO: Extract this into a transactionalHandler utility
+export const handle = handler(async (req: Request) =>
+    await getConnection().manager.transaction(async em => {
+      const media = await Promise.all(multerFiles(req).map(toMedia));
+      await repository(em).save(media);
+    })
+);
 
-// async function transaction(res: Response, fn: (session: mongoose.ClientSession) => Promise<any>): Promise<void> {
-//   const session = await mongoose.startSession();
-//   session.startTransaction();
-//   try {
-//     await fn(session);
-//     res.status(200).send();
-//   } catch (e) {
-//     await session.abortTransaction();
-//     session.endSession();
-//     res.status(500).send();
-//   }
-// }
+function multerFiles(req: Request): Express.Multer.File[] {
+  return req.files as Express.Multer.File[];
+}
 
-async function parse(file: Express.Multer.File): Promise<Media> {
+async function toMedia(file: Express.Multer.File): Promise<Media> {
 
   const probeData = await ffprobe(file.path);
   const height = findFileProperty(probeData, stream => stream.height);
