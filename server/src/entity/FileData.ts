@@ -1,5 +1,5 @@
+import { Dimension } from '@app/entity/Dimension';
 import { Column } from 'typeorm';
-import { Dimension } from './Dimension';
 
 export class FileData {
 
@@ -18,7 +18,7 @@ export class FileData {
   @Column()
   public readonly uploadedAt: Date;
 
-  @Column(() => Number)
+  @Column({ type: Number, nullable: true })
   public readonly duration: number | null;
 
   @Column(() => Dimension)

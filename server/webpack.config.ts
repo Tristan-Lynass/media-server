@@ -19,7 +19,11 @@ module.exports = {
     filename: 'index.js'
   },
   resolve: {
-    extensions: [ '.ts', '.js' ]
+    extensions: [ '.ts' ],
+    // https://stackoverflow.com/a/58515690/3616885
+    alias: {
+      '@app': path.resolve(process.cwd(), './src')
+    }
   },
   externals: [ nodeExternals() ],
   plugins: [ new NodemonPlugin() ],

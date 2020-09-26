@@ -5,6 +5,7 @@
 # Configuration
 * Configure database: https://typeorm.io/#/using-ormconfig
 * Configure other environmental variables in .env
+* Set the windows environmental variable FFMPEG_PATH
 
 # Dependencies
 * body-parser:            Parse HTTP request bodies
