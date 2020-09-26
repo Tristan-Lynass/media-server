@@ -1,5 +1,5 @@
-import { Entity, ManyToOne, PrimaryColumn } from 'typeorm';
 import { Media } from '@app/entity/Media';
+import { Entity, ManyToOne, PrimaryColumn } from 'typeorm';
 
 // TODO: Make sure these delete on cascade
 @Entity()

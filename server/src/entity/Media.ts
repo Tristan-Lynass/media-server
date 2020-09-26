@@ -20,7 +20,7 @@ export class Media {
   @Column()
   private starred: boolean = false;
 
-  @Column(() => Date)
+  @Column({ type: Date, nullable: true })
   private lastView: Date | null = null;
 
   constructor(id: string,

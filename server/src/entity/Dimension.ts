@@ -2,10 +2,10 @@ import { Column } from 'typeorm';
 
 export class Dimension {
 
-  @Column()
+  @Column({ nullable: true })
   public readonly width: number;
 
-  @Column()
+  @Column({ nullable: true })
   public readonly height: number;
 
   constructor(width: number, height: number) {

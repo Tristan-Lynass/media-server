@@ -4,7 +4,7 @@ import { ffprobe } from '@app/util/ffmpeg';
 import { isDefined } from '@app/util/filters';
 import { handler } from '@app/util/routers';
 import { uuid } from '@app/util/uuid';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import { FfprobeData, FfprobeStream } from 'fluent-ffmpeg';
 import md5 from 'md5-file';
 import path from 'path';
@@ -18,12 +18,18 @@ import { EntityManager, getConnection } from 'typeorm';
 
 const repository = (em: EntityManager) => em.getRepository(Media);
 
+/**
+ * Currently, this will discard all files if any single one fails. Should only stop for that file, best effort,
+ * all others should try to process.
+ */
+
 // TODO: Extract this into a transactionalHandler utility
-export const handle = handler(async (req: Request) =>
-    await getConnection().manager.transaction(async em => {
-      const media = await Promise.all(multerFiles(req).map(toMedia));
-      await repository(em).save(media);
-    })
+export const handle = handler(async (req: Request, res: Response) =>
+  await getConnection().manager.transaction(async em => {
+    const media = await Promise.all(multerFiles(req).map(toMedia));
+    await repository(em).save(media);
+    res.status(200).send();
+  })
 );
 
 function multerFiles(req: Request): Express.Multer.File[] {
@@ -53,11 +59,7 @@ async function toMedia(file: Express.Multer.File): Promise<Media> {
 }
 
 function findFileProperty<T>(probeData: FfprobeData, cb: (stream: FfprobeStream) => T): T | null {
-  probeData.streams.forEach(stream => {
-    const res = cb(stream);
-    if (isDefined(res)) {
-      return res;
-    }
-  });
-  return null;
+  return probeData.streams
+           .map(cb)
+           .find(isDefined) ?? null;
 }
