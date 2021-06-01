@@ -1,1 +1,4 @@
-<p>search-results works!</p>
+<cdk-virtual-scroll-viewport itemSize="18"
+  style="height:500px" >
+  <div *cdkVirtualFor="let item of items">{{item}}</div>
+</cdk-virtual-scroll-viewport>
