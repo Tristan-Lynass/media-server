@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-search-bar',
@@ -7,9 +7,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchBarComponent implements OnInit {
 
-  constructor() { }
+  input: string;
+
+  readonly tags: Set<string> = new Set<string>();
+
+  constructor(private readonly cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
   }
+
+  addTag(): void {
+    // console.log(tag);
+
+    this.tags.add(this.input);
+    this.input = '';
+    this.cd.markForCheck();
+  }
+
+  deleteTag(tag: string): void {
+    this.tags.delete(tag);
+  }
+
 
 }

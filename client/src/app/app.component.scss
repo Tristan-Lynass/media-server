@@ -1,0 +1,18 @@
+:host {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+
+  app-search-bar {
+    height: 150px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+  }
+
+
+
+
+}

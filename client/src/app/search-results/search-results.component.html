@@ -1,4 +1,5 @@
-<cdk-virtual-scroll-viewport itemSize="18"
-  style="height:500px" >
-  <div *cdkVirtualFor="let item of items">{{item}}</div>
-</cdk-virtual-scroll-viewport>
+<div class="viewport">
+  <div *uiScroll="let item of items">
+    <img src="https://www.meme-arsenal.com/memes/68c4a3754dfb6fbf6fe96cbc46a12ada.jpg" style="width:100px;">
+  </div>
+</div>

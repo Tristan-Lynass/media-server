@@ -21,6 +21,8 @@
     "@angular/platform-browser-dynamic": "~9.0.3",
     "@angular/router": "~9.0.3",
     "ngx-infinite-scroll": "^10.0.1",
+    "ngx-ui-scroll": "^2.1.0-beta.2",
+    "ngx-virtual-scroller": "^4.0.3",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

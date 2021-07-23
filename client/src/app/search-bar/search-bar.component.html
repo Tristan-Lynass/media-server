@@ -1,1 +1,9 @@
-<p>search-bar works!</p>
+<div class="container">
+  <app-search-tag
+    class="tag"
+    *ngFor="let tag of tags;"
+    [tag]="tag"
+    (deleteEvent)="deleteTag(tag)"
+  ></app-search-tag>
+  <input type="text" [(ngModel)]="input" (keyup.enter)="addTag()">
+</div>

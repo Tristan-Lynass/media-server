@@ -1,0 +1,3 @@
+<virtual-scroller #scroll [items]="items">
+  <img *ngFor="let item of scroll.viewPortItems" [attr.src]="item">
+</virtual-scroller>
