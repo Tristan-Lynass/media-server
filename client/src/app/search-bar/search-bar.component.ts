@@ -18,9 +18,14 @@ export class SearchBarComponent implements OnInit {
 
   addTag(): void {
     // console.log(tag);
+    if (this.input === '') {
+      return;
+    }
 
     this.tags.add(this.input);
     this.input = '';
+
+    // TODO: update service so that it can re-fetch cache data stuff
     this.cd.markForCheck();
   }
 

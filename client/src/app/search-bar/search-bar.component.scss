@@ -12,6 +12,12 @@
     border-radius: 2px;
     width:100%;
     margin: 50px;
+    display: flex;
+    flex-wrap: wrap;
+
+    app-search-tag {
+      padding:3px;
+    }
 
     input {
       width: 100%;
@@ -20,6 +26,7 @@
       outline: none;
       border-bottom: 1px solid aliceblue;
       transition: .1s;
+      flex: 1; // https://stackoverflow.com/a/47030876
     }
 
     input:focus {

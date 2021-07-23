@@ -1,0 +1,37 @@
+:host {
+  display: flex;
+
+
+  .triangle-left {
+    width: 0;
+    height: 0;
+    border-right: 8px solid #dadada;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+  }
+
+  .main {
+    padding-left: 5px;
+  }
+
+  .remove {
+    border-radius: 0 5px 5px 0;
+    outline: none;
+    transition: .1s;
+    border: 1px solid #dadada;
+  }
+
+  .main, .remove {
+    background-color: #dadada;
+  }
+
+  .remove:focus {
+    border: 1px dashed #838383;
+  }
+
+  .remove:hover  {
+    background-color: #c0c0c0; //#ffbe17;
+    cursor: pointer;
+  }
+
+}
