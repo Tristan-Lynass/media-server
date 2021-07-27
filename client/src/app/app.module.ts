@@ -5,14 +5,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { UiScrollModule } from 'ngx-ui-scroll';
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
+import { AppComponent } from 'src/app/component/app.component';
+import { ResultItemComponent } from 'src/app/component/result-item/result-item.component';
+import { SearchBarComponent } from 'src/app/component/search-bar/search-bar.component';
+import { SearchTagComponent } from 'src/app/component/search-bar/search-tag/search-tag.component';
+import { SearchResultTableComponent } from 'src/app/component/search-result-table/search-result-table.component';
+import { SearchResultsComponent } from 'src/app/component/search-results/search-results.component';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { SearchBarComponent } from './search-bar/search-bar.component';
-import { SearchResultsComponent } from './search-results/search-results.component';
-import { SearchResultTableComponent } from './search-result-table/search-result-table.component';
-import { ResultItemComponent } from './result-item/result-item.component';
-import { SearchTagComponent } from './search-bar/search-tag/search-tag.component';
+import { FileDropZoneComponent } from './component/file-drop-zone/file-drop-zone.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { SearchTagComponent } from './search-bar/search-tag/search-tag.component
     SearchResultsComponent,
     SearchResultTableComponent,
     ResultItemComponent,
-    SearchTagComponent
+    SearchTagComponent,
+    FileDropZoneComponent
   ],
   imports: [
     BrowserModule,
