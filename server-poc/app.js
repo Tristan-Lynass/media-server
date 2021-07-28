@@ -36,14 +36,13 @@ app.post('/uploads', async function(req, res) {
 
 app.get('/uploads', (req, res) => {
   const page = req.query.page;
-  if (page == null) {
+  const size = req.query.size;
+  if (page == null || size == null) {
     return res.status(400).send()
   }
 
-  const pageSize = 50;
-  const offset = page * pageSize;
-  console.log(sql.getPage, pageSize, offset)
-  db.all(sql.getPage, offset, pageSize, (err, rows) => {
+  const offset = page * size;
+  db.all(sql.getAllByPage, offset, size, (err, rows) => {
     if (err) {
       return console.error(err.message);
     }

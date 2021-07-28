@@ -4,5 +4,5 @@ module.exports = {
         filename TEXT
       );`,
     insert: `insert into uploads values (NULL, ?);`,
-    getPage: `select filename from uploads limit ?, ?;`
+    getAllByPage: `select filename from uploads limit ?, ?;`
 };
