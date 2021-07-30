@@ -5,6 +5,8 @@ const fs = require('fs')
 const fileUpload = require('express-fileupload')
 const sql = require('./sql')
 const imageThumbnail = require('image-thumbnail');
+const cors = require('cors')
+
 
 
 const port = 3000
@@ -12,13 +14,15 @@ const db = new sqlite3.Database('data.db', err => err && console.log(err.message
 
 db.run(sql.initialise)
 
+app.use(cors())
 app.use(fileUpload({
   useTempFiles : true,
   tempFileDir : './tmp/'
 }));
 
 app.post('/uploads', async function(req, res) {
-  req.files.media.forEach(async file => {
+  // req.files.media.forEach(async file => {
+    const file = req.files.media;
     const filename = `${file.md5}.jpg`;
     fs.rename(file.tempFilePath, `uploads/${filename}`, async () => {
       // Note: fit != inside(not full 200x200), fill(stretches), contains(letterboxes)
@@ -28,8 +32,7 @@ app.post('/uploads', async function(req, res) {
         db.run(sql.insert, filename)
       })
     })
-
-  })
+  // })
 
   res.send();
 });

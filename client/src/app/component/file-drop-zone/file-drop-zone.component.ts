@@ -1,16 +1,20 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { SequentialUploadService } from 'src/app/service/sequential-upload.service';
 
 @Component({
   selector: 'app-file-drop-zone',
   templateUrl: './file-drop-zone.component.html',
-  styleUrls: ['./file-drop-zone.component.scss']
+  styleUrls: [ './file-drop-zone.component.scss' ]
 })
 export class FileDropZoneComponent {
 
   lastTarget = null; // https://stackoverflow.com/a/28226022/3616885
   dropped = false;
 
-  @HostListener('window:dragenter', ['$event'])
+  constructor(private readonly us: SequentialUploadService) {
+  }
+
+  @HostListener('window:dragenter', [ '$event' ])
   private onDragEnter(e: DragEvent): void {
     e.preventDefault();
     e.stopPropagation();
@@ -20,7 +24,7 @@ export class FileDropZoneComponent {
     // TODO: open overlay with prompt image
   }
 
-  @HostListener('window:dragleave', ['$event'])
+  @HostListener('window:dragleave', [ '$event' ])
   private onDragLeave(e: DragEvent): void {
     e.preventDefault();
     e.stopPropagation();
@@ -34,12 +38,12 @@ export class FileDropZoneComponent {
 
   // Needed so that the drop event will fire
   /* https://stackoverflow.com/a/60565791/3616885 */
-  @HostListener('window:dragover', ['$event'])
+  @HostListener('window:dragover', [ '$event' ])
   private onDragOver(e: DragEvent): void {
     e.preventDefault();
   }
 
-  @HostListener('drop', ['$event'])
+  @HostListener('drop', [ '$event' ])
   private onDrop(e: DragEvent): void {
     e.preventDefault();
     e.stopPropagation();
@@ -55,6 +59,7 @@ export class FileDropZoneComponent {
     // else
     //   TODO: turn red
     console.log(files);
+    this.us.upload([ files.item(0) ]);
   }
 
 }

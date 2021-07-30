@@ -1,0 +1,15 @@
+:host {
+  .xxx {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+
+    div {
+      width: 50px;
+    }
+
+    mat-progress-bar {
+      width: 200px;
+    }
+  }
+}

@@ -1,8 +1,11 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { BrowserModule } from '@angular/platform-browser';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { UiScrollModule } from 'ngx-ui-scroll';
@@ -40,7 +43,10 @@ import { UploadMonitorComponent } from './component/upload-monitor/upload-monito
     FormsModule,
     NoopAnimationsModule,
     MatCardModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatDividerModule,
+    MatProgressBarModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
