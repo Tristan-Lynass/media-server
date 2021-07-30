@@ -8,6 +8,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 export class FileDropZoneComponent {
 
   lastTarget = null; // https://stackoverflow.com/a/28226022/3616885
+  dropped = false;
 
   @HostListener('window:dragenter', ['$event'])
   private onDragEnter(e: DragEvent): void {
@@ -16,6 +17,7 @@ export class FileDropZoneComponent {
     this.lastTarget = e.target;
 
     console.log('Drag Enter');
+    // TODO: open overlay with prompt image
   }
 
   @HostListener('window:dragleave', ['$event'])
@@ -24,9 +26,9 @@ export class FileDropZoneComponent {
     e.stopPropagation();
 
     if (e.target === this.lastTarget || e.target === document) {
-      // console.log(e.target);
-      // console.log('Drag Leave');
+
       this.lastTarget = null;
+      // TODO: close overlay
     }
   }
 
@@ -46,6 +48,12 @@ export class FileDropZoneComponent {
     if (files == null || files.length === 0) {
       this.lastTarget = null;
     }
+    this.dropped = true;
+    // if (any files validate)
+    //   TODO: Change the displayed dialog to the pre-upload dialog
+    //    Then from that dialog, you can close to cancel or hit upload / (enter) to start upload
+    // else
+    //   TODO: turn red
     console.log(files);
   }
 

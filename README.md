@@ -2,22 +2,27 @@
 `npm run start`
 
 ### Client POC To Do
-- Get results table performing
-  - Dynamic resizing
-  - Infinite scrolling
-  - Virtual scrolling
-- Get search bar generating tags to send the server
-- Get file upload working (Drag and drop on top the results table)
-  - Send files in form data under (media)
-- Add feature to cycle through images to manage tags
+1. Get file upload working (Drag and drop on top the results table)
+    - Send files in form data under (media)
+2. Get results table performing
+    - Dynamic resizing
+    - Infinite scrolling
+    - Virtual scrolling
+3. Add feature to cycle through images to manage tags
+   - Clicking an image on the results page will open the image full size
+   - This page will contain a method of managing tags (undo and redo buttons would be great)
+   - Left and right buttons for traversing the results
+   - Ideally a horizontal infinite scroll thing at the bottom to display image previews
+   - A play button to automatically cycle through the images in fullscreen cover
+4. Get search bar generating tags to send the server
 
 ### Later To Do
 - Searching
   - Put search tags in url, so reload will retain tags
-  - Clear all tags
+  - Clear all tags / backspace to delete a tag (see how annoying this is)
   - Click tag to toggle include/exclude
-  - Sort by various media props
-  - Search by other props like filetype
+  - Sort and search by various media props
+    - Untagged, filetype, length, filesize, dimensions, num tags
   - Save searches
   - Suggest tags
 - Support video
@@ -35,4 +40,4 @@ Doing it in Spring Boot will be a better option because it comes with so much op
 
 
 ### Development notes
-When you're just starting a new project, so you don't loose movitiation or steam, just do commits to develop and once you have a 1.0 version of the app, start doing feature branches, and a ticketed approach. I tried the latter from the get-go and all the overhead of Jira tickets and that stuff really bogged me down and I lost motivation.
+When you're just starting a new project, so you don't lose motivation or steam, just do commits to develop and once you have a 1.0 version of the app, start doing feature branches, and a ticketed approach. I tried the latter from the get-go and all the overhead of Jira tickets and that stuff really bogged me down and I lost motivation.
