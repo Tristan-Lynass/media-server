@@ -1,4 +1,4 @@
-<div class="container">
+<mat-card class="container">
   <app-search-tag
     class="tag"
     *ngFor="let tag of tags;"
@@ -6,4 +6,4 @@
     (deleteEvent)="deleteTag(tag)"
   ></app-search-tag>
   <input autofocus type="text" [(ngModel)]="input" (keyup.space)="addTag()" (keyup.enter)="addTag()">
-</div>
+</mat-card>

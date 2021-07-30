@@ -1,6 +1,7 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
 import { BrowserModule } from '@angular/platform-browser';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { UiScrollModule } from 'ngx-ui-scroll';
@@ -14,6 +15,7 @@ import { SearchResultsComponent } from 'src/app/component/search-results/search-
 
 import { AppRoutingModule } from './app-routing.module';
 import { FileDropZoneComponent } from './component/file-drop-zone/file-drop-zone.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { FileDropZoneComponent } from './component/file-drop-zone/file-drop-zone
     ScrollingModule,
     UiScrollModule,
     VirtualScrollerModule,
-    FormsModule
+    FormsModule,
+    NoopAnimationsModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
