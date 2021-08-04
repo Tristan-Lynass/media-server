@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SequentialUploadService } from 'src/app/service/sequential-upload.service';
 
 @Component({
   selector: 'app-upload-monitor',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UploadMonitorComponent implements OnInit {
 
-  constructor() { }
+  constructor(readonly xx: SequentialUploadService) { }
 
   ngOnInit(): void {
   }

@@ -21,18 +21,28 @@ app.use(fileUpload({
 }));
 
 app.post('/uploads', async function(req, res) {
-  // req.files.media.forEach(async file => {
-    const file = req.files.media;
-    const filename = `${file.md5}.jpg`;
-    fs.rename(file.tempFilePath, `uploads/${filename}`, async () => {
+  let files = req.files.media
+  if (files == null) {
+    return res.status(400).send()
+  }
+
+  if (!Array.isArray(files)) {
+    files = [ files ]
+  }
+
+  files.forEach(file => {
+    // console.log(file);
+    const extension = file.name.split('.').pop()
+    const filename = `${file.md5}.${extension}`
+    file.mv(`uploads/${filename}`, async () => {
       // Note: fit != inside(not full 200x200), fill(stretches), contains(letterboxes)
       const options = { width: 200, height: 200, jpegOptions: { force: true, quality: 90 }, fit: 'cover' }
       const thumbnail = await imageThumbnail(`uploads/${filename}`, options);
-      fs.writeFile(`./uploads/thumbs/${filename}`, thumbnail, () => {
+      fs.writeFile(`uploads/thumbs/${filename}`, thumbnail, () => {
         db.run(sql.insert, filename)
       })
     })
-  // })
+  })
 
   res.send();
 });

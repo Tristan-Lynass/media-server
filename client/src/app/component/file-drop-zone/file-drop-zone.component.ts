@@ -59,7 +59,8 @@ export class FileDropZoneComponent {
     // else
     //   TODO: turn red
     console.log(files);
-    this.us.upload([ files.item(0) ]);
+    this.us.uploadAll(Array.from(files));
+    this.lastTarget = null;
   }
 
 }

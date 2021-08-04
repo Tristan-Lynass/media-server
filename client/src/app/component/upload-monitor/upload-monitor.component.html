@@ -1,13 +1,14 @@
-<mat-card>
+<mat-card *ngIf="xx.getProgress() | async; let progress">
 
-  <div class="xxx">
+  <div class="xxx" *ngFor="let p of progress">
     <div>5 / 6</div>
-    <mat-progress-bar [value]="45" [bufferValue]="100"></mat-progress-bar>
+    <mat-progress-bar [value]="p.total == null || p.total == 0 ? 0 : 100*(p.loaded / p.total)" [bufferValue]="100"></mat-progress-bar>
+    <div style="width:20px;height:20px;background-color:green" *ngIf="p.loaded === p.total"></div>
   </div>
-  <div class="xxx">
-    <div>4 / 60</div>
-    <mat-progress-bar [value]="20" [bufferValue]="100"></mat-progress-bar>
-  </div>
+<!--  <div class="xxx">-->
+<!--    <div>4 / 60</div>-->
+<!--    <mat-progress-bar [value]="20" [bufferValue]="100"></mat-progress-bar>-->
+<!--  </div>-->
 
 <!--  <mat-expansion-panel>-->
 <!--    <mat-expansion-panel-header>-->
