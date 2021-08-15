@@ -21,7 +21,7 @@ app.use(fileUpload({
 }));
 
 app.post('/uploads', async function(req, res) {
-  let files = req.files.media
+  let files = req.files?.media
   if (files == null) {
     return res.status(400).send()
   }
