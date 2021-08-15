@@ -1,21 +1,28 @@
-<mat-card *ngIf="xx.getProgress() | async; let progress">
-
-  <div class="xxx" *ngFor="let p of progress">
-    <div>5 / 6</div>
-    <mat-progress-bar [value]="p.total == null || p.total == 0 ? 0 : 100*(p.loaded / p.total)" [bufferValue]="100"></mat-progress-bar>
-    <div style="width:20px;height:20px;background-color:green" *ngIf="p.loaded === p.total"></div>
-  </div>
 <!--  <div class="xxx">-->
 <!--    <div>4 / 60</div>-->
 <!--    <mat-progress-bar [value]="20" [bufferValue]="100"></mat-progress-bar>-->
 <!--  </div>-->
+<ng-container *ngIf="xx.getProgress() | async; let progress">
+  <mat-expansion-panel *ngIf="progress.length > 0" style="width:400px;">
+    <mat-expansion-panel-header>
+      <mat-panel-title style="align-items: center;">
+        <div>{{ progress.filter(isFinished).length }} / {{ progress.length }}</div>
+        <mat-progress-bar [value]="progress.filter(isFinished).length" [bufferValue]="fuckme(progress.length)"></mat-progress-bar>
+      </mat-panel-title>
 
-<!--  <mat-expansion-panel>-->
-<!--    <mat-expansion-panel-header>-->
-<!--      <mat-panel-title> 5/6</mat-panel-title>-->
-<!--      <mat-panel-description> Progress bar</mat-panel-description>-->
-<!--    </mat-expansion-panel-header>-->
-<!--    <p>This is the primary content of the panel.</p>-->
-<!--  </mat-expansion-panel>-->
-  <!--  <mat-divider></mat-divider>-->
-</mat-card>
+    </mat-expansion-panel-header>
+
+    <div style="max-height: 300px; overflow-y: scroll; ">
+      <div *ngFor="let p of progress; trackBy: trackByIdentity">
+        <div style="display: flex; flex-direction: row; justify-content: space-between">
+          <div>{{ p.filename }}</div>
+          <div>{{ p.percent / 100 | percent:'.0' }}</div>
+          <!--        <div style="width:20px;height:20px;background-color:green" *ngIf="p.isFinished()"></div>-->
+        </div>
+        <mat-progress-bar [value]="p.percent" [bufferValue]="100"></mat-progress-bar>
+
+      </div>
+    </div>
+  </mat-expansion-panel>
+</ng-container>
+

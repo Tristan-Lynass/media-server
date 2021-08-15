@@ -1,6 +1,7 @@
-import { HttpClient, HttpEvent, HttpEventType, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { UploadProgress } from 'src/app/upload-progress';
 import { v4 as uuid } from 'uuid';
 
 @Injectable({
@@ -20,10 +21,21 @@ export class SequentialUploadService {
 
   private update(id: string, loaded: number, total: number | undefined): void {
     const current = this.progress.value;
-    const index = current.findIndex(p => p.id = id);
+    const index = current.findIndex(p => p.id === id);
     if (index != null) {
-      current[index].loaded = loaded;
-      current[index].total = total;
+      current[index] = current[index].update(loaded, total);
+      this.progress.next(current);
+    } else {
+      console.log('ERROR: Unable to find upload with id: ' + id);
+    }
+  }
+
+  private finish(id: string): void {
+    const current = this.progress.value;
+    const index = current.findIndex(p => p.id === id);
+    if (index != null) {
+      const progress = current[index];
+      current[index] = progress.update(progress.total, progress.total);
       this.progress.next(current);
     } else {
       console.log('ERROR: Unable to find upload with id: ' + id);
@@ -35,34 +47,40 @@ export class SequentialUploadService {
     this.progress.next(current.filter(p => p.id === id));
   }
 
-  private add(progress: UploadProgress): void {
+  private queueUpload(filename: string): string {
+    const id = uuid();
     const current = this.progress.value;
-    current.push(progress);
+    current.push(new UploadProgress(id, 0, undefined, filename));
     this.progress.next(current);
+
+    return id;
   }
 
   public uploadAll(files: File[]): void {
     files.forEach(file => {
-      const progress: UploadProgress = { id: uuid(), loaded: 0, total: undefined, filename: file.name };
-      this.add(progress);
+      const id = this.queueUpload(file.name);
+
       this.upload(file).subscribe((event: HttpEvent<any>) => {
         if (event.type === HttpEventType.UploadProgress) {
           // console.log(`Updating ${progress.id}: ${event.loaded} / ${progress.total} = ${100 * (event.loaded / progress.total)}`);
-          this.update(progress.id, event.loaded, event.total);
+          this.update(id, event.loaded, event.total);
         } else if (event.type === HttpEventType.Response) {
           console.log('Uploaded the file successfully: ' + file.name);
-          this.update(progress.id, progress.total, progress.total);
+          this.finish(id);
+          // this.update(progress.id, progress.total, progress.total);
           // this.remove(progress.id);
         }
       }, () => {
+        console.log('FAILED TO UPLOAD', id);
       });
     });
   }
-        //     (err: any) => {
-        //       this.progressInfos[idx].value = 0;
-        //       const msg = 'Could not upload the file: ' + file.name;
-        //       this.message.push(msg);
-        //       this.fileInfos = this.uploadService.getFiles();
+
+  //     (err: any) => {
+  //       this.progressInfos[idx].value = 0;
+  //       const msg = 'Could not upload the file: ' + file.name;
+  //       this.message.push(msg);
+  //       this.fileInfos = this.uploadService.getFiles();
   //     });
   //   });
   // }
@@ -97,11 +115,4 @@ export class SequentialUploadService {
   //   });
   // }
 
-}
-
-export interface UploadProgress {
-  id: string;
-  loaded: number;
-  total: number | undefined;
-  filename: string;
 }
