@@ -1,8 +1,9 @@
 module.exports = {
     initialise: `create table if not exists uploads (
-        id integer primary key autoincrement,
-        filename TEXT
+        filename text primary key,
+        ext text,
+        md5 text
       );`,
-    insert: `insert into uploads values (NULL, ?);`,
-    getAllByPage: `select filename from uploads limit ?, ?;`
+    insert: `insert into uploads values (?, ?, ?);`,
+    getAllByPage: `select filename, ext from uploads limit ?, ?;`
 };

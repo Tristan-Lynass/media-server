@@ -5,5 +5,5 @@
     [tag]="tag"
     (deleteEvent)="deleteTag(tag)"
   ></app-search-tag>
-  <input autofocus type="text" [(ngModel)]="input" (keyup.space)="addTag()" (keyup.enter)="addTag()">
+  <input autofocus type="text" [(ngModel)]="input" (keydown.space)="addTag()" (keyup.enter)="addTag()">
 </mat-card>

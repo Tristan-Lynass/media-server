@@ -7,7 +7,7 @@ import { VirtualScrollerComponent } from 'ngx-virtual-scroller';
   styleUrls: ['./search-result-table.component.scss']
 })
 export class SearchResultTableComponent   {
-  items = new Array(100).fill('https://picsum.photos/300/300');
+  items = new Array(100).fill('https://picsum.photos/200/200');
 
   @ViewChild(VirtualScrollerComponent)
   private virtualScroller: VirtualScrollerComponent;

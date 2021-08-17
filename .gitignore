@@ -4,7 +4,7 @@ server/.env
 files
 db
 
-.idea/workspace.xml
+.idea/*
 
 **/.DS_Store
 **/Thumbs.db

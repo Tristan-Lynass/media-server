@@ -1,15 +1,47 @@
 :host {
-  .xxx {
-    display: flex;
-    align-items: center;
-    padding: 5px;
+  mat-expansion-panel {
+    width: 400px;
 
-    div {
-      width: 50px;
+    mat-expansion-panel-header {
+      border-bottom: 1px solid #dedede;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+
+      mat-panel-title {
+        align-items: center;
+
+        div {
+          min-width: 80px;
+        }
+      }
     }
 
-    mat-progress-bar {
-      width: 200px;
+    .progress-container {
+      max-height: 300px;
+      overflow-y: scroll;
+
+      .progress-item {
+        font-size: 12px;
+        padding: 8px;
+        border-radius: 2px;
+
+        .progress-info {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        }
+
+        .filename {
+          max-width: 230px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+
+        mat-progress-bar {
+          height: 3px;
+        }
+      }
     }
   }
 }

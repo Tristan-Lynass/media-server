@@ -11,8 +11,7 @@ export class UploadMonitorComponent implements OnInit {
 
   public readonly trackByIdentity = (index: number, item: UploadProgress): string => item.id;
 
-  constructor(readonly xx: SequentialUploadService) {
-    this.xx.getProgress().subscribe(x => console.log(x.length));
+  constructor(readonly uploadService: SequentialUploadService) {
   }
 
   ngOnInit(): void {
@@ -20,11 +19,6 @@ export class UploadMonitorComponent implements OnInit {
 
   isFinished(progress: UploadProgress): boolean {
     return progress.isFinished;
-  }
-
-  fuckme(x: any) {
-    console.log('fuckme', x);
-    return x;
   }
 
 }

@@ -1,25 +1,20 @@
-<!--  <div class="xxx">-->
-<!--    <div>4 / 60</div>-->
-<!--    <mat-progress-bar [value]="20" [bufferValue]="100"></mat-progress-bar>-->
-<!--  </div>-->
-<ng-container *ngIf="xx.getProgress() | async; let progress">
-  <mat-expansion-panel *ngIf="progress.length > 0" style="width:400px;">
+<ng-container *ngIf="uploadService.getProgress() | async; let progress">
+  <mat-expansion-panel *ngIf="progress.length > 0">
     <mat-expansion-panel-header>
-      <mat-panel-title style="align-items: center;">
+      <mat-panel-title>
         <div>{{ progress.filter(isFinished).length }} / {{ progress.length }}</div>
-        <mat-progress-bar [value]="progress.filter(isFinished).length" [bufferValue]="fuckme(progress.length)"></mat-progress-bar>
+        <mat-progress-bar [value]="(progress.filter(isFinished).length / progress.length)*100"></mat-progress-bar>
       </mat-panel-title>
-
     </mat-expansion-panel-header>
 
-    <div style="max-height: 300px; overflow-y: scroll; ">
-      <div *ngFor="let p of progress; trackBy: trackByIdentity">
-        <div style="display: flex; flex-direction: row; justify-content: space-between">
-          <div>{{ p.filename }}</div>
+    <div class="progress-container">
+      <div *ngFor="let p of progress; trackBy: trackByIdentity" class="progress-item">
+        <div class="progress-info">
+          <div class="filename">{{ p.filename }}</div>
           <div>{{ p.percent / 100 | percent:'.0' }}</div>
-          <!--        <div style="width:20px;height:20px;background-color:green" *ngIf="p.isFinished()"></div>-->
+          <!-- <div style="width:20px;height:20px;background-color:green" *ngIf="p.isFinished()"></div>-->
         </div>
-        <mat-progress-bar [value]="p.percent" [bufferValue]="100"></mat-progress-bar>
+        <mat-progress-bar [value]="p.percent"></mat-progress-bar>
 
       </div>
     </div>
