@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { VirtualScrollerComponent } from 'ngx-virtual-scroller';
+import { SearchService } from 'src/app/service/search.service';
 
 @Component({
   selector: 'app-search-result-table',
@@ -11,6 +12,9 @@ export class SearchResultTableComponent   {
 
   @ViewChild(VirtualScrollerComponent)
   private virtualScroller: VirtualScrollerComponent;
+
+  constructor(readonly searchService: SearchService) {
+  }
 
   // call this function after resize + animation end
   afterResize() {
