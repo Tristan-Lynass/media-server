@@ -88,7 +88,7 @@ export class SequentialUploadService {
   private upload(file: File): Observable<HttpEvent<any>> {
     const formData = new FormData();
     formData.append('media', file);
-    return this.http.post('http://localhost:3000/uploads', formData, {
+    return this.http.post('http://localhost:3000/api/uploads', formData, {
       reportProgress: true,
       observe: 'events'
     });

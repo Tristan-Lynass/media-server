@@ -12,27 +12,32 @@ const { v4: uuid } = require('uuid');
 
 const port = 3000
 const db = new sqlite3.Database('data.db', err => err && console.log(err.message))
-const UPLOAD_DIR = 'uploads'
+const UPLOAD_DIR = 'static/uploads'
 const THUMBS_DIR = `${UPLOAD_DIR}/thumbs`
 
-if (!fs.existsSync(UPLOAD_DIR)){
+if (!(fs.existsSync('static'))) {
+  fs.mkdirSync('static')
+}
+
+if (!fs.existsSync(UPLOAD_DIR)) {
   fs.mkdirSync(UPLOAD_DIR)
 }
 
-if (!fs.existsSync(THUMBS_DIR)){
+if (!fs.existsSync(THUMBS_DIR)) {
   fs.mkdirSync(THUMBS_DIR)
 }
 
 
 db.run(sql.initialise)
 
+app.use(express.static(__dirname + '/static'));
 app.use(cors())
 app.use(fileUpload({
   useTempFiles : true,
   tempFileDir : './tmp/'
 }))
 
-app.post('/uploads', async function(req, res) {
+app.post('/api/uploads', async function(req, res) {
   let files = req.files?.media
   if (files == null) {
     return res.status(400).send()
@@ -61,7 +66,7 @@ app.post('/uploads', async function(req, res) {
   res.send()
 })
 
-app.get('/uploads', (req, res) => {
+app.get('/api/uploads', (req, res) => {
   const page = req.query.page
   const size = req.query.size
   if (page == null || size == null) {
