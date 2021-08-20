@@ -3,10 +3,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { BrowserModule } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { UiScrollModule } from 'ngx-ui-scroll';
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
@@ -19,7 +21,7 @@ import { SearchResultsComponent } from 'src/app/component/search-results/search-
 
 import { AppRoutingModule } from './app-routing.module';
 import { FileDropZoneComponent } from './component/file-drop-zone/file-drop-zone.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TagManagementContextMenuComponent } from './component/tag-management-context-menu/tag-management-context-menu.component';
 import { UploadMonitorComponent } from './component/upload-monitor/upload-monitor.component';
 
 @NgModule({
@@ -31,7 +33,8 @@ import { UploadMonitorComponent } from './component/upload-monitor/upload-monito
     ResultItemComponent,
     SearchTagComponent,
     FileDropZoneComponent,
-    UploadMonitorComponent
+    UploadMonitorComponent,
+    TagManagementContextMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -46,9 +49,13 @@ import { UploadMonitorComponent } from './component/upload-monitor/upload-monito
     MatExpansionModule,
     MatDividerModule,
     MatProgressBarModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    // { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } }
+  ],
+  bootstrap: [ AppComponent ]
 })
-export class AppModule { }
+export class AppModule {
+}

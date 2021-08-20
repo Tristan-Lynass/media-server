@@ -46,7 +46,9 @@ export class SearchService {
 
 export class Media {
   readonly thumbnailUrl: string;
-  constructor(readonly id: string, readonly extensions: string) {
+  readonly url: string;
+  constructor(readonly id: string, readonly extension: string) {
     this.thumbnailUrl = `http://localhost:3000/uploads/thumbs/${id}.jpg`;
+    this.url = `http://localhost:3000/uploads/${id}.${extension}`;
   }
 }

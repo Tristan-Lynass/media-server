@@ -1,3 +1,6 @@
-<virtual-scroller #scroll [items]="results" (vsEnd)="onVsEnd($event)">
-  <img *ngFor="let item of scroll.viewPortItems" [attr.src]="item.thumbnailUrl">
+<virtual-scroller #scroll [items]="results" (vsEnd)="onViewportEnd($event)">
+  <img #image
+    *ngFor="let item of scroll.viewPortItems"
+    [attr.src]="item.thumbnailUrl"
+    (contextmenu)="onRightClick(item, $event)">
 </virtual-scroller>
