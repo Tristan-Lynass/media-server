@@ -35,11 +35,6 @@ export class SearchResultTableComponent implements OnDestroy {
     });
   }
 
-  // call this function after resize + animation end
-  // afterResize() {
-  //   this.virtualScroller.refresh();
-  // }
-
   public onVsEnd(event: any): void {
     const THRESHHOLD = 25;
 
@@ -58,5 +53,6 @@ export class SearchResultTableComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.destroyed.complete();
   }
 }

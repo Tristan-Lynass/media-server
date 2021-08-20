@@ -42,7 +42,6 @@ export class SearchService {
     return this.xx;
   }
 
-  public loadPage(){}
 }
 
 export class Media {
