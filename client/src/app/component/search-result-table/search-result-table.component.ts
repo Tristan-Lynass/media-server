@@ -27,6 +27,8 @@ export class SearchResultTableComponent implements OnDestroy {
 
   private isLoading = true;
 
+  private finished = false;
+
   constructor(private readonly searchService: SearchService,
               private readonly cd: ChangeDetectorRef,
               private readonly dialog: MatDialog) {
@@ -43,12 +45,16 @@ export class SearchResultTableComponent implements OnDestroy {
   public onViewportEnd(event: IPageInfo): void {
     const THRESHHOLD = 25;
 
-    if (event.endIndex + THRESHHOLD > this.results.length && !this.isLoading) {
+    if (event.endIndex + THRESHHOLD > this.results.length && !this.isLoading && !this.finished) {
 
       this.isLoading = true;
       this.searchService.nextPage().pipe(
         takeUntil(this.destroyed) // fucken review
       ).subscribe(result => {
+        if (result.length < SearchService.CHUNK_SIZE) {
+          this.finished = true;
+        }
+
         this.results = this.results.concat(result);
         this.cd.markForCheck();
         this.isLoading = false;

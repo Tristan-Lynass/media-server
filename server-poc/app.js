@@ -7,6 +7,7 @@ const sql = require('./sql')
 const imageThumbnail = require('image-thumbnail')
 const cors = require('cors')
 const { v4: uuid } = require('uuid');
+const sizeOf = require('image-size');
 
 
 
@@ -28,7 +29,8 @@ if (!fs.existsSync(THUMBS_DIR)) {
 }
 
 
-db.run(sql.initialise)
+db.run(sql.init_media)
+db.run(sql.init_tag)
 
 app.use(express.static(__dirname + '/static'));
 app.use(cors())
@@ -51,14 +53,18 @@ app.post('/api/uploads', async function(req, res) {
     const extension = file.name.split('.').pop()
     const id = uuid()
     const filename = `${id}.${extension}`
-    file.mv(`${UPLOAD_DIR}/${filename}`, async () => {
+    const path = `${UPLOAD_DIR}/${filename}`
+    file.mv(path, async () => {
       // Note: fit != inside(not full 200x200), fill(stretches), contains(letterboxes)
       const options = { width: 200, height: 200, jpegOptions: { force: true, quality: 90 }, fit: 'cover' }
-      const thumbnail = await imageThumbnail(`${UPLOAD_DIR}/${filename}`, options)
+      const thumbnail = await imageThumbnail(path, options)
       fs.writeFile(`${THUMBS_DIR}/${id}.jpg`, thumbnail, () => {
-        db.run(sql.insert, id, extension, file.md5, err => {
-          console.log(err)
-        })
+        const size = file.size;
+        const now = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+
+        sizeOf(path, (err, dim) =>
+            db.run(sql.insert, id, extension, now, dim.width, dim.height, size, file.md5, err => console.log(err))
+        )
       })
     })
   })
