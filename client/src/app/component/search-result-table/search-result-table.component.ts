@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, ViewChild } from '@angular/core';
-import { VirtualScrollerComponent } from 'ngx-virtual-scroller';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SearchService } from 'src/app/service/search.service';
@@ -7,10 +6,10 @@ import { SearchService } from 'src/app/service/search.service';
 @Component({
   selector: 'app-search-result-table',
   templateUrl: './search-result-table.component.html',
-  styleUrls: ['./search-result-table.component.scss'],
+  styleUrls: [ './search-result-table.component.scss' ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SearchResultTableComponent implements OnDestroy  {
+export class SearchResultTableComponent implements OnDestroy {
   // items = new Array(100).fill('https://picsum.photos/200/200');
 
   // @ViewChild(VirtualScrollerComponent)
@@ -20,12 +19,19 @@ export class SearchResultTableComponent implements OnDestroy  {
 
   results = [];
 
-  constructor(readonly searchService: SearchService, cd: ChangeDetectorRef) {
-    this.searchService.findAll().pipe(
+  tags = [];
+
+  private isLoading = true;
+
+  constructor(private readonly searchService: SearchService,
+              private readonly cd: ChangeDetectorRef) {
+    this.isLoading = true;
+    this.searchService.search(this.tags).pipe(
       takeUntil(this.destroyed)
     ).subscribe(result => {
       this.results = result;
-      cd.markForCheck();
+      this.cd.markForCheck();
+      this.isLoading = false;
     });
   }
 
@@ -34,8 +40,21 @@ export class SearchResultTableComponent implements OnDestroy  {
   //   this.virtualScroller.refresh();
   // }
 
-  xxx(event): void {
-    console.log(event);
+  public onVsEnd(event: any): void {
+    const THRESHHOLD = 25;
+
+    if (event.endIndex + THRESHHOLD > this.results.length && !this.isLoading) {
+
+      this.isLoading = true;
+      this.searchService.nextPage().pipe(
+        takeUntil(this.destroyed) // fucken review
+      ).subscribe(result => {
+        this.results = this.results.concat(result);
+        this.cd.markForCheck();
+        this.isLoading = false;
+      });
+    }
+
   }
 
   ngOnDestroy(): void {

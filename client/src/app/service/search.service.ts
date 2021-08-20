@@ -11,17 +11,28 @@ export class SearchService {
   private static readonly CHUNK_SIZE = 100;
 
   private xx: Observable<Media[]>;
+  private page = 0;
 
   constructor(private readonly http: HttpClient) { }
 
-  public findAll(): Observable<Media[]> {
+  public search(tags: string[]): Observable<Media[]> {
+    this.page = 0;
+    return this.getPage();
+  }
+
+  public nextPage(): Observable<Media[]> {
+    this.page++;
+    return this.getPage();
+  }
+
+  private getPage(): Observable<Media[]> {
     // if (this.xx != null) {
     //   this.xx.complete();
     // }
 
     this.xx = this.http.get('http://localhost:3000/api/uploads', {
       params: {
-        page: 0,
+        page: this.page,
         size: SearchService.CHUNK_SIZE
       }
     }).pipe(

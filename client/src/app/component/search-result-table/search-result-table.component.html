@@ -1,3 +1,3 @@
-<virtual-scroller #scroll [items]="results">
+<virtual-scroller #scroll [items]="results" (vsEnd)="onVsEnd($event)">
   <img *ngFor="let item of scroll.viewPortItems" [attr.src]="item.thumbnailUrl">
 </virtual-scroller>

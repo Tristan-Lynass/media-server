@@ -41,3 +41,18 @@ Doing it in Spring Boot will be a better option because it comes with so much op
 
 ### Development notes
 When you're just starting a new project, so you don't lose motivation or steam, just do commits to develop and once you have a 1.0 version of the app, start doing feature branches, and a ticketed approach. I tried the latter from the get-go and all the overhead of Jira tickets and that stuff really bogged me down and I lost motivation.
+
+
+### Infinite + Virtual scrolling grid investigation
+
+#### Requirements
+* Dynamic viewport size support
+* Virtual / recycler scroll capability
+* Infinite scroll
+* Image support
+* Multi-column support
+
+#### Candidates
+* **ngx-ui-scroll**           - This doesn't have obvious support for a grid layout
+* **ngx-infinite-scroll**     - This doesn't support virtual scrolling natively. This is definitely something we could build out, but would be out of scope for an MVP
+* **ngx-virtual-scroller**    - So far this is the *WINNER* as it supports virtual scrolling and a grid layout. The infinite scrolling part is fairly trivial (I hope...)
