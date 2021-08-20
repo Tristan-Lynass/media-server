@@ -41,6 +41,7 @@ export class SearchService {
       map((res: any[]) => res.map(m => new Media(
         m.id,
         m.ext,
+        m.filename,
         DateTime.fromSQL(m.uploadedAt),
         m.width,
         m.height,
@@ -59,6 +60,7 @@ export class Media {
   readonly url: string;
   constructor(readonly id: string,
               readonly extension: string,
+              readonly filename: string,
               readonly uploadedAt: DateTime,
               readonly width: number,
               readonly height: number,

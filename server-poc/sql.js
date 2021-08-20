@@ -2,6 +2,7 @@ module.exports = {
     init_media: `create table if not exists media (
         id text primary key,
         ext text,
+        filename text,
         uploadedAt datetime,
         width integer,
         height integer,

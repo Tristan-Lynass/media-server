@@ -55,4 +55,4 @@ When you're just starting a new project, so you don't lose motivation or steam, 
 #### Candidates
 * **ngx-ui-scroll**           - This doesn't have obvious support for a grid layout
 * **ngx-infinite-scroll**     - This doesn't support virtual scrolling natively. This is definitely something we could build out, but would be out of scope for an MVP
-* **ngx-virtual-scroller**    - So far this is the *WINNER* as it supports virtual scrolling and a grid layout. The infinite scrolling part is fairly trivial (I hope...)
+* **ngx-virtual-scroller**    - So far this is the *WINNER* as it supports virtual scrolling and a grid layout. The infinite scrolling part is fairly trivial. ~~(I hope...)~~ It was

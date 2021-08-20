@@ -58,12 +58,13 @@ app.post('/api/uploads', async function(req, res) {
       // Note: fit != inside(not full 200x200), fill(stretches), contains(letterboxes)
       const options = { width: 200, height: 200, jpegOptions: { force: true, quality: 90 }, fit: 'cover' }
       const thumbnail = await imageThumbnail(path, options)
+      console.log(file);
       fs.writeFile(`${THUMBS_DIR}/${id}.jpg`, thumbnail, () => {
         const size = file.size;
         const now = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
 
         sizeOf(path, (err, dim) =>
-            db.run(sql.insert, id, extension, now, dim.width, dim.height, size, file.md5, err => console.log(err))
+            db.run(sql.insert, id, extension, file.name, now, dim.width, dim.height, size, file.md5, err => console.log(err))
         )
       })
     })
