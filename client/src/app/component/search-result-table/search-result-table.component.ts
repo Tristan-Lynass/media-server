@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { IPageInfo } from 'ngx-virtual-scroller';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SearchBarComponent } from 'src/app/component/search-bar/search-bar.component';
-import { TagManagementContextMenuComponent } from 'src/app/component/tag-management-context-menu/tag-management-context-menu.component';
+import { ManageMediaComponent } from 'src/app/component/tag-management-context-menu/manage-media.component';
 import { Media, SearchService } from 'src/app/service/search.service';
 
 @Component({
@@ -29,9 +30,11 @@ export class SearchResultTableComponent implements OnDestroy {
 
   private finished = false;
 
+  activeMedia: Media = null;
+
   constructor(private readonly searchService: SearchService,
               private readonly cd: ChangeDetectorRef,
-              private readonly dialog: MatDialog) {
+              private readonly bottomSheet: MatBottomSheet) {
     this.isLoading = true;
     this.searchService.search(this.tags).pipe(
       takeUntil(this.destroyed)
@@ -63,11 +66,14 @@ export class SearchResultTableComponent implements OnDestroy {
   }
 
   // TODO: Investigate if performance hit from getting HTMLElement ref this way
-  public onRightClick(media: Media, event: MouseEvent): void {
+  public onClick(media: Media, event: MouseEvent): void {
     event.preventDefault();
-    // const x = image.getBoundingClientRect();
-    // console.log(x);
-    this.dialog.open(TagManagementContextMenuComponent, {
+    this.activeMedia = media;
+    this.bottomSheet.open(ManageMediaComponent, {
+      hasBackdrop: false,
+      data: { media },
+      // panelClass: 'custom-width'
+    }); /*, {
       width: '70%',
       maxWidth: '1200px',
       height: '80%',
@@ -79,7 +85,7 @@ export class SearchResultTableComponent implements OnDestroy {
       //   top: `${x.top + x.height}px`,
       //   left: `${x.left   }px`
       // }
-    });
+    });*/
     // event.target; // spawn a dialog on this, and account for re-size
   }
 

@@ -2,6 +2,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatCardModule } from '@angular/material/card';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
@@ -21,7 +22,7 @@ import { SearchResultsComponent } from 'src/app/component/search-results/search-
 
 import { AppRoutingModule } from './app-routing.module';
 import { FileDropZoneComponent } from './component/file-drop-zone/file-drop-zone.component';
-import { TagManagementContextMenuComponent } from './component/tag-management-context-menu/tag-management-context-menu.component';
+import { ManageMediaComponent } from 'src/app/component/tag-management-context-menu/manage-media.component';
 import { UploadMonitorComponent } from './component/upload-monitor/upload-monitor.component';
 
 @NgModule({
@@ -34,7 +35,7 @@ import { UploadMonitorComponent } from './component/upload-monitor/upload-monito
     SearchTagComponent,
     FileDropZoneComponent,
     UploadMonitorComponent,
-    TagManagementContextMenuComponent
+    ManageMediaComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +51,8 @@ import { UploadMonitorComponent } from './component/upload-monitor/upload-monito
     MatDividerModule,
     MatProgressBarModule,
     HttpClientModule,
-    MatDialogModule
+    MatDialogModule,
+    MatBottomSheetModule
   ],
   providers: [
     // { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } }
