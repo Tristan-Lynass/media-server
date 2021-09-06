@@ -37,3 +37,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .custom-width {
   width: 90%;
 }
+
+.mat-bottom-sheet-container-xlarge, .mat-bottom-sheet-container-large, .mat-bottom-sheet-container-medium {
+  width: 100vw;
+}

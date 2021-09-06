@@ -14,6 +14,6 @@ module.exports = {
         media_id text,
         foreign key(media_id) references media(id)
     );`,
-    insert: `insert into media values (?, ?, ?, ?, ?, ?, ?);`,
+    insert: `insert into media values (?, ?, ?, ?, ?, ?, ?, ?);`,
     getAllByPage: `select * from media limit ?, ?;`
 };

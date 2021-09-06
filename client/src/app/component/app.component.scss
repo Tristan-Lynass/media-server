@@ -5,11 +5,12 @@
   flex-direction: row;
 
   app-search-bar {
-    height: 150px;
+    height: 50px;
     position: absolute;
     left: 0;
     right: 0;
     top: 0;
+    margin: 50px;
   }
 
   app-upload-monitor {

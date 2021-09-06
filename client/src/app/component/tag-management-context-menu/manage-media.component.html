@@ -1,11 +1,15 @@
 <!--<img [src]="media.url">-->
 <div style="display:flex; ">
-  <app-search-bar style="width:100%"></app-search-bar>
-  <div>
-    <div><b>Uploaded At</b>{{media.uploadedAt}}</div>
-    <div><b>Size</b>{{media.size}}</div>
-    <div><b>Dimensions</b>{{media.width + ' x ' + media.height}}</div>
-    <div><b>MD5</b>{{media.md5}}</div>
+  <div style="display:flex; flex-direction: column; padding: 10px;">
+    <div style="font-size: 18px">{{ media.filename }}</div>
+    <table style="font-size: 10px; line-height:12px; margin-top:5px;">
+      <tr><td><b>Uploaded At</b></td><td>{{media.uploadedAt}}</td></tr>
+      <tr><td><b>Size</b></td><td>{{media.size}}</td></tr>
+      <tr><td><b>Dimensions</b></td><td>{{media.width + ' x ' + media.height}}</td></tr>
+      <tr><td><b>MD5</b></td><td>{{media.md5}}</td></tr>
+    </table>
   </div>
+
+  <app-search-bar style="width:100%"></app-search-bar>
 </div>
 <i style="color: greenyellow" class="fas fa-times"></i>
