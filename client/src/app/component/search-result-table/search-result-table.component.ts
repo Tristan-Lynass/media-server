@@ -22,7 +22,7 @@ export class SearchResultTableComponent implements OnDestroy {
 
   tags = []; // FIXME: Watch out for this with subscriptions
 
-  private isLoading = true;
+  isLoading = true;
 
   private finished = false;
 

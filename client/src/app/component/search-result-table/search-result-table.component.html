@@ -4,7 +4,7 @@
     [attr.src]="item.thumbnailUrl"
     (click)="onClick(item, $event)">
 </virtual-scroller>
-<div *ngIf="results.length === 0" id="info">
+<div *ngIf="results.length === 0 && !isLoading" id="info">
   <div *ngif="tags.length !== 0">No results</div>
   <div *ngIf="tags.length === 0" style="display:flex; flex-direction: column">
     <i style="font-size: 100px; margin-bottom: 20px;" class="fa fa-upload"></i>
