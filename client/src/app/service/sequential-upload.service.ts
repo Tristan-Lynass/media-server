@@ -60,6 +60,7 @@ export class SequentialUploadService {
     files.forEach(file => {
       const id = this.queueUpload(file.name);
 
+      // FIXME: Avoid subscriptions in a service. Instead return an observable, and pipe+filter
       this.upload(file).subscribe((event: HttpEvent<any>) => {
         if (event.type === HttpEventType.UploadProgress) {
           // console.log(`Updating ${progress.id}: ${event.loaded} / ${progress.total} = ${100 * (event.loaded / progress.total)}`);

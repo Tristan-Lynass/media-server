@@ -4,11 +4,20 @@
     top: 150px;
     position: absolute;
     bottom: 0;
+
+    img {
+      width: 200px;
+      height: 200px;
+    }
   }
 
-  img {
-    width: 200px;
-    height: 200px;
+  #info {
+    position: absolute;
+    top: 50%;
+    text-align: center;
+    width: 100%;
+    color: white;
+    opacity: 0.7;
   }
 }
 

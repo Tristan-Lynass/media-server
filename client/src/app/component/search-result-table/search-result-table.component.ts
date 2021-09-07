@@ -24,7 +24,7 @@ export class SearchResultTableComponent implements OnDestroy {
 
   results = [];
 
-  tags = [];
+  tags = []; // FIXME: Watch out for this with subscriptions
 
   private isLoading = true;
 
@@ -65,7 +65,6 @@ export class SearchResultTableComponent implements OnDestroy {
     }
   }
 
-  // TODO: Investigate if performance hit from getting HTMLElement ref this way
   public onClick(media: Media, event: MouseEvent): void {
     event.preventDefault();
     this.activeMedia = media;
@@ -73,20 +72,7 @@ export class SearchResultTableComponent implements OnDestroy {
       hasBackdrop: false,
       data: { media },
       // panelClass: 'custom-width'
-    }); /*, {
-      width: '70%',
-      maxWidth: '1200px',
-      height: '80%',
-      maxHeight: '800px',
-      data: {
-        media
-      }
-      // position: {
-      //   top: `${x.top + x.height}px`,
-      //   left: `${x.left   }px`
-      // }
-    });*/
-    // event.target; // spawn a dialog on this, and account for re-size
+    });
   }
 
   ngOnDestroy(): void {
