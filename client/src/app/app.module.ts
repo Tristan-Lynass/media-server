@@ -10,6 +10,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { BrowserModule } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxFilesizeModule } from 'ngx-filesize';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { UiScrollModule } from 'ngx-ui-scroll';
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
@@ -52,7 +53,8 @@ import { UploadMonitorComponent } from './component/upload-monitor/upload-monito
     MatProgressBarModule,
     HttpClientModule,
     MatDialogModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    NgxFilesizeModule
   ],
   providers: [
     // { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } }
