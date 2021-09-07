@@ -15,10 +15,6 @@ import { Media, SearchService } from 'src/app/service/search.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchResultTableComponent implements OnDestroy {
-  // items = new Array(100).fill('https://picsum.photos/200/200');
-
-  // @ViewChild(VirtualScrollerComponent)
-  // private virtualScroller: VirtualScrollerComponent;
 
   private readonly destroyed = new Subject();
 

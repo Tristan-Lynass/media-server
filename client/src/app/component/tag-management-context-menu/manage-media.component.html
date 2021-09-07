@@ -1,15 +1,15 @@
 <!--<img [src]="media.url">-->
-<div style="display:flex; ">
-  <div style="display:flex; flex-direction: column; padding: 10px;">
+
+  <div style="display:flex; flex-direction: column; padding: 10px;width:100%">
     <div style="font-size: 18px">{{ media.filename }}</div>
-    <table style="font-size: 10px; line-height:12px; margin-top:5px;">
+    <table style="font-size: 10px; line-height:12px; margin-top:5px; width: 300px;">
       <tr><td><b>Uploaded At</b></td><td>{{media.uploadedAt}}</td></tr>
       <tr><td><b>Size</b></td><td>{{media.size}}</td></tr>
       <tr><td><b>Dimensions</b></td><td>{{media.width + ' x ' + media.height}}</td></tr>
       <tr><td><b>MD5</b></td><td>{{media.md5}}</td></tr>
     </table>
+    <app-search-bar style="width:100%;margin-top:5px;"></app-search-bar>
   </div>
 
-  <app-search-bar style="width:100%"></app-search-bar>
-</div>
-<i style="color: black; opacity: 0.5;" class="fa fa-times"></i>
+
+<i style="position: absolute; top: 7px; right: 7px; color: black; opacity: 0.5; font-size:18px;" class="fa fa-times" (click)="bottomSheetRef.dismiss()"></i>

@@ -1,6 +1,11 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { SequentialUploadService } from 'src/app/service/sequential-upload.service';
 
+/**
+ * FIXME: Dragging anything right now triggers this. We want to restrict this to image files for now
+ *
+ * TODO: Investigate using CDK overlay
+ */
 @Component({
   selector: 'app-file-drop-zone',
   templateUrl: './file-drop-zone.component.html',

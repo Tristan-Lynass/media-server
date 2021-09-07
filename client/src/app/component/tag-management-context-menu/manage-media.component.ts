@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Media } from 'src/app/service/search.service';
 
 @Component({
@@ -9,9 +9,10 @@ import { Media } from 'src/app/service/search.service';
 })
 export class ManageMediaComponent implements OnInit {
 
-  media: Media;
+  readonly media: Media;
 
-  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: any) {
+  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) data: any,
+              readonly bottomSheetRef: MatBottomSheetRef<ManageMediaComponent>) {
     this.media = data.media;
   }
 

@@ -1,29 +1,23 @@
 :host {
+  width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-wrap: wrap;
 
-  .container {
+  app-search-tag {
+    padding: 3px;
+  }
+
+  input {
     width: 100%;
-    display: flex;
-    flex-wrap: wrap;
+    background: none;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid aliceblue;
+    transition: .1s;
+    flex: 1; // https://stackoverflow.com/a/47030876
+  }
 
-    app-search-tag {
-      padding:3px;
-    }
-
-    input {
-      width: 100%;
-      background: none;
-      border: none;
-      outline: none;
-      border-bottom: 1px solid aliceblue;
-      transition: .1s;
-      flex: 1; // https://stackoverflow.com/a/47030876
-    }
-
-    input:focus {
-      border-bottom: 1px solid #a2a2a2;
-    }
+  input:focus {
+    border-bottom: 1px solid #a2a2a2;
   }
 }
