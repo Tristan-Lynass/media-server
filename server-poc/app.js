@@ -31,6 +31,7 @@ if (!fs.existsSync(THUMBS_DIR)) {
 
 db.run(sql.init_media)
 db.run(sql.init_tag)
+db.run(sql.init_media_tag)
 
 app.use(express.static(__dirname + '/static'));
 app.use(cors())
@@ -88,6 +89,12 @@ app.get('/api/uploads', (req, res) => {
     }
     res.send( rows )
   })
+})
+
+app.post('api/media/tag', (req, res) => {
+})
+
+app.delete('api/media/tag', (req, res) => {
 })
 
 app.listen(port, () => {
