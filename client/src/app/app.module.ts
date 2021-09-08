@@ -16,8 +16,8 @@ import { UiScrollModule } from 'ngx-ui-scroll';
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 import { AppComponent } from 'src/app/component/app.component';
 import { ResultItemComponent } from 'src/app/component/result-item/result-item.component';
-import { SearchBarComponent } from 'src/app/component/search-bar/search-bar.component';
-import { SearchTagComponent } from 'src/app/component/search-bar/search-tag/search-tag.component';
+import { TagManagerComponent } from 'src/app/component/tag-manager/tag-manager.component';
+import { SearchTagComponent } from 'src/app/component/tag-manager/search-tag/search-tag.component';
 import { SearchResultTableComponent } from 'src/app/component/search-result-table/search-result-table.component';
 import { SearchResultsComponent } from 'src/app/component/search-results/search-results.component';
 
@@ -29,7 +29,7 @@ import { UploadMonitorComponent } from './component/upload-monitor/upload-monito
 @NgModule({
   declarations: [
     AppComponent,
-    SearchBarComponent,
+    TagManagerComponent,
     SearchResultsComponent,
     SearchResultTableComponent,
     ResultItemComponent,

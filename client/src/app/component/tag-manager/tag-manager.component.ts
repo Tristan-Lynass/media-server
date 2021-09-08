@@ -1,11 +1,12 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-search-bar',
-  templateUrl: './search-bar.component.html',
-  styleUrls: ['./search-bar.component.scss']
+  selector: 'app-tag-manager',
+  templateUrl: './tag-manager.component.html',
+  styleUrls: [ './tag-manager.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SearchBarComponent implements OnInit {
+export class TagManagerComponent {
 
   input: string;
 
@@ -13,11 +14,7 @@ export class SearchBarComponent implements OnInit {
 
   constructor(private readonly cd: ChangeDetectorRef) { }
 
-  ngOnInit(): void {
-  }
-
   addTag(): void {
-    // console.log(tag);
     const input = this.input.trim();
     if (input === '') {
       return;
@@ -27,12 +24,13 @@ export class SearchBarComponent implements OnInit {
     this.input = '';
 
     // TODO: update service so that it can re-fetch cache data stuff
+    //
     this.cd.markForCheck();
   }
 
   deleteTag(tag: string): void {
     this.tags.delete(tag);
+    this.cd.markForCheck();
   }
-
 
 }

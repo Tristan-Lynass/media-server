@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { IPageInfo } from 'ngx-virtual-scroller';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { SearchBarComponent } from 'src/app/component/search-bar/search-bar.component';
+import { TagManagerComponent } from 'src/app/component/tag-manager/tag-manager.component';
 import { ManageMediaComponent } from 'src/app/component/tag-management-context-menu/manage-media.component';
 import { Media, SearchService } from 'src/app/service/search.service';
 

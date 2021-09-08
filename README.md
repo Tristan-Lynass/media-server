@@ -2,12 +2,12 @@
 `npm run start`
 
 ### Client POC To Do
-1. Get file upload working (Drag and drop on top the results table)
-    - Send files in form data under (media)
-2. Get results table performing
-    - Dynamic resizing
-    - Infinite scrolling
-    - Virtual scrolling
+1. ~~Get file upload working (Drag and drop on top the results table)~~
+    - ~~Send files in form data under (media)~~
+2. ~~Get results table performing~~
+    - ~~Dynamic resizing~~
+    - ~~Infinite scrolling~~
+    - ~~Virtual scrolling~~
 3. Add feature to cycle through images to manage tags
    - Clicking an image on the results page will open the image full size
    - This page will contain a method of managing tags (undo and redo buttons would be great)
