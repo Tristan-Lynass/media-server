@@ -17,4 +17,21 @@
     opacity: 0;
   }
 
+  .drop-container {
+    padding: 110px 130px;
+    background: rgb(35,38,74);
+    background: linear-gradient( 36deg, #dc760c 0%, #34145f 100%);
+
+    .prompt {
+      border-radius: 3px;
+      border: 2px dashed #ffffff8a;
+      padding: 30px 50px;
+      font-size: 19px;
+      font-weight: 600;
+      color: white;
+      letter-spacing: 1px;
+    }
+
+  }
+
 }

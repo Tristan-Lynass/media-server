@@ -13,7 +13,7 @@ import { SequentialUploadService } from 'src/app/service/sequential-upload.servi
 export class FileDropZoneComponent implements OnDestroy {
 
   lastTarget = null; // https://stackoverflow.com/a/28226022/3616885
-  dropped = false;
+  // dropped = false;
 
   // So we don't capture when the user drags DOM elements
   // Stolen from: https://github.com/georgipeltekov/ngx-file-drop/blob/master/src/ngx-file-drop/ngx-file-drop.component.ts
@@ -41,10 +41,6 @@ export class FileDropZoneComponent implements OnDestroy {
     e.preventDefault();
     e.stopPropagation();
     this.lastTarget = e.target;
-
-    console.log('Drag Enter');
-    console.log(e);
-    // TODO: open overlay with prompt image
   }
 
   @HostListener('window:dragleave', [ '$event' ])
@@ -75,7 +71,7 @@ export class FileDropZoneComponent implements OnDestroy {
     if (files == null || files.length === 0) {
       this.lastTarget = null;
     }
-    this.dropped = true;
+    // this.dropped = true;
     // if (any files validate)
     //   TODO: Change the displayed dialog to the pre-upload dialog
     //    Then from that dialog, you can close to cancel or hit upload / (enter) to start upload

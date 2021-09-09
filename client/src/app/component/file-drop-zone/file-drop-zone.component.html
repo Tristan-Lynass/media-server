@@ -1,5 +1,5 @@
-<div [ngClass]="{'invisible': lastTarget == null}" id="drop-zone">
-  <div style="width:400px; height:400px; background-color: green; color: white" *ngIf="!dropped"><h3>Upload</h3></div>
-  <div style="width: 700px; background-color: antiquewhite;" *ngIf="dropped">help</div>
+<div [class.invisible]="lastTarget == null" id="drop-zone">
+  <div class="drop-container">
+    <div class="prompt">Drop files here</div>
+  </div>
 </div>
-<!-- king of persia, malaga, changia -->
