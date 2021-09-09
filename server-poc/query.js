@@ -10,5 +10,7 @@ module.exports = {
     createTag: `insert into tag values (?, ?);`,
     getAllTagsByMedia: `select t.name from media_tag mt
     join tag t on t.id = mt.tag_id
-    where mt.media_id = ?`
+    where mt.media_id = ?`,
+    getTagUsageCount: `select count(*) c from media_tag where tag_id = ?`,
+    deleteTag: `delete from tag where id = ?`
 }

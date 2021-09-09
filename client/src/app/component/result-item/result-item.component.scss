@@ -1,6 +1,56 @@
 :host {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+
+
   img {
     width: 200px;
     height: 200px;
+    transition: 50ms;
   }
+
+  .tick {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    background: #6eb165; //#50d4ff;
+    border-radius: 12px;
+    display: none;
+    padding: 4px;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    transition: 50ms;
+  }
+
+  &.selected {
+    img {
+      height: 90%;
+      width: 90%;
+    }
+
+    .tick {
+      display: flex;
+    }
+  }
+
+  //.overlay {
+  //  transition: .2s;
+  //}
+  //
+  //&.selected .overlay {
+  //  position: absolute;
+  //  height: 100%;
+  //  width: 100%;
+  //  top: 0;
+  //  left: 0;
+  //  box-sizing: border-box;
+  //  border: 2px solid aqua;
+  //  box-shadow: inset 0px 0px 8px #4cdbfb;
+  //}
 }

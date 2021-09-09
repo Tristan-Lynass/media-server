@@ -120,9 +120,11 @@ app.delete('/api/media/tag', (req, res) => {
     return res.status(400).send()
   }
   db.prepare(query.removeMediaTag).run(mediaId, tagId)
+  const count = db.prepare(query.getTagUsageCount).get(tagId).c
+  if (count === 0) {
+    db.prepare(query.deleteTag).run(tagId)
+  }
   res.send()
-
-  // TODO: Get tag count in media_tag and delete tag if usages = 0
 })
 
 app.listen(port, () => {

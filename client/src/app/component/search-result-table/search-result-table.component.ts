@@ -61,11 +61,24 @@ export class SearchResultTableComponent implements OnDestroy {
 
   public onClick(media: Media, event: MouseEvent): void {
     event.preventDefault();
+    if (this.activeMedia === media) {
+      this.bottomSheet._openedBottomSheetRef.dismiss();
+      this.cd.markForCheck();
+      return;
+    }
+
     this.activeMedia = media;
     this.bottomSheet.open(ManageMediaComponent, {
       hasBackdrop: false,
       data: { media },
       // panelClass: 'custom-width'
+    }).afterDismissed().pipe(
+      takeUntil(this.destroyed)
+    ).subscribe(() => {
+      if (this.bottomSheet._openedBottomSheetRef == null) {
+        this.activeMedia = null;
+        this.cd.markForCheck();
+      }
     });
   }
 
