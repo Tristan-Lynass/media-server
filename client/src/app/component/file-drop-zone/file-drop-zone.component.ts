@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener } from '@angular/core';
 import { SequentialUploadService } from 'src/app/service/sequential-upload.service';
 
 /**
@@ -9,7 +9,8 @@ import { SequentialUploadService } from 'src/app/service/sequential-upload.servi
 @Component({
   selector: 'app-file-drop-zone',
   templateUrl: './file-drop-zone.component.html',
-  styleUrls: [ './file-drop-zone.component.scss' ]
+  styleUrls: [ './file-drop-zone.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FileDropZoneComponent {
 

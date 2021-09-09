@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-search-tag',
   templateUrl: './search-tag.component.html',
-  styleUrls: ['./search-tag.component.scss']
+  styleUrls: ['./search-tag.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchTagComponent implements OnInit {
 

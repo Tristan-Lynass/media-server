@@ -1,10 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { MatDialog } from '@angular/material/dialog';
 import { IPageInfo } from 'ngx-virtual-scroller';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { TagManagerComponent } from 'src/app/component/tag-manager/tag-manager.component';
 import { ManageMediaComponent } from 'src/app/component/tag-management-context-menu/manage-media.component';
 import { Media, SearchService } from 'src/app/service/search.service';
 

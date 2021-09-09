@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { SequentialUploadService } from 'src/app/service/sequential-upload.service';
 import { UploadProgress } from 'src/app/upload-progress';
 
 @Component({
   selector: 'app-upload-monitor',
   templateUrl: './upload-monitor.component.html',
-  styleUrls: [ './upload-monitor.component.scss' ]
+  styleUrls: [ './upload-monitor.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UploadMonitorComponent implements OnInit {
 

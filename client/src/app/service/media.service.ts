@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { Media } from 'src/app/service/search.service';
 
 @Injectable({
@@ -18,22 +18,16 @@ export class MediaService {
   }
 
   // FIXME: https://stackoverflow.com/questions/36208732/angular-2-http-post-is-not-sending-the-request
-  addTag(media: Media, tag: string): void {
-    this.http.post('http://localhost:3000/api/media/tag', { mediaId: media.id, tag }, MediaService.HTTP_OPTIONS)
-      .pipe(
-        catchError(async e => console.log(e))
-      ).subscribe();
+  addTag(media: Media, tag: string): Observable<any> {
+    return this.http.post('http://localhost:3000/api/media/tag', { mediaId: media.id, tag }, MediaService.HTTP_OPTIONS);
   }
 
-  removeTag(media: Media, tag: string): void {
-    this.http.delete('http://localhost:3000/api/media/tag', {
+  removeTag(media: Media, tag: string): Observable<any> {
+    return this.http.delete('http://localhost:3000/api/media/tag', {
         params: {
           mediaId: media.id,
           tag
         }
-      })
-      .pipe(
-        catchError(async e => console.log(e))
-      ).subscribe();
+      });
   }
 }
