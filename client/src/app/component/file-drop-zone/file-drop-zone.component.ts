@@ -1,10 +1,8 @@
-import { ChangeDetectionStrategy, Component, HostListener } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, OnDestroy, Renderer2 } from '@angular/core';
 import { SequentialUploadService } from 'src/app/service/sequential-upload.service';
 
 /**
- * FIXME: Dragging anything right now triggers this. We want to restrict this to image files for now
- *
- * TODO: Investigate using CDK overlay
+ * TODO: Investigate using CDK overlay and clean up...
  */
 @Component({
   selector: 'app-file-drop-zone',
@@ -12,21 +10,40 @@ import { SequentialUploadService } from 'src/app/service/sequential-upload.servi
   styleUrls: [ './file-drop-zone.component.scss' ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FileDropZoneComponent {
+export class FileDropZoneComponent implements OnDestroy {
 
   lastTarget = null; // https://stackoverflow.com/a/28226022/3616885
   dropped = false;
 
-  constructor(private readonly us: SequentialUploadService) {
+  // So we don't capture when the user drags DOM elements
+  // Stolen from: https://github.com/georgipeltekov/ngx-file-drop/blob/master/src/ngx-file-drop/ngx-file-drop.component.ts
+  private isDomDragHappening = false;
+  private readonly removeDragStartListener: () => void;
+  private readonly removeDragEndListener: () => void;
+
+  constructor(private readonly us: SequentialUploadService,
+              renderer: Renderer2) {
+    // These must be done with Renderer2, not HostListener
+    this.removeDragStartListener = renderer.listen('document', 'dragstart', () => {
+      this.isDomDragHappening = true;
+    });
+    this.removeDragEndListener = renderer.listen('document', 'dragend', () => {
+      this.isDomDragHappening = false;
+    });
   }
 
   @HostListener('window:dragenter', [ '$event' ])
   private onDragEnter(e: DragEvent): void {
+    if (this.isDomDragHappening) {
+      return;
+    }
+
     e.preventDefault();
     e.stopPropagation();
     this.lastTarget = e.target;
 
     console.log('Drag Enter');
+    console.log(e);
     // TODO: open overlay with prompt image
   }
 
@@ -67,6 +84,11 @@ export class FileDropZoneComponent {
     console.log(files);
     this.us.uploadAll(Array.from(files));
     this.lastTarget = null;
+  }
+
+  ngOnDestroy(): void {
+    this.removeDragStartListener();
+    this.removeDragEndListener();
   }
 
 }
