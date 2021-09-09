@@ -46,7 +46,8 @@ export class SearchService {
         m.width,
         m.height,
         m.size,
-        m.md5
+        m.md5,
+        new Set(m.tags)
       )))
     );
 
@@ -65,7 +66,8 @@ export class Media {
               readonly width: number,
               readonly height: number,
               readonly size: number,
-              readonly md5: string) {
+              readonly md5: string,
+              readonly tags: Set<string>) {
     this.thumbnailUrl = `http://localhost:3000/uploads/thumbs/${id}.jpg`;
     this.url = `http://localhost:3000/uploads/${id}.${extension}`;
   }

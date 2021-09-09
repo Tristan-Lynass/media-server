@@ -1,18 +1,21 @@
 const express = require('express')
 const app = express()
-const sqlite3 = require('sqlite3')
+const Database = require('better-sqlite3');
 const fs = require('fs')
 const fileUpload = require('express-fileupload')
-const sql = require('./sql')
+const query = require('./query')
 const imageThumbnail = require('image-thumbnail')
 const cors = require('cors')
 const { v4: uuid } = require('uuid');
 const sizeOf = require('image-size');
+const bodyParser = require('body-parser')
+const {addMediaTag} = require("./query");
+
 
 
 
 const port = 3000
-const db = new sqlite3.Database('data.db', err => err && console.log(err.message))
+const db = new Database('data.db', { verbose: console.log });
 const UPLOAD_DIR = 'static/uploads'
 const THUMBS_DIR = `${UPLOAD_DIR}/thumbs`
 
@@ -28,13 +31,12 @@ if (!fs.existsSync(THUMBS_DIR)) {
   fs.mkdirSync(THUMBS_DIR)
 }
 
-
-db.run(sql.init_media)
-db.run(sql.init_tag)
-db.run(sql.init_media_tag)
+const schema = fs.readFileSync('schema.sql', 'utf8');
+db.exec(schema);
 
 app.use(express.static(__dirname + '/static'));
 app.use(cors())
+app.use(bodyParser.json())
 app.use(fileUpload({
   useTempFiles : true,
   tempFileDir : './tmp/'
@@ -65,7 +67,7 @@ app.post('/api/uploads', async function(req, res) {
         const now = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
 
         sizeOf(path, (err, dim) =>
-            db.run(sql.insert, id, extension, file.name, now, dim.width, dim.height, size, file.md5, err => console.log(err))
+            db.prepare(query.insert).run(id, extension, file.name, now, dim.width, dim.height, size, file.md5)
         )
       })
     })
@@ -82,21 +84,41 @@ app.get('/api/uploads', (req, res) => {
   }
 
   const offset = page * size
-  db.all(sql.getAllByPage, offset, size, (err, rows) => {
-    if (err) {
-      console.error(err.message)
-      return res.status(500).send()
-    }
-    res.send( rows )
-  })
+  try {
+    const rows = db.prepare(query.getAllByPage).all(offset, size)
+    return res.send(rows.map(row => {
+      row.tags = db.prepare(query.getAllTagsByMedia).all(row.id).map(r => r.name);
+      return row;
+    }))
+  } catch (e) {
+    console.error(e)
+    return res.status(500).send()
+  }
 })
 
-app.post('api/media/tag', (req, res) => {
+app.post('/api/media/tag', req => {
+  const tag = req.body.tag;
+  const mediaId = req.body.mediaId
+  let tagId = db.prepare(query.getTagId).get(tag)
+  if (tagId == null) {
+    tagId = uuid()
+    db.prepare(query.createTag).run(tagId, tag)
+  }
+  db.prepare(addMediaTag).run(mediaId, tagId)
 })
 
-app.delete('api/media/tag', (req, res) => {
+app.delete('/api/media/tag', (req, res) => {
+  const mediaId = req.query.mediaId
+  const tag = req.query.tag
+  const tagId = db.prepare(query.getTagId).get(tag).id
+  if (tagId == null) {
+    return res.status(400).send()
+  }
+  db.prepare(query.removeMediaTag).run(mediaId, tagId)
+
+  // TODO: Get tag count in media_tag and delete tag if usages = 0
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`Listening at http://localhost:${port}`)
 })

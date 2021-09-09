@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-tag-manager',
@@ -6,7 +6,12 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
   styleUrls: [ './tag-manager.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TagManagerComponent {
+export class TagManagerComponent implements OnInit {
+
+  @Output() added: EventEmitter<string> = new EventEmitter();
+  @Output() deleted: EventEmitter<string> = new EventEmitter();
+
+  @Input() startWith: Set<string>;
 
   input: string;
 
@@ -24,13 +29,18 @@ export class TagManagerComponent {
     this.input = '';
 
     // TODO: update service so that it can re-fetch cache data stuff
-    //
+    this.added.emit(input);
     this.cd.markForCheck();
   }
 
   deleteTag(tag: string): void {
     this.tags.delete(tag);
+    this.deleted.emit(tag);
     this.cd.markForCheck();
+  }
+
+  ngOnInit(): void {
+    this.startWith.forEach(tag => this.tags.add(tag));
   }
 
 }

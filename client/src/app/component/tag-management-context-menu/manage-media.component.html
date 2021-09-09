@@ -7,7 +7,7 @@
     <tr><td><b>Dimensions</b></td><td>{{media.width + ' x ' + media.height}}</td></tr>
     <tr><td><b>MD5</b></td><td>{{media.md5}}</td></tr>
   </table>
-  <app-tag-manager style="width:100%;margin-top:5px;"></app-tag-manager>
+  <app-tag-manager [startWith]="media.tags" (added)="add($event)" (deleted)="remove($event)" style="width:100%;margin-top:5px;"></app-tag-manager>
 </div>
 
 

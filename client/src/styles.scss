@@ -19,6 +19,7 @@ app-search-result-table {
     .scrollable-content {
       display: flex;
       flex-wrap: wrap;
+      align-content: flex-start;
       justify-content: center; /*space-evenly; /*center*/
       flex-grow: 1;
     }
