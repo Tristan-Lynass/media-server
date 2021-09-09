@@ -103,7 +103,9 @@ app.post('/api/media/tag', (req, res) => {
       db.prepare(query.createTag).run(tagId, tag)
     }
 
-    db.prepare(query.addMediaTag).run(mediaId, tagId)
+    if (db.prepare(query.getMediaTag).get(mediaId, tagId) == null) {
+      db.prepare(query.addMediaTag).run(mediaId, tagId)
+    }
     res.send()
   } catch (e) {
     console.error(`Error on adding tag: tag=${tag}, mediaId=${mediaId}, tagId=${tagId}`)
