@@ -85,7 +85,7 @@ export class SearchResultTableComponent implements OnDestroy {
 
     this.bottomSheet.open(ManageMediaComponent, {
       hasBackdrop: false,
-      data: { media: Array.from(this.selectionController.indices()).map(i => this.results[i]) }
+      data: { media: Array.from(this.selectionController.indices()).map(i => this.results[i].media) }
       // panelClass: 'custom-width'
     }).afterDismissed().pipe(
       takeUntil(this.destroyed)

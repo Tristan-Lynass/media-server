@@ -1,5 +1,7 @@
 /**
  * Maintains selected indices state
+ *
+ * TODO: This needs a normalisation pass
  */
 export class SelectionController {
   private start: number | null = null;
@@ -28,11 +30,49 @@ export class SelectionController {
   }
 
   public onShiftClick(index: number): void {
-    // TODO
+    if (this.start === null && this.stop === null) {
+      this.start = index;
+      this.stop = index;
+    } else if (this.start === index && this.stop === index) {
+      this.start = null;
+      this.stop = null;
+    } else if (index < this.start) {
+      for (let i = index; i < this.start; i++) {
+        this.included.delete(i);
+      }
+      this.start = index;
+    } else if (index === this.start) {
+      let nextStart = this.start + 1;
+      while (this.excluded.has(nextStart)) {
+        this.excluded.delete(nextStart);
+        nextStart++;
+      }
+      this.start = nextStart;
+    } else if (index > this.start && index < this.stop) {
+      for (let i = index; i < this.stop; i++) {
+        this.excluded.delete(i);
+      }
+      this.stop = index;
+    } else if (index === this.stop) {
+      let nextStop = this.stop - 1;
+      while (this.excluded.has(nextStop)) {
+        this.excluded.delete(nextStop);
+        nextStop--;
+      }
+      this.stop = nextStop;
+    } else {
+      for (let i = index; i > this.stop; i--) {
+        this.included.delete(i);
+      }
+      this.stop = index;
+    }
   }
 
   public onControlClick(index: number): void {
-    if (this.start === index && this.stop === index) {
+    if (this.start === null && this.stop === null) {
+      this.start = index;
+      this.stop = index;
+    } else if (this.start === index && this.stop === index) {
       this.start = null;
       this.stop = null;
     } else if (this.start === index) {
