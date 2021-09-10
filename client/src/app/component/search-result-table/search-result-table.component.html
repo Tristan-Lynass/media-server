@@ -1,9 +1,9 @@
 <virtual-scroller #scroll [items]="results" (vsEnd)="onViewportEnd($event)">
   <app-result-item #image
     *ngFor="let item of scroll.viewPortItems"
-    [url]="item.thumbnailUrl"
-    (click)="onClick(item, $event)"
-  [class.selected]="item === activeMedia"></app-result-item>
+    [url]="item.media.thumbnailUrl"
+    (click)="onClick(item.index, $event)"
+    [class.selected]="selectionController.isSelected(item.index)"></app-result-item>
 </virtual-scroller>
 <div *ngIf="results.length === 0 && !isLoading" id="info">
   <div *ngif="tags.length !== 0">No results</div>
