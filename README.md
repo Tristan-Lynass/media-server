@@ -1,3 +1,7 @@
+4. SEARCH!
+5. Style the bottom sheet
+6. Fullscreen page
+
 ### Start Client
 `npm run start`
 

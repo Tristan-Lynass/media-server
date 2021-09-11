@@ -13,29 +13,43 @@ import { Media } from 'src/app/service/search.service';
 })
 export class ManageMediaComponent implements OnInit, OnDestroy {
 
-  readonly media: Media;
+  readonly selected: Media[];
 
   private readonly destroyed = new Subject();
+
+  readonly tags: Set<string>;
+
+  readonly size: number;
 
   constructor(@Inject(MAT_BOTTOM_SHEET_DATA) data: any,
               readonly bottomSheetRef: MatBottomSheetRef<ManageMediaComponent>,
               private readonly mediaService: MediaService) {
-    this.media = data.media;
+    this.selected = data.media;
+    // Stolen from https://stackoverflow.com/a/55053125, probably could be improved
+    this.tags = this.selected.map(v => v.tags)
+      .reduce((a, b) => new Set([ ...a ].filter(x => b.has(x))));
+    this.size = this.selected.reduce((size, media) => size + media.size, 0);
   }
 
   ngOnInit(): void {
   }
 
   add(tag: string): void {
-    this.mediaService.addTag(this.media, tag)
+    this.mediaService.addTag(this.selected, tag)
       .pipe(takeUntil(this.destroyed))
-      .subscribe(() => this.media.tags.add(tag));
+      .subscribe(() => {
+        this.selected.forEach(media => media.tags.add(tag));
+        this.tags.add(tag);
+      });
   }
 
   remove(tag: string): void {
-    this.mediaService.removeTag(this.media, tag)
+    this.mediaService.removeTag(this.selected, tag)
       .pipe(takeUntil(this.destroyed))
-      .subscribe(() => this.media.tags.delete(tag));
+      .subscribe(() => {
+        this.selected.forEach(media => media.tags.delete(tag));
+        this.tags.delete(tag);
+      });
   }
 
   ngOnDestroy(): void {

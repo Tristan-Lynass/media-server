@@ -66,13 +66,14 @@ export class SearchResultTableComponent implements OnDestroy {
     console.log(index);
     event.preventDefault();
 
+    // if (this.selectionController.size() === 1 && this.selectionController.isSelected(index)) {
+    //   this.bottomSheet._openedBottomSheetRef.dismiss();
+    //   this.selectionController.onClick(index);
+    //   this.cd.markForCheck();
+    //   return;
+    // }
+
     if (!event.shiftKey && !event.ctrlKey && !event.altKey) {
-      // if (this.selectionController.size() === 1 && this.selectionController.isSelected(index)) {
-      //   this.bottomSheet._openedBottomSheetRef.dismiss();
-      //   this.selectionController.onClick(index);
-      //   this.cd.markForCheck();
-      //   return;
-      // }
       this.selectionController.onClick(index);
     } else if (event.shiftKey) {
       this.selectionController.onShiftClick(index);
