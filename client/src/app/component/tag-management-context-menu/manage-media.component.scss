@@ -21,10 +21,14 @@
       bottom: 0;
       position: absolute;
       display: flex;
-      transform: translateY(50%);
+      margin-left: 50%;
+      transform: translateX(-50%) translateY(50%);
 
       button {
-        margin: 0 10px
+        margin: 0 10px;
+        color: #696969;
+        background-color: white;
+        transition: .1s;
       }
     }
 
@@ -49,7 +53,7 @@
   }
 
   app-tag-manager {
-    padding: 8px 10px;
+    padding: 14px 20px;
     box-sizing: border-box;
     margin-top: 16px;
     width:100%;
