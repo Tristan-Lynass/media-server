@@ -63,7 +63,6 @@ export class SearchResultTableComponent implements OnDestroy {
 
   // FIXME: This is whole method is pre dodge, probably worth while *trying* to clean up once this feature works
   public onClick(index: number, event: MouseEvent): void {
-    console.log(index);
     event.preventDefault();
 
     // if (this.selectionController.size() === 1 && this.selectionController.isSelected(index)) {

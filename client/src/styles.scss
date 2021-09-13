@@ -44,3 +44,31 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-bottom-sheet-container {
   padding: 0 !important;
 }
+
+button {
+  &.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  &.icon-xlarge {
+
+  }
+
+  &.icon-large {
+
+  }
+
+  &.icon-med {
+    font-size: large;
+  }
+
+  &.icon-small {
+
+  }
+
+  &.icon-white {
+    color: white;
+  }
+}

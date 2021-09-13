@@ -26,8 +26,15 @@ export class ManageMediaComponent implements OnInit, OnDestroy {
               private readonly mediaService: MediaService) {
     this.selected = data.media;
     // Stolen from https://stackoverflow.com/a/55053125, probably could be improved
-    this.tags = this.selected.map(v => v.tags)
-      .reduce((a, b) => new Set([ ...a ].filter(x => b.has(x))));
+    if (this.selected.length === 0) {
+      throw new Error();
+    } else if (this.selected.length === 1) {
+      this.tags = this.selected[0].tags;
+    } else {
+      this.tags = this.selected.map(v => v.tags)
+        .reduce((a, b) => new Set([ ...a ].filter(x => b.has(x))));
+    }
+
     this.size = this.selected.reduce((size, media) => size + media.size, 0);
   }
 

@@ -19,6 +19,7 @@ export class SelectionController {
 
   public onClick(index: number): void {
     if (this.start === index && this.stop === index) {
+      // FIXME: What about included?
       this.start = null;
       this.stop = null;
     } else {
@@ -34,6 +35,7 @@ export class SelectionController {
       this.start = index;
       this.stop = index;
     } else if (this.start === index && this.stop === index) {
+      // FIXME: What about included?
       this.start = null;
       this.stop = null;
     } else if (index < this.start) {
@@ -66,6 +68,7 @@ export class SelectionController {
       }
       this.stop = index;
     }
+    console.log(this);
   }
 
   public onControlClick(index: number): void {
@@ -73,6 +76,7 @@ export class SelectionController {
       this.start = index;
       this.stop = index;
     } else if (this.start === index && this.stop === index) {
+      // FIXME: What about included?
       this.start = null;
       this.stop = null;
     } else if (this.start === index) {
@@ -102,6 +106,7 @@ export class SelectionController {
         this.included.add(index);
       }
     }
+    console.log(this);
   }
 
   public isSelected(index: number): boolean {

@@ -94,7 +94,7 @@ app.get('/api/uploads', (req, res) => {
 
 app.post('/api/media/tag', (req, res) => {
   const tag = req.body.tag
-  const mediaId = req.body.mediaId
+  const media = req.body.media
   let tagId
   try {
     tagId = db.prepare(query.getTagId).get(tag)?.id
@@ -103,25 +103,31 @@ app.post('/api/media/tag', (req, res) => {
       db.prepare(query.createTag).run(tagId, tag)
     }
 
-    if (db.prepare(query.getMediaTag).get(mediaId, tagId) == null) {
-      db.prepare(query.addMediaTag).run(mediaId, tagId)
-    }
+    media.forEach(mediaId => {
+      if (db.prepare(query.getMediaTag).get(mediaId, tagId) == null) {
+        db.prepare(query.addMediaTag).run(mediaId, tagId)
+      }
+    })
     res.send()
   } catch (e) {
     console.error(`Error on adding tag: tag=${tag}, mediaId=${mediaId}, tagId=${tagId}`)
     console.error(e)
-    res.status(500).send()
+    return res.status(500).send()
   }
 })
 
 app.delete('/api/media/tag', (req, res) => {
-  const mediaId = req.query.mediaId
+  const media = req.query.media
   const tag = req.query.tag
   const tagId = db.prepare(query.getTagId).get(tag)?.id
   if (tagId == null) {
     return res.status(400).send()
   }
-  db.prepare(query.removeMediaTag).run(mediaId, tagId)
+
+  media.forEach(mediaId => {
+    db.prepare(query.removeMediaTag).run(mediaId, tagId)
+  })
+
   const count = db.prepare(query.getTagUsageCount).get(tagId).c
   if (count === 0) {
     db.prepare(query.deleteTag).run(tagId)
