@@ -19,9 +19,12 @@ export class SelectionController {
 
   public onClick(index: number): void {
     if (this.start === index && this.stop === index) {
-      // FIXME: What about included?
-      this.start = null;
-      this.stop = null;
+      if (this.included.size > 0) {
+        this.included.clear();
+      } else {
+        this.start = null;
+        this.stop = null;
+      }
     } else {
       this.start = index;
       this.stop = index;
@@ -35,9 +38,15 @@ export class SelectionController {
       this.start = index;
       this.stop = index;
     } else if (this.start === index && this.stop === index) {
-      // FIXME: What about included?
-      this.start = null;
-      this.stop = null;
+      if (this.included.size > 0) {
+        const next = Array.from(this.included).pop();
+        this.included.delete(next);
+        this.start = next;
+        this.stop = next;
+      } else {
+        this.start = null;
+        this.stop = null;
+      }
     } else if (index < this.start) {
       for (let i = index; i < this.start; i++) {
         this.included.delete(i);
@@ -76,9 +85,15 @@ export class SelectionController {
       this.start = index;
       this.stop = index;
     } else if (this.start === index && this.stop === index) {
-      // FIXME: What about included?
-      this.start = null;
-      this.stop = null;
+      if (this.included.size > 0) {
+        const next = Array.from(this.included).pop();
+        this.included.delete(next);
+        this.start = next;
+        this.stop = next;
+      } else {
+        this.start = null;
+        this.stop = null;
+      }
     } else if (this.start === index) {
       let nextStart = this.start + 1;
       while (this.excluded.has(nextStart)) {
@@ -130,7 +145,7 @@ export class SelectionController {
     if (this.start === null && this.stop === null) {
       return 0;
     }
-    return (this.stop - this.start) - this.excluded.size + this.included.size;
+    return (this.stop - this.start + 1) - this.excluded.size + this.included.size;
   }
 
   public indices(): Set<number> {

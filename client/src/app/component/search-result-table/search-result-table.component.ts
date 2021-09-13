@@ -65,13 +65,6 @@ export class SearchResultTableComponent implements OnDestroy {
   public onClick(index: number, event: MouseEvent): void {
     event.preventDefault();
 
-    // if (this.selectionController.size() === 1 && this.selectionController.isSelected(index)) {
-    //   this.bottomSheet._openedBottomSheetRef.dismiss();
-    //   this.selectionController.onClick(index);
-    //   this.cd.markForCheck();
-    //   return;
-    // }
-
     if (!event.shiftKey && !event.ctrlKey && !event.altKey) {
       this.selectionController.onClick(index);
     } else if (event.shiftKey) {
@@ -81,19 +74,25 @@ export class SearchResultTableComponent implements OnDestroy {
     } else {
       return; // Meaningless
     }
+
     this.cd.markForCheck();
+
+    if (this.selectionController.size() === 0) {
+      this.bottomSheet._openedBottomSheetRef.dismiss();
+      this.cd.markForCheck();
+      return;
+    }
 
     this.bottomSheet.open(ManageMediaComponent, {
       hasBackdrop: false,
       data: { media: Array.from(this.selectionController.indices()).map(i => this.results[i].media) }
-      // panelClass: 'custom-width'
     }).afterDismissed().pipe(
       takeUntil(this.destroyed)
     ).subscribe(() => {
-      // if (this.bottomSheet._openedBottomSheetRef == null) {
-      //   this.selectionController.clear();
-      //   this.cd.markForCheck();
-      // }
+      if (this.bottomSheet._openedBottomSheetRef == null) {
+        this.selectionController.clear();
+        this.cd.markForCheck();
+      }
     });
   }
 
