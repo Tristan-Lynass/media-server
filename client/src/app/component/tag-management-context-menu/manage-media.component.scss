@@ -6,28 +6,58 @@
   .header {
     width: 100%;
     //background-color: black;
-    background: linear-gradient( 36deg, #dc760c 0%, #34145f 100%);
+    background: linear-gradient(36deg, #dc760c 0%, #34145f 100%);
     font-family: 'Ubuntu Mono', monospace;
     display: flex;
     color: white;
-    padding: 12px 16px;
+    padding: 6px 16px;
     justify-content: space-between;
     box-sizing: border-box;
+    align-items: baseline;
+    position: relative;
+    padding-bottom: 15px;
+
+    .actions {
+      bottom: 0;
+      position: absolute;
+      display: flex;
+      transform: translateY(50%);
+
+      button {
+        margin: 0 10px
+      }
+    }
 
     .file-name {
       font-size: 20px;
       font-weight: 700;
+      align-items: baseline;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .file-size {
+      min-width: 100px;
+      margin-left: 10px;
+      font-size: 14px;
     }
 
     .close-btn {
-      font-size:18px;
-      //opacity: 0.5;
-      cursor: pointer;
+      margin-left: auto;
     }
   }
 
   app-tag-manager {
     padding: 8px 10px;
     box-sizing: border-box;
+    margin-top: 16px;
+    width:100%;
   }
+
+  .xxx {
+    font-size: 18px;
+    margin-right: 10px;
+  }
+
 }

@@ -1,23 +1,18 @@
 <div class="header">
-  <div>
-    <span class="file-name"> {{ selected.length === 1 ? selected[0].filename : selected.length + ' Selected' }}</span>
-    <span style="margin-left: 10px;font-size: 14px;">{{ size | filesize }}</span>
+
+  <span class="file-name"> {{ selected.length === 1 ? selected[0].filename : selected.length + ' Selected' }}</span>
+  <span class="file-size">{{ size | filesize }}</span>
+
+  <div class="actions">
+    <button mat-mini-fab title="Fullscreen"><i class="fa fa-expand"></i></button>
+    <button mat-mini-fab title="Download"><i class="fa fa-download"></i></button>
+    <button mat-mini-fab title="Favourite"><i class="fa fa-heart"></i></button>
+    <button mat-mini-fab title="Media Info"><i class="fa fa-info-circle"></i></button>
+    <button mat-mini-fab title="Delete"><i class="fa fa-trash"></i></button>
   </div>
 
-  <button class="icon-btn icon-med icon-white" (click)="bottomSheetRef.dismiss()">
+  <button  mat-icon-button  class="close-btn icon-med" (click)="bottomSheetRef.dismiss()">
     <i class="fa fa-times"></i>
   </button>
 </div>
-<app-tag-manager [startWith]="tags" (added)="add($event)" (deleted)="remove($event)" style="width:100%;margin-top:5px;"></app-tag-manager>
-
-<!--<div style="display:flex; flex-direction: column; padding: 10px;width:100%">-->
-<!--  <div style="font-size: 18px">{{ selected.filename }}</div>-->
-<!--  <table style="font-size: 10px; line-height:12px; margin-top:5px; width: 300px;">-->
-<!--    <tr><td><b>Uploaded At</b></td><td>{{selected.uploadedAt}}</td></tr>-->
-<!--    <tr><td><b>Size</b></td><td>{{selected.size | filesize}}</td></tr>-->
-<!--    <tr><td><b>Dimensions</b></td><td>{{selected.width + ' x ' + selected.height}}</td></tr>-->
-<!--    <tr><td><b>MD5</b></td><td>{{selected.md5}}</td></tr>-->
-<!--  </table>-->
-<!--</div>-->
-
-
+<app-tag-manager [startWith]="tags" (added)="add($event)" (deleted)="remove($event)"></app-tag-manager>
