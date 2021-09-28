@@ -8,6 +8,13 @@ create table if not exists media (
     size integer not null,
     md5 text not null
 );
+-- Schema TODO in order of decreasing priority
+-- is_favorite integer not null
+-- is_deleted integer not null
+-- geolocation text (lat, long, alt)
+-- created_at datetime not null (from taken at, else created at, else uploaded_at)
+-- duration real
+-- user_id text not null
 
 create table if not exists tag (
     id text primary key,
