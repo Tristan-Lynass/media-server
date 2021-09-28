@@ -3,16 +3,37 @@
   <span class="file-name"> {{ selected.length === 1 ? selected[0].filename : selected.length + ' Selected' }}</span>
   <span class="file-size">{{ size | filesize }}</span>
 
-  <div class="actions">
-    <button mat-mini-fab title="Fullscreen"><i class="fa fa-expand"></i></button>
-    <button mat-mini-fab title="Download"><i class="fa fa-download"></i></button>
-    <button mat-mini-fab title="Favourite"><i class="fa fa-heart"></i></button>
-    <button mat-mini-fab title="Media Info"><i class="fa fa-info-circle"></i></button>
-    <button mat-mini-fab title="Delete"><i class="fa fa-trash"></i></button>
+  <div class="header-actions">
+    <button mat-icon-button class="more-btn icon-med" [matMenuTriggerFor]="more">
+      <i class="fa fa-ellipsis-v"></i>
+    </button>
+    <button mat-icon-button  class="close-btn icon-med" (click)="bottomSheetRef.dismiss()">
+      <i class="fa fa-times"></i>
+    </button>
+
+    <!-- TODO: Allow scrolling while this is opened -->
+    <mat-menu #more="matMenu" style="color: black; position: fixed;">
+      <button mat-menu-item>
+        <i class="menu-icon fa fa-download"></i>
+        <span>Download</span>
+      </button>
+      <button mat-menu-item>
+        <i class="menu-icon fa fa-info-circle"></i>
+        <span>More Info</span>
+      </button>
+      <button mat-menu-item>
+        <i class="menu-icon fa fa-trash"></i>
+        <span>Delete</span>
+      </button>
+    </mat-menu>
+
   </div>
 
-  <button  mat-icon-button  class="close-btn icon-med" (click)="bottomSheetRef.dismiss()">
-    <i class="fa fa-times"></i>
-  </button>
 </div>
-<app-tag-manager [startWith]="tags" (added)="add($event)" (deleted)="remove($event)"></app-tag-manager>
+<div class="xxx">
+  <div class="actions">
+    <button mat-mini-fab title="Fullscreen"><i class="fa fa-expand"></i></button>
+    <button mat-mini-fab title="Favourite"><i class="fa fa-heart"></i></button>
+  </div>
+  <app-tag-manager [startWith]="tags" (added)="add($event)" (deleted)="remove($event)"></app-tag-manager>
+</div>
