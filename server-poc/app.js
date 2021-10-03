@@ -6,13 +6,13 @@ const fileUpload = require('express-fileupload')
 const query = require('./query')
 const imageThumbnail = require('image-thumbnail')
 const cors = require('cors')
-const { v4: uuid } = require('uuid')
+const {v4: uuid} = require('uuid')
 const sizeOf = require('image-size')
 const bodyParser = require('body-parser')
 
 
 const port = 3000
-const db = new Database('data.db', { verbose: console.log })
+const db = new Database('data.db', {verbose: console.log})
 const UPLOAD_DIR = 'static/uploads'
 const THUMBS_DIR = `${UPLOAD_DIR}/thumbs`
 
@@ -35,18 +35,18 @@ app.use(express.static(__dirname + '/static'))
 app.use(cors())
 app.use(bodyParser.json())
 app.use(fileUpload({
-  useTempFiles : true,
-  tempFileDir : './tmp/'
+  useTempFiles: true,
+  tempFileDir: './tmp/'
 }))
 
-app.post('/api/uploads', async function(req, res) {
+app.post('/api/uploads', async function (req, res) {
   let files = req.files?.media
   if (files == null) {
     return res.status(400).send()
   }
 
   if (!Array.isArray(files)) {
-    files = [ files ]
+    files = [files]
   }
 
   files.forEach(file => {
@@ -56,14 +56,19 @@ app.post('/api/uploads', async function(req, res) {
     const path = `${UPLOAD_DIR}/${filename}`
     file.mv(path, async () => {
       // Note: fit != inside(not full 200x200), fill(stretches), contains(letterboxes)
-      const options = { width: 200, height: 200, jpegOptions: { force: true, quality: 90 }, fit: 'cover' }
+      const options = {width: 200, height: 200, jpegOptions: {force: true, quality: 90}, fit: 'cover'}
       const thumbnail = await imageThumbnail(path, options)
       fs.writeFile(`${THUMBS_DIR}/${id}.jpg`, thumbnail, () => {
         const size = file.size
         const now = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
 
-        sizeOf(path, (err, dim) =>
-            db.prepare(query.insert).run(id, extension, file.name, now, dim.width, dim.height, size, file.md5)
+        sizeOf(path, (err, dim) => {
+              if (dim == null) {
+                console.log("Failed to upload: " + file.name)
+                return
+              }
+              db.prepare(query.insert).run(id, extension, file.name, now, dim.width, dim.height, size, file.md5)
+            }
         )
       })
     })
