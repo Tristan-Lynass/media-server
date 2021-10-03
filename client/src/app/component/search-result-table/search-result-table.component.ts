@@ -66,10 +66,13 @@ export class SearchResultTableComponent implements OnDestroy {
     event.preventDefault();
 
     if (!event.shiftKey && !event.ctrlKey && !event.altKey) {
+      // console.log('onClick');
       this.selectionController.onClick(index);
     } else if (event.shiftKey) {
+      // console.log('onShiftClick');
       this.selectionController.onShiftClick(index);
     } else if (event.ctrlKey) {
+      // console.log('onControlClick');
       this.selectionController.onControlClick(index);
     } else {
       return; // Meaningless
