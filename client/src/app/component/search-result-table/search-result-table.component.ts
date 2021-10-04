@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { IPageInfo } from 'ngx-virtual-scroller';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { ManageMediaComponent } from 'src/app/component/tag-management-context-menu/manage-media.component';
 import { SelectionController } from 'src/app/selection.controller';
 import { Media, SearchService } from 'src/app/service/search.service';
@@ -30,13 +30,18 @@ export class SearchResultTableComponent implements OnDestroy {
   constructor(private readonly searchService: SearchService,
               private readonly cd: ChangeDetectorRef,
               private readonly bottomSheet: MatBottomSheet) {
-    this.isLoading = true;
-    this.searchService.search(this.tags).pipe(
-      takeUntil(this.destroyed)
+    const original = this.searchService.results();
+
+    original.pipe(
+      // tap(x => console.log('hi')),
+      tap(() => this.isLoading = true),
+      switchMap(x => x),
+      // tap(x => console.log('hi2'))
+      // takeUntil(original)
     ).subscribe(result => {
       this.results = result.map((v, i) => new ResultItem(i, v));
+      this.isLoading = false;
       this.cd.markForCheck();
-      this.isLoading = false; // TODO: Why is this after markForCheck?
     });
   }
 

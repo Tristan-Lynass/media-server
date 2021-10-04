@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DateTime } from 'luxon';
-import { Observable } from 'rxjs';
+import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -11,15 +11,21 @@ export class SearchService {
 
   public static readonly CHUNK_SIZE = 100;
 
-  private xx: Observable<Media[]>;
+  private readonly resultsSubject = new ReplaySubject<Observable<Media[]>>();
   private page = 0;
   private finished = false;
+  private tags = new Set<string>();
 
   constructor(private readonly http: HttpClient) { }
 
-  public search(tags: string[]): Observable<Media[]> {
+  public setTags(tags: Set<string>): void {
     this.page = 0;
-    return this.getPage();
+    this.tags = tags;
+    this.resultsSubject.next(this.getPage());
+  }
+
+  public results(): Observable<Observable<Media[]>> {
+    return this.resultsSubject;
   }
 
   public nextPage(): Observable<Media[]> {
@@ -32,12 +38,20 @@ export class SearchService {
     //   this.xx.complete();
     // }
 
-    this.xx = this.http.get('http://localhost:3000/api/uploads', {
+
+
+    const options = {
       params: {
         page: this.page,
         size: SearchService.CHUNK_SIZE
-      }
-    }).pipe(
+      } as { [key: string]: any }
+    };
+
+    if (this.tags.size > 0) {
+      options.params.tags = Array.from(this.tags);
+    }
+
+    return this.http.get('http://localhost:3000/api/uploads', options).pipe(
       map((res: any[]) => res.map(m => new Media(
         m.id,
         m.ext,
@@ -50,8 +64,6 @@ export class SearchService {
         new Set(m.tags)
       )))
     );
-
-    return this.xx;
   }
 
 }

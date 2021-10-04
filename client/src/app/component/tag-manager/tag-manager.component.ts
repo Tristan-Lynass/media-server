@@ -1,5 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
+/**
+ * TODO: Tweak behaviour of this component when it comes to tag input
+ */
 @Component({
   selector: 'app-tag-manager',
   templateUrl: './tag-manager.component.html',
@@ -8,6 +11,9 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, In
 })
 export class TagManagerComponent implements OnInit {
 
+  /**
+   * Fires when a tag has been added. Emits the actual tag which was added.
+   */
   @Output() added: EventEmitter<string> = new EventEmitter();
   @Output() deleted: EventEmitter<string> = new EventEmitter();
 

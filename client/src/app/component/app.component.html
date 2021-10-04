@@ -36,7 +36,7 @@
       </button>
 
       <mat-card>
-        <app-tag-manager [startWith]="startWith"></app-tag-manager>
+        <app-tag-manager [startWith]="startWith" (added)="add($event)" (deleted)="delete($event)"></app-tag-manager>
       </mat-card>
 
       <button mat-icon-button [matMenuTriggerFor]="sort" class="icon-med">

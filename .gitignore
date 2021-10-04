@@ -2,7 +2,6 @@
 server/dist/
 server/.env
 files
-db
 
 .idea/*
 
