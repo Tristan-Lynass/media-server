@@ -2,6 +2,7 @@
 server/dist/
 server/.env
 files
+store.db
 
 .idea/*
 

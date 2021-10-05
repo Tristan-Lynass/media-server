@@ -19,7 +19,7 @@ export class TagManagerComponent implements OnInit {
 
   @Input() startWith: Set<string>;
 
-  input: string;
+  input = '';
 
   readonly tags: Set<string> = new Set<string>();
 
