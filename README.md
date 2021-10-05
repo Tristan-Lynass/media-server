@@ -1,6 +1,7 @@
-4. SEARCH!
-5. Style the bottom sheet
-6. Fullscreen page
+1. SEARCH!
+3. Re-do the upload component, putting it up near the search bar, either as a badge on the menu hamburger, OR as a standalone button
+4. Fullscreen page
+5. Refine tagging
 
 ### Start Client
 `npm run start`

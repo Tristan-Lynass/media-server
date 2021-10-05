@@ -2,7 +2,6 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
@@ -56,7 +55,6 @@ import { UploadMonitorComponent } from './component/upload-monitor/upload-monito
     MatProgressBarModule,
     HttpClientModule,
     MatDialogModule,
-    MatBottomSheetModule,
     NgxFilesizeModule,
     MatButtonModule,
     MatMenuModule,

@@ -1,9 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { IPageInfo } from 'ngx-virtual-scroller';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ManageMediaComponent } from 'src/app/component/tag-management-context-menu/manage-media.component';
 import { SelectionController } from 'src/app/selection.controller';
 import { Media, SearchService } from 'src/app/service/search.service';
 
@@ -27,9 +25,10 @@ export class SearchResultTableComponent implements OnDestroy {
 
   readonly selectionController = new SelectionController();
 
+  selectedMedia: Media[] = [];
+
   constructor(private readonly searchService: SearchService,
-              private readonly cd: ChangeDetectorRef,
-              private readonly bottomSheet: MatBottomSheet) {
+              private readonly cd: ChangeDetectorRef) {
     this.isLoading = true;
     this.searchService.search(this.tags).pipe(
       takeUntil(this.destroyed)
@@ -81,22 +80,19 @@ export class SearchResultTableComponent implements OnDestroy {
     this.cd.markForCheck();
 
     if (this.selectionController.size() === 0) {
-      this.bottomSheet._openedBottomSheetRef.dismiss();
+      this.selectedMedia = [];
       this.cd.markForCheck();
       return;
     }
 
-    this.bottomSheet.open(ManageMediaComponent, {
-      hasBackdrop: false,
-      data: { media: Array.from(this.selectionController.indices()).map(i => this.results[i].media) }
-    }).afterDismissed().pipe(
-      takeUntil(this.destroyed)
-    ).subscribe(() => {
-      if (this.bottomSheet._openedBottomSheetRef == null) {
-        this.selectionController.clear();
-        this.cd.markForCheck();
-      }
-    });
+    this.selectedMedia = Array.from(this.selectionController.indices()).map(i => this.results[i].media);
+
+  }
+
+  onClose(): void {
+    this.selectionController.clear();
+    this.selectedMedia = [];
+    this.cd.markForCheck();
   }
 
   ngOnDestroy(): void {

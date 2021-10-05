@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MediaService } from 'src/app/service/media.service';
@@ -11,21 +10,15 @@ import { Media } from 'src/app/service/search.service';
   styleUrls: [ './manage-media.component.scss' ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ManageMediaComponent implements OnInit, OnDestroy {
+export class ManageMediaComponent implements OnDestroy {
 
-  readonly selected: Media[];
+  // tslint:disable-next-line:variable-name
+  private _selected: Media[];
 
-  private readonly destroyed = new Subject();
-
-  readonly tags: Set<string>;
-
-  readonly size: number;
-
-  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) data: any,
-              readonly bottomSheetRef: MatBottomSheetRef<ManageMediaComponent>,
-              private readonly mediaService: MediaService) {
-    this.selected = data.media;
+  @Input()
+  set selected(selected: Media[]) {
     // Stolen from https://stackoverflow.com/a/55053125, probably could be improved
+    this._selected = selected;
     if (this.selected.length === 0) {
       throw new Error();
     } else if (this.selected.length === 1) {
@@ -38,7 +31,20 @@ export class ManageMediaComponent implements OnInit, OnDestroy {
     this.size = this.selected.reduce((size, media) => size + media.size, 0);
   }
 
-  ngOnInit(): void {
+  get selected(): Media[] {
+    return this._selected;
+  }
+
+  @Output()
+  closed = new EventEmitter();
+
+  private readonly destroyed = new Subject();
+
+  tags: Set<string>;
+
+  size: number;
+
+  constructor(private readonly mediaService: MediaService) {
   }
 
   add(tag: string): void {

@@ -7,7 +7,7 @@
     <button mat-icon-button class="more-btn icon-med" [matMenuTriggerFor]="more">
       <i class="fa fa-ellipsis-v"></i>
     </button>
-    <button mat-icon-button  class="close-btn icon-med" (click)="bottomSheetRef.dismiss()">
+    <button mat-icon-button  class="close-btn icon-med" (click)="closed.emit()">
       <i class="fa fa-times"></i>
     </button>
 
