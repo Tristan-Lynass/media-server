@@ -1,6 +1,14 @@
 package org.tristan.mediaserver.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.Repository;
+import org.tristan.mediaserver.model.User;
 
-public interface UserRepository extends JpaRepository {
+import java.util.Optional;
+import java.util.UUID;
+
+@org.springframework.stereotype.Repository
+public interface UserRepository extends Repository<User, UUID> {
+
+  Optional<User> findDistinctByUsername(String username);
+
 }

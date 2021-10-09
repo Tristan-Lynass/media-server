@@ -30,5 +30,6 @@ create table if not exists media_tag (
 create table if not exists user (
     id text primary key,
     username text not null,
-    password text not null
+    password text not null,
+    is_admin integer not null
 )

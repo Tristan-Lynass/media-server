@@ -10,15 +10,23 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.tristan.mediaserver.repository.UserRepository;
+import org.tristan.mediaserver.service.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
 class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+  private final UserRepository userRepository;
+
+  public SecurityConfiguration(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
+
+
   @Override
   protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-    // authentication manager (see below)
-    auth.
+    auth.userDetailsService(userDetailsService());
   }
 
   @Override
@@ -46,7 +54,7 @@ class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Bean
   @Override
   public UserDetailsService userDetailsService() {
-    return new UserDetailsServiceImpl(credentialRepository);
+    return new UserDetailsServiceImpl(userRepository);
   }
 
 }
