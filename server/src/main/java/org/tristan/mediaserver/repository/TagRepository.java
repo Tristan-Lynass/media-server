@@ -6,6 +6,6 @@ import org.tristan.mediaserver.model.Tag;
 
 import java.util.UUID;
 
-@RepositoryRestResource
+@RepositoryRestResource(path = "tag")
 public interface TagRepository extends JpaRepository<Tag, UUID> {
 }

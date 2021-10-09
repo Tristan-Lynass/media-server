@@ -1,6 +1,9 @@
 
 
 spring:
+  security.user:
+    name: tristan
+    password: password
   flyway:
     table: flyway_schema_history
     locations: classpath:db/migration
@@ -11,10 +14,5 @@ spring:
     driver-class-name: org.sqlite.JDBC
     hibernate:
       dialect: org.sqlite.hibernate.dialect.SQLiteDialect
-#      hbm2ddl.auto: create-drop
-#      show_sql: true
-#  jpa:
-#    database-platform: org.hibernate.dialect.MySQL5Dialect
-#    generate-ddl: true
-#    hibernate.ddl-auto: update
 
+  data.rest.basePath: /api

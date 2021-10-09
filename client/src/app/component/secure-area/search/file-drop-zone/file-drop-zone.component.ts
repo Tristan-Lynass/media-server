@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, HostListener, OnDestroy, Renderer2 } from '@angular/core';
-import { SequentialUploadService } from 'src/app/service/sequential-upload.service';
+import { UploadService } from 'src/app/service/upload.service';
 
 /**
  * TODO: Investigate using CDK overlay and clean up...
@@ -21,7 +21,7 @@ export class FileDropZoneComponent implements OnDestroy {
   private readonly removeDragStartListener: () => void;
   private readonly removeDragEndListener: () => void;
 
-  constructor(private readonly us: SequentialUploadService,
+  constructor(private readonly us: UploadService,
               renderer: Renderer2) {
     // These must be done with Renderer2, not HostListener
     this.removeDragStartListener = renderer.listen('document', 'dragstart', () => {

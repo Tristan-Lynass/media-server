@@ -19,15 +19,20 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { UiScrollModule } from 'ngx-ui-scroll';
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 import { AppComponent } from 'src/app/component/app.component';
-import { ResultItemComponent } from 'src/app/component/result-item/result-item.component';
-import { SearchResultTableComponent } from 'src/app/component/search-result-table/search-result-table.component';
-import { ManageMediaComponent } from 'src/app/component/tag-management-context-menu/manage-media.component';
-import { SearchTagComponent } from 'src/app/component/tag-manager/search-tag/search-tag.component';
-import { TagManagerComponent } from 'src/app/component/tag-manager/tag-manager.component';
+import { FileDropZoneComponent } from 'src/app/component/search/file-drop-zone/file-drop-zone.component';
+import { ResultItemComponent } from 'src/app/component/search/result-item/result-item.component';
+import { SearchResultTableComponent } from 'src/app/component/search/search-result-table/search-result-table.component';
+import { ManageMediaComponent } from 'src/app/component/search/tag-management-context-menu/manage-media.component';
+import { SearchTagComponent } from 'src/app/component/search/tag-manager/search-tag/search-tag.component';
+import { TagManagerComponent } from 'src/app/component/search/tag-manager/tag-manager.component';
+import { UploadMonitorComponent } from 'src/app/component/search/upload-monitor/upload-monitor.component';
 
 import { AppRoutingModule } from './app-routing.module';
-import { FileDropZoneComponent } from './component/file-drop-zone/file-drop-zone.component';
-import { UploadMonitorComponent } from './component/upload-monitor/upload-monitor.component';
+import { MenuDrawerComponent } from './component/menu-drawer/menu-drawer.component';
+import { SearchComponent } from './component/search/search.component';
+import { TagsComponent } from './component/tags/tags.component';
+import { LoginComponent } from './component/login/login.component';
+import { SecureAreaComponent } from './component/secure-area/secure-area.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +43,12 @@ import { UploadMonitorComponent } from './component/upload-monitor/upload-monito
     SearchTagComponent,
     FileDropZoneComponent,
     UploadMonitorComponent,
-    ManageMediaComponent
+    ManageMediaComponent,
+    MenuDrawerComponent,
+    SearchComponent,
+    TagsComponent,
+    LoginComponent,
+    SecureAreaComponent
   ],
   imports: [
     BrowserModule,

@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DateTime } from 'luxon';
-import { Observable, ReplaySubject, Subject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Media } from 'src/app/model/media';
 
 @Injectable({
   providedIn: 'root'
@@ -34,11 +35,6 @@ export class SearchService {
   }
 
   private getPage(): Observable<Media[]> {
-    // if (this.xx != null) {
-    //   this.xx.complete();
-    // }
-
-
 
     const options = {
       params: {
@@ -64,23 +60,5 @@ export class SearchService {
         new Set(m.tags)
       )))
     );
-  }
-
-}
-
-export class Media {
-  readonly thumbnailUrl: string;
-  readonly url: string;
-  constructor(readonly id: string,
-              readonly extension: string,
-              readonly filename: string,
-              readonly uploadedAt: DateTime,
-              readonly width: number,
-              readonly height: number,
-              readonly size: number,
-              readonly md5: string,
-              readonly tags: Set<string>) {
-    this.thumbnailUrl = `http://localhost:3000/uploads/thumbs/${id}.jpg`;
-    this.url = `http://localhost:3000/uploads/${id}.${extension}`;
   }
 }

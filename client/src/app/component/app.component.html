@@ -1,86 +1,9 @@
-<!-- Side Drawer -->
 <mat-drawer-container>
   <mat-drawer #drawer mode="over">
-    <div class="uuuu">
-      <a class="active">
-        <i class="fa fa-search"></i>
-        <div class="title">search</div>
-      </a>
-      <a>
-        <i class="fa fa-tag"></i>
-        <div class="title">tags</div>
-      </a>
-      <a>
-        <i class="fa fa-map-marker"></i>
-        <div class="title">geotemporal</div>
-      </a>
-      <a>
-        <i class="fa fa-clone"></i>
-        <div class="title">duplicates</div>
-      </a>
-      <a>
-        <i class="fa fa-trash"></i>
-        <div class="title">bin</div>
-      </a>
-      <a>
-        <i class="fa fa-cog"></i>
-        <div class="title">settings</div>
-      </a>
-
-      <a style="margin-top: auto ">
-        <i class="fa fa-user" style="border-radius: 50px; background-color: white; color: black;padding: 20px 10px;"></i>
-      </a>
-    </div>
+    <app-menu-drawer></app-menu-drawer>
   </mat-drawer>
   <mat-drawer-content>
+    <router-outlet></router-outlet>
 
-    <div class="yyy">
-      <button mat-icon-button class="icon-med" (click)="drawer.toggle()">
-        <i class="fa fa-bars"></i>
-      </button>
-
-      <mat-card>
-        <app-tag-manager [startWith]="startWith" (added)="add($event)" (deleted)="delete($event)"></app-tag-manager>
-      </mat-card>
-
-      <button mat-icon-button [matMenuTriggerFor]="sort" class="icon-med">
-        <i class="fa fa-sort"></i>
-      </button>
-      <mat-menu #sort="matMenu">
-        <div style="display: flex; flex-direction: column">
-          <mat-button-toggle-group style="margin: auto;" #group="matButtonToggleGroup">
-            <mat-button-toggle value="left">
-              <i class="fa fa-sort-down"></i>
-            </mat-button-toggle>
-            <mat-button-toggle value="center">
-              <i class="fa fa-sort-up"></i>
-            </mat-button-toggle>
-          </mat-button-toggle-group>
-
-          <mat-radio-group style="display: flex; flex-direction: column; font-size: small">
-            <mat-radio-button style="margin: 15px;" *ngFor="let filter of ['Uploaded At', 'Number of Tags']" [value]="filter">
-              {{filter}}
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
-
-      </mat-menu>
-
-      <button mat-icon-button [matMenuTriggerFor]="filters" class="icon-med">
-        <i class="fa fa-filter"></i>
-      </button>
-      <mat-menu #filters="matMenu">
-        <!-- file properties -->
-<!--        favorates, contains, types-->
-        <div></div>
-      </mat-menu>
-
-    </div>
-
-    <app-search-result-table></app-search-result-table>
-
-    <!-- TODO: Use CDK overlay?-->
-    <app-file-drop-zone></app-file-drop-zone>
-    <app-upload-monitor></app-upload-monitor>
   </mat-drawer-content>
 </mat-drawer-container>

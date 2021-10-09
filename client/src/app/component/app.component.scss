@@ -7,41 +7,6 @@
     height: 100%;
     background: none;
 
-    mat-drawer {
-      .uuuu {
-        display: flex;
-        flex-direction: column;
-        background-color: #21374c;
-        color: white;
-        padding-top: 50px;
-        height:100%;
-        box-sizing: border-box;
-
-
-        a {
-          padding: 20px 50px;
-          text-align: center;
-          cursor: pointer;
-          opacity: .7;
-          i {
-            font-size: medium;
-            margin-bottom: 10px;
-          }
-
-          div.title {
-            text-transform: uppercase;
-            font-size: xx-small;
-            letter-spacing: 1px;
-            opacity: 0;
-          }
-        }
-
-        a:hover, a:hover div.title, .active, .active div.title {
-          opacity: 1;
-        }
-      }
-    }
-
     mat-drawer-content {
       display: flex;
       flex-direction: column;

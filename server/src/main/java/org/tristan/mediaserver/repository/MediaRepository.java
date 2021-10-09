@@ -6,6 +6,6 @@ import org.tristan.mediaserver.model.Media;
 
 import java.util.UUID;
 
-@RepositoryRestResource
+@RepositoryRestResource(path = "media")
 public interface MediaRepository extends JpaRepository<Media, UUID> {
 }

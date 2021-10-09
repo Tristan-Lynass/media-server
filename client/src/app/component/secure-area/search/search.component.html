@@ -1,0 +1,48 @@
+<div class="yyy">
+  <button mat-icon-button class="icon-med" (click)="drawer.toggle()">
+    <i class="fa fa-bars"></i>
+  </button>
+
+  <mat-card>
+    <app-tag-manager [startWith]="startWith" (added)="add($event)" (deleted)="delete($event)"></app-tag-manager>
+  </mat-card>
+
+  <button mat-icon-button [matMenuTriggerFor]="sort" class="icon-med">
+    <i class="fa fa-sort"></i>
+  </button>
+  <mat-menu #sort="matMenu">
+    <div style="display: flex; flex-direction: column">
+      <mat-button-toggle-group style="margin: auto;" #group="matButtonToggleGroup">
+        <mat-button-toggle value="left">
+          <i class="fa fa-sort-down"></i>
+        </mat-button-toggle>
+        <mat-button-toggle value="center">
+          <i class="fa fa-sort-up"></i>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <mat-radio-group style="display: flex; flex-direction: column; font-size: small">
+        <mat-radio-button style="margin: 15px;" *ngFor="let filter of ['Uploaded At', 'Number of Tags']" [value]="filter">
+          {{filter}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+  </mat-menu>
+
+  <button mat-icon-button [matMenuTriggerFor]="filters" class="icon-med">
+    <i class="fa fa-filter"></i>
+  </button>
+  <mat-menu #filters="matMenu">
+    <!-- file properties -->
+    <!--        favorates, contains, types-->
+    <div></div>
+  </mat-menu>
+
+</div>
+
+<app-search-result-table></app-search-result-table>
+
+<!-- TODO: Use CDK overlay?-->
+<app-file-drop-zone></app-file-drop-zone>
+<app-upload-monitor></app-upload-monitor>

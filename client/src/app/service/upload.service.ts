@@ -1,13 +1,13 @@
 import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { UploadProgress } from 'src/app/upload-progress';
+import { UploadProgress } from 'src/app/model/upload-progress';
 import { v4 as uuid } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SequentialUploadService {
+export class UploadService {
 
   // Have an observable with an array of requests
   private readonly progress = new BehaviorSubject<UploadProgress[]>([]);

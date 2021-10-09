@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { SequentialUploadService } from 'src/app/service/sequential-upload.service';
+import { UploadService } from 'src/app/service/upload.service';
 import { UploadProgress } from 'src/app/upload-progress';
 
 @Component({
@@ -12,7 +12,7 @@ export class UploadMonitorComponent implements OnInit {
 
   public readonly trackByIdentity = (index: number, item: UploadProgress): string => item.id;
 
-  constructor(readonly uploadService: SequentialUploadService) {
+  constructor(readonly uploadService: UploadService) {
   }
 
   ngOnInit(): void {
