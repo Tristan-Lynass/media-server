@@ -1,5 +1,7 @@
 package org.tristan.mediaserver.service;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -8,9 +10,17 @@ import org.tristan.mediaserver.repository.UserRepository;
 
 import javax.transaction.Transactional;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
+
+  private static final GrantedAuthority USER_AUTHORITY = new SimpleGrantedAuthority("USER_ROLE");
+  private static final GrantedAuthority ADMIN_AUTHORITY = new SimpleGrantedAuthority("ADMIN_ROLE");
 
   private final UserRepository userRepository;
 
@@ -24,6 +34,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     var user = userRepository.findDistinctByUsername(username)
         .orElseThrow(() -> new UsernameNotFoundException("Unable to find user: " + username));
 
-    return new User(username, user.getPassword(), emptyList());
+    var authorities = new ArrayList<>(List.of(USER_AUTHORITY));
+
+    if (user.isAdmin()) {
+      authorities.add(ADMIN_AUTHORITY);
+    }
+
+    return new User(username, user.getPassword(), authorities);
   }
 }

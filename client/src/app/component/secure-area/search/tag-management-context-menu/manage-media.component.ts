@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Media } from 'src/app/model/media';
 import { MediaService } from 'src/app/service/media.service';
-import { Media } from 'src/app/service/search.service';
 
 @Component({
   selector: 'app-manage-media',

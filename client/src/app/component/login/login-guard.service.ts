@@ -3,6 +3,7 @@ import { CanActivate, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { switchMap } from 'rxjs/operators';
+import { SessionService } from 'src/app/service/session.service';
 
 @Injectable({ providedIn: 'root' })
 export class LoginGuardService implements CanActivate {
@@ -14,7 +15,7 @@ export class LoginGuardService implements CanActivate {
   canActivate(): Observable<boolean> {
     return this.sessionService.isLoggedIn$.pipe(
       switchMap(isLoggedIn => isLoggedIn
-        ? fromPromise(this.router.navigate(['secure']))
+        ? fromPromise(this.router.navigate([ 'secure' ]))
         : of(true))
     );
   }

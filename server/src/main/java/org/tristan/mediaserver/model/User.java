@@ -7,49 +7,54 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "user")
+@EntityListeners({PasswordEncoderListener.class})
 public class User {
 
-    @Id
-    @GeneratedValue()
-    private final UUID id;
+  @Id
+  @GeneratedValue()
+  private final UUID id;
 
-    @Column(nullable = false)
-    private final String username;
+  @Column(nullable = false)
+  private final String username;
 
-    @Column(nullable = false)
-    private final String password;
+  @Column(nullable = false)
+  private String password;
 
-    @Column(nullable = false)
-    private final boolean isAdmin;
+  @Column(nullable = false)
+  private final boolean isAdmin;
 
-    protected User() {
-        id = null;
-        username = null;
-        password = null;
-        isAdmin = false;
-    }
+  protected User() {
+    id = null;
+    username = null;
+    password = null;
+    isAdmin = false;
+  }
 
-    public User(String username, String password, Boolean isAdmin) {
-        this.id = null;
-        this.username = username;
-        this.password = password;
-        this.isAdmin = isAdmin;
-    }
+  public User(String username, String password, Boolean isAdmin) {
+    this.id = null;
+    this.username = username;
+    this.password = password;
+    this.isAdmin = isAdmin;
+  }
 
-    public UUID getId() {
-        return id;
-    }
+  public UUID getId() {
+    return id;
+  }
 
-    public String getUsername() {
-        return username;
-    }
+  public String getUsername() {
+    return username;
+  }
 
-    @JsonIgnore
-    public String getPassword() {
-        return password;
-    }
+  @JsonIgnore
+  public String getPassword() {
+    return password;
+  }
 
-    public boolean isAdmin() {
-        return isAdmin;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public boolean isAdmin() {
+    return isAdmin;
+  }
 }

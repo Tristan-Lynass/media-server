@@ -2,8 +2,9 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from
 import { IPageInfo } from 'ngx-virtual-scroller';
 import { Subject } from 'rxjs';
 import { switchMap, takeUntil, tap } from 'rxjs/operators';
+import { Media } from 'src/app/model/media';
 import { SelectionController } from 'src/app/selection.controller';
-import { Media, SearchService } from 'src/app/service/search.service';
+import { SearchService } from 'src/app/service/search.service';
 
 @Component({
   selector: 'app-search-result-table',

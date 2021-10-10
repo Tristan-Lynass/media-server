@@ -9,121 +9,150 @@ import java.util.UUID;
 @Table(name = "media")
 public class Media {
 
-    @Id
-    @GeneratedValue()
-    private final UUID id;
+  @Id
+  @GeneratedValue()
+  private final UUID id;
 
-    @Column(nullable = false)
-    private final String extension;
+  // TODO Setup Media (M) <---> (1) User relationship
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "user_id", nullable = false)
+  private final User user;
 
-    @Column(nullable = false)
-    private final String filename;
+  @Column(nullable = false)
+  private final String extension;
 
-    @Column(nullable = false)
-    private final OffsetDateTime uploadedAt;
+  @Column(nullable = false)
+  private final String filename;
 
-    @Column
-    private final Integer width;
+  @Column(nullable = false)
+  private final OffsetDateTime uploadedAt;
 
-    @Column
-    private final Integer height;
+  @Column
+  private final Integer width;
 
-    @Column(nullable = false)
-    private final Integer size;
+  @Column
+  private final Integer height;
 
-    @Column(nullable = false)
-    private final String md5;
+  @Column(nullable = false)
+  private final Integer size;
 
-    @Column(nullable = false)
-    private final Boolean isFavourite;
+  @Column(nullable = false)
+  private final String md5;
 
-    @Column(nullable = false)
-    private final Boolean isDeleted;
+  @Column(nullable = false)
+  private Boolean favourite;
 
-    @ManyToMany()
-    @JoinTable(name = "media_tag")
-    private final Set<Tag> tags;
+  @Column(nullable = false)
+  private Boolean deleted;
 
-    protected Media() {
-        // Default JPA constructor
-        id = null;
-        extension = null;
-        filename = null;
-        uploadedAt = null;
-        width = null;
-        height = null;
-        size = null;
-        md5 = null;
-        tags = null;
-        isFavourite = null;
-        isDeleted = null;
-    }
+  @Column(nullable = false)
+  private Boolean processed = false;
 
-    public Media(String extension,
-                 String filename,
-                 OffsetDateTime uploadedAt,
-                 Integer width,
-                 Integer height,
-                 Integer size,
-                 String md5,
-                 Boolean isFavourite,
-                 Boolean isDeleted,
-                 Set<Tag> tags) {
-        this.id = null;
-        this.extension = extension;
-        this.filename = filename;
-        this.uploadedAt = uploadedAt;
-        this.width = width;
-        this.height = height;
-        this.size = size;
-        this.md5 = md5;
-        this.isFavourite = isFavourite;
-        this.isDeleted = isDeleted;
-        this.tags = tags;
-    }
+  @ManyToMany()
+  @JoinTable(name = "media_tag")
+  private final Set<Tag> tags;
 
-    public UUID getId() {
-        return id;
-    }
+  protected Media() {
+    // Default JPA constructor
+    id = null;
+    user = null;
+    extension = null;
+    filename = null;
+    uploadedAt = null;
+    width = null;
+    height = null;
+    size = null;
+    md5 = null;
+    tags = null;
+  }
 
-    public String getExtension() {
-        return extension;
-    }
+  public Media(User user,
+               String extension,
+               String filename,
+               OffsetDateTime uploadedAt,
+               Integer width,
+               Integer height,
+               Integer size,
+               String md5,
+               Boolean favourite,
+               Boolean deleted,
+               Set<Tag> tags) {
+    this.id = null;
+    this.user = user;
+    this.extension = extension;
+    this.filename = filename;
+    this.uploadedAt = uploadedAt;
+    this.width = width;
+    this.height = height;
+    this.size = size;
+    this.md5 = md5;
+    this.favourite = favourite;
+    this.deleted = deleted;
+    this.tags = tags;
+  }
 
-    public String getFilename() {
-        return filename;
-    }
+  public UUID getId() {
+    return id;
+  }
 
-    public OffsetDateTime getUploadedAt() {
-        return uploadedAt;
-    }
+  public User getUser() {
+    return user;
+  }
 
-    public Integer getWidth() {
-        return width;
-    }
+  public String getExtension() {
+    return extension;
+  }
 
-    public Integer getHeight() {
-        return height;
-    }
+  public String getFilename() {
+    return filename;
+  }
 
-    public Integer getSize() {
-        return size;
-    }
+  public OffsetDateTime getUploadedAt() {
+    return uploadedAt;
+  }
 
-    public String getMd5() {
-        return md5;
-    }
+  public Integer getWidth() {
+    return width;
+  }
 
-    public Boolean getFavourite() {
-        return isFavourite;
-    }
+  public Integer getHeight() {
+    return height;
+  }
 
-    public Boolean getDeleted() {
-        return isDeleted;
-    }
+  public Integer getSize() {
+    return size;
+  }
 
-    public Set<Tag> getTags() {
-        return tags;
-    }
+  public String getMd5() {
+    return md5;
+  }
+
+  public Boolean isFavourite() {
+    return favourite;
+  }
+
+  public void setFavourite(Boolean favourite) {
+    this.favourite = favourite;
+  }
+
+  public Boolean isDeleted() {
+    return deleted;
+  }
+
+  public void setDeleted(Boolean deleted) {
+    this.deleted = deleted;
+  }
+
+  public Boolean isProcessed() {
+    return processed;
+  }
+
+  public void setProcessed(Boolean processed) {
+    this.processed = processed;
+  }
+
+  public Set<Tag> getTags() {
+    return tags;
+  }
 
 }

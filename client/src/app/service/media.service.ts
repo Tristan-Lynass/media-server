@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Media } from 'src/app/service/search.service';
+import { Media } from 'src/app/model/media';
 
 @Injectable({
   providedIn: 'root'

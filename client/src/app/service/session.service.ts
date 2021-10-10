@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { map, switchMap } from 'rxjs/operators';
 import { isDefined, Nullable } from 'src/app/lang-util';
+import { User } from 'src/app/model/user';
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
@@ -26,7 +27,7 @@ export class SessionService {
 
   }
 
-  public login(username: string, password: string): Observable<User> {
+  public login(username: string, password: string): Observable<boolean> {
     return this.http.post('api/login', '').pipe(
       switchMap(_ => fromPromise(this.router.navigate([ '/secure' ])))
     );

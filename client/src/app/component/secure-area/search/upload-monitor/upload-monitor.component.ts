@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { UploadProgress } from 'src/app/model/upload-progress';
 import { UploadService } from 'src/app/service/upload.service';
-import { UploadProgress } from 'src/app/upload-progress';
 
 @Component({
   selector: 'app-upload-monitor',

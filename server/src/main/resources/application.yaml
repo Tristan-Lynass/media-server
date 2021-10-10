@@ -14,5 +14,11 @@ spring:
     driver-class-name: org.sqlite.JDBC
     hibernate:
       dialect: org.sqlite.hibernate.dialect.SQLiteDialect
-
+  servlet.multipart:
+    enabled: true # Whether to enable support of multipart uploads.
+    file-size-threshold: 0 # Threshold after which files are written to disk. Values can use the suffixes "MB" or "KB" to indicate megabytes or kilobytes, respectively.
+    location: tmp
+#    max-file-size: 1MB # Max file size. Values can use the suffixes "MB" or "KB" to indicate megabytes or kilobytes, respectively.
+#    max-request-size: 10MB # Max request size. Values can use the suffixes "MB" or "KB" to indicate megabytes or kilobytes, respectively.
+    #resolve-lazily: false # Whether to resolve the multipart request lazily at the time of file or parameter access.
   data.rest.basePath: /api

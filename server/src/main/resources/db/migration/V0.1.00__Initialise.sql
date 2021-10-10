@@ -1,5 +1,6 @@
 create table if not exists media (
     id text primary key,
+    user_id text not null references user(id),
     extension text not null,
     filename text not null,
     uploaded_at datetime not null,
@@ -7,8 +8,9 @@ create table if not exists media (
     height integer,
     size integer not null,
     md5 text not null,
-    is_favourite integer not null,
-    is_deleted integer not null
+    favourite integer not null,
+    deleted integer not null,
+    processed integer not null
 );
 -- Schema TODO in order of decreasing priority
 -- geolocation text (lat, long, alt)
@@ -22,7 +24,7 @@ create table if not exists tag (
 );
 
 create table if not exists media_tag (
-    media_id  integer not null references media(id),
+    media_id integer not null references media(id),
     tag_id text not null references tag(id),
     primary key (media_id, tag_id)
 );
