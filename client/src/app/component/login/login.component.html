@@ -1,19 +1,18 @@
-<mat-card id="container">
+<mat-card id="container" [formGroup]="form">
   <h1>Login</h1>
-  <form id="form">
-    <mat-form-field appearance="legacy" color="warn">
-      <mat-label>Username</mat-label>
-      <input autofocus type="text" matInput placeholder="Type your username">
-      <i class="fa fa-user" style="margin: 18px;" matPrefix></i>
-      <mat-error>Username is required</mat-error>
-    </mat-form-field>
 
-    <mat-form-field appearance="legacy" color="warn">
-      <mat-label>Password</mat-label>
-      <input type="password" matInput placeholder="Type your password">
-      <i class="fa fa-lock" style="margin: 18px;" matPrefix></i>
-    </mat-form-field>
+  <mat-form-field appearance="legacy" >
+    <mat-label>Username</mat-label>
+    <input [formControl]="username" autofocus type="text" matInput placeholder="Type your username">
+    <i class="fa fa-user" style="margin: 18px;" matPrefix></i>
+<!--    <mat-error>Username is required</mat-error>-->
+  </mat-form-field>
 
-    <button mat-button>Login</button>
-  </form>
+  <mat-form-field appearance="legacy">
+    <mat-label>Password</mat-label>
+    <input [formControl]="password" type="password" matInput placeholder="Type your password">
+    <i class="fa fa-lock" style="margin: 18px;" matPrefix></i>
+  </mat-form-field>
+
+  <button mat-button>Login</button>
 </mat-card>
