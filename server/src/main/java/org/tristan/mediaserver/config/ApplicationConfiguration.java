@@ -23,7 +23,7 @@ public class ApplicationConfiguration implements ApplicationListener<ContextRefr
     var encoder = context.getBean(PasswordEncoder.class);
 
     tx.execute(status -> {
-      var username = "Admin";
+      var username = "admin";
       if (userRepository.findDistinctByUsername(username).isEmpty()) {
         log.info("Creating default user");
         var defaultUser = new User(username, encoder.encode("admin"), true);

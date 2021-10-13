@@ -6,10 +6,13 @@ import { map } from 'rxjs/operators';
 import { isDefined } from 'src/app/lang-util';
 
 /* https://spring.io/guides/tutorials/spring-security-and-angular-js/ for details */
+/**
+ * If we're not authenticated, we need to get the server to set XSRF-TOKEN by initiating our first interaction with it.
+ */
 @Injectable({ providedIn: 'root' })
 export class XsrfService {
 
-  readonly headerName = 'X-XSRF-TOKEN';
+  // readonly headerName = 'X-XSRF-TOKEN';
 
   constructor(private readonly http: HttpClient,
               private readonly cookie: CookieService) {
@@ -21,8 +24,8 @@ export class XsrfService {
 
   xsrf(): Observable<string> {
     const xsrf = this.token;
-    return isDefined(xsrf)
+    return xsrf?.trim() !== '' ?? false
       ? of(xsrf)
-      : this.http.get('api/xsrf').pipe(map(() => this.token));
+      : this.http.get('/api/xsrf').pipe(map(() => this.token));
   }
 }

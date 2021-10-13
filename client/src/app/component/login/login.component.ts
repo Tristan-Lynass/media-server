@@ -1,20 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { formControl, TypedFormControl } from 'src/app/form';
+import { SessionService } from 'src/app/service/session.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
+
+  private readonly destroyed = new Subject();
 
   readonly form: FormGroup;
 
   readonly username: TypedFormControl<string>;
   readonly password: TypedFormControl<string>;
 
-  constructor(fb: FormBuilder) {
+  constructor(private readonly sessionService: SessionService, fb: FormBuilder) {
     this.form = fb.group({
       username: [ null, [ Validators.required ] ],
       password: [ null, [ Validators.required ] ]
@@ -25,6 +30,19 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  login(): void {
+    if (this.username.valid && this.password.valid) {
+      this.sessionService.login(this.username.value, this.password.value).pipe(
+        takeUntil(this.destroyed)
+      ).subscribe();
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed.next(null);
+    this.destroyed.complete();
   }
 
 }

@@ -20,4 +20,20 @@
 
   }
 
+  .ico {
+    color: #a9a9a9;
+    transition: .05s;
+  }
+
+  .mat-form-field-invalid {
+    .ico {
+      //color: #f44336;
+    }
+  }
+
+  button:hover:active {
+    .ico {
+      color: #21374c; //#21374c 0%, #2d2940 100%)
+    }
+  }
 }
