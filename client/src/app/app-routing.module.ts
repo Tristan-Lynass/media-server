@@ -5,6 +5,7 @@ import { LoginGuardService } from 'src/app/component/login/login-guard.service';
 import { LoginComponent } from 'src/app/component/login/login.component';
 import { SearchComponent } from 'src/app/component/secure-area/search/search.component';
 import { SecureAreaGuardService } from 'src/app/component/secure-area/secure-area-guard.service';
+import { SecureAreaComponent } from 'src/app/component/secure-area/secure-area.component';
 import { TagsComponent } from 'src/app/component/secure-area/tags/tags.component';
 
 const routes: Routes = [
@@ -15,9 +16,10 @@ const routes: Routes = [
   },
   {
     path: 'secure',
-    component: AppComponent, // this is the component with the <router-outlet> in the template
+    component: SecureAreaComponent, // this is the component with the <router-outlet> in the template
     canActivate: [ SecureAreaGuardService ],
     children: [
+      { path: '', redirectTo: 'search', pathMatch: 'full' },
       {
         path: 'search', // child route path
         component: SearchComponent // child route component that the router renders
