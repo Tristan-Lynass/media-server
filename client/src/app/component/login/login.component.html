@@ -1,20 +1,22 @@
 <mat-card id="container" [formGroup]="form">
   <h1>Login</h1>
 
-  <mat-form-field appearance="legacy" >
-    <mat-label>Username</mat-label>
-    <input [formControl]="username" autofocus type="text" matInput placeholder="Type your username">
-    <i class="fa fa-user ico" style="margin: 18px;" matPrefix></i>
-<!--    <mat-error>Username is required</mat-error>-->
-  </mat-form-field>
+  <form>
+    <mat-form-field appearance="legacy" >
+      <mat-label>Username</mat-label>
+      <input [formControl]="username" autofocus type="text" matInput placeholder="Type your username">
+      <i class="fa fa-user ico" style="margin: 18px;" matPrefix></i>
+  <!--    <mat-error>Username is required</mat-error>-->
+    </mat-form-field>
 
-  <mat-form-field appearance="legacy">
-    <mat-label>Password</mat-label>
-    <input [formControl]="password" type="password" matInput placeholder="Type your password">
-    <i class="fa fa-lock ico" style="margin: 18px;" matPrefix></i>
-  </mat-form-field>
+    <mat-form-field appearance="legacy">
+      <mat-label>Password</mat-label>
+      <input [formControl]="password" type="password" matInput placeholder="Type your password">
+      <i class="fa fa-lock ico" style="margin: 18px;" matPrefix></i>
+    </mat-form-field>
 
-  <button mat-flat-button style="background-color: #efefef" (click)="login()">
-    <i style="margin: 15px 60px;font-size: 30px;" class="fa fa-sign-in ico"></i>
-  </button>
+    <button mat-flat-button style="background-color: #efefef" (click)="login()" type="submit">
+      <i style="margin: 15px 60px;font-size: 30px;" class="fa fa-sign-in ico"></i>
+    </button>
+  </form>
 </mat-card>

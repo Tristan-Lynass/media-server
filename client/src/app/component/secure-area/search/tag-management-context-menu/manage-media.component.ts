@@ -12,7 +12,7 @@ import { MediaService } from 'src/app/service/media.service';
 })
 export class ManageMediaComponent implements OnDestroy {
 
-  // tslint:disable-next-line:variable-name
+  // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match
   private _selected: Media[];
 
   @Input()

@@ -3,7 +3,6 @@ package org.tristan.mediaserver.controller;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @RepositoryRestController
 @RequestMapping("/api")
