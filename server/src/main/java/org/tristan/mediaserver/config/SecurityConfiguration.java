@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.tristan.mediaserver.repository.UserRepository;
 import org.tristan.mediaserver.service.UserDetailsServiceImpl;
@@ -47,16 +48,22 @@ class SecurityConfiguration extends WebSecurityConfigurerAdapter {
           .and()
         .formLogin()
           .loginProcessingUrl("/api/login")
-          .usernameParameter("username")
-          .passwordParameter("password")
           .successHandler(successHandler())
           .failureHandler(failureHandler())
           .and()
         .logout()
           .logoutUrl("/api/logout").deleteCookies().invalidateHttpSession(true).clearAuthentication(true)
+          .logoutSuccessHandler(logoutSuccessHandler())
           .and()
         .csrf()
           .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+  }
+
+  private LogoutSuccessHandler logoutSuccessHandler() {
+    return (request, response, authentication) -> {
+      response.getWriter().append("{\"status\":\"OK\"}");
+      response.setStatus(200);
+    };
   }
 
   private AuthenticationSuccessHandler successHandler() {

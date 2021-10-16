@@ -102,6 +102,7 @@ export class SearchResultTableComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.destroyed.next();
     this.destroyed.complete();
   }
 }

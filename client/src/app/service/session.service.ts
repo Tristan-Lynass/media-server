@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { catchError, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { isDefined, Nullable } from 'src/app/lang-util';
 import { User } from 'src/app/model/user';
 import { XsrfService } from 'src/app/service/xsrf.service';
@@ -11,17 +11,18 @@ import { XsrfService } from 'src/app/service/xsrf.service';
 interface Json$User {
   id: string;
   username: string;
-  isAdmin: boolean;
+  admin: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
 
   // Needs to be replay because of Guard services dynamically subscribing on url change
-  private readonly userSubject = new ReplaySubject<Nullable<User>>();
+  private readonly userSubject = new Subject<Nullable<User>>();
 
   readonly isLoggedIn$ = this.userSubject.pipe(
-    map(isDefined)
+    map(isDefined),
+    shareReplay(1)
   );
 
   readonly user$ = this.userSubject.asObservable();
@@ -48,15 +49,18 @@ export class SessionService {
     );
   }
 
-  public logout(): void {
-    this.http.post('/api/logout', '').pipe(
-      switchMap(_ => fromPromise(this.router.navigate([ '/login' ])))
+  public logout(): Observable<boolean> {
+    return this.http.post('/api/logout', '').pipe(
+      // catchError(err => console.log('Could not log out:', err)),
+      tap(() => this.userSubject.next(null)),
+      switchMap(_ => fromPromise(this.router.navigate([ 'login' ])))
     );
   }
 
   private getUser(): Observable<User> {
-    return this.http.get('/api/user').pipe(
-      map((user: Json$User) => new User(user.id, user.username, user.isAdmin))
+    return this.xsrfService.xsrf().pipe(
+      switchMap(() => this.http.get('/api/user')),
+      map((user: Json$User) => new User(user.id, user.username, user.admin))
     );
   }
 

@@ -16,17 +16,20 @@ const routes: Routes = [
   },
   {
     path: 'secure',
-    component: SecureAreaComponent, // this is the component with the <router-outlet> in the template
+    component: SecureAreaComponent,
     canActivate: [ SecureAreaGuardService ],
+    // canActivateChild: [ SecureAreaGuardService ], FIXME: Why doesn't this work?
     children: [
       { path: '', redirectTo: 'search', pathMatch: 'full' },
       {
-        path: 'search', // child route path
-        component: SearchComponent // child route component that the router renders
+        path: 'search',
+        component: SearchComponent,
+        canActivate: [ SecureAreaGuardService ]
       },
       {
         path: 'tags',
-        component: TagsComponent // another child route component that the router renders
+        component: TagsComponent,
+        canActivate: [ SecureAreaGuardService ]
       }
     ]
   },
