@@ -1,7 +1,6 @@
 <div class="yyy">
-  <button mat-icon-button class="icon-med" (click)="drawer.toggle()">
-    <i class="fa fa-bars"></i>
-  </button>
+
+  <app-menu-drawer-toggle></app-menu-drawer-toggle>
 
   <mat-card>
     <app-tag-manager [startWith]="startWith" (added)="add($event)" (deleted)="delete($event)"></app-tag-manager>

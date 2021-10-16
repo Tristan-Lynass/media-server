@@ -20,6 +20,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { UiScrollModule } from 'ngx-ui-scroll';
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 import { AppComponent } from 'src/app/component/app.component';
+import { MenuDrawerToggleComponent } from 'src/app/component/secure-area/menu-drawer-toggle/menu-drawer-toggle.component';
 import { MenuDrawerComponent } from 'src/app/component/secure-area/menu-drawer/menu-drawer.component';
 import { FileDropZoneComponent } from 'src/app/component/secure-area/search/file-drop-zone/file-drop-zone.component';
 import { ResultItemComponent } from 'src/app/component/secure-area/search/result-item/result-item.component';
@@ -49,7 +50,8 @@ import { SecureAreaComponent } from './component/secure-area/secure-area.compone
     SearchComponent,
     TagsComponent,
     LoginComponent,
-    SecureAreaComponent
+    SecureAreaComponent,
+    MenuDrawerToggleComponent
   ],
   imports: [
     BrowserModule,

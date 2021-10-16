@@ -3,6 +3,7 @@ import { CanActivate, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { switchMap } from 'rxjs/operators';
+import { MenuDrawerService } from 'src/app/component/secure-area/menu-drawer/menu-drawer.service';
 import { SessionService } from 'src/app/service/session.service';
 
 @Injectable({ providedIn: 'root' })

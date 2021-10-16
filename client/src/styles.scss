@@ -36,13 +36,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .custom-width {
   width: 90%;
 }
+//
+//.mat-bottom-sheet-container-xlarge, .mat-bottom-sheet-container-large, .mat-bottom-sheet-container-medium {
+//  width: 100vw;
+//}
+//
+//.mat-bottom-sheet-container {
+//  padding: 0 !important;
+//}
 
-.mat-bottom-sheet-container-xlarge, .mat-bottom-sheet-container-large, .mat-bottom-sheet-container-medium {
-  width: 100vw;
-}
-
-.mat-bottom-sheet-container {
-  padding: 0 !important;
+a {
+  text-decoration: none;
+  color: white;
 }
 
 button {

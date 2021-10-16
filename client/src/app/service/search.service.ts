@@ -47,7 +47,7 @@ export class SearchService {
       options.params.tags = Array.from(this.tags);
     }
 
-    return this.http.get('http://localhost:3000/api/uploads', options).pipe(
+    return this.http.get('/api/media', options).pipe(
       map((res: any[]) => res.map(m => new Media(
         m.id,
         m.ext,
