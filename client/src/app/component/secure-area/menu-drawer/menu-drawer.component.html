@@ -23,7 +23,15 @@
   <div class="title">settings</div>
 </a>
 
-<a style="margin-top: auto " (click)="logout()">
-  <i class="fa fa-user" style="border-radius: 50px; background-color: white; color: black;padding: 20px 10px;"></i>
-</a>
+<div style="margin-top: auto" *ngIf="sessionService.user$ | async; let user;">
+  <div style="width: 100%; padding: 10px; box-sizing: border-box; font-size: 12px;">
+    <i class="fa fa-user" *ngIf="!user.isAdmin"></i>
+    <i class="fas fa-user-shield" *ngIf="user.isAdmin"></i> <!-- need to use https://www.npmjs.com/package/@fortawesome/fontawesome-free -->
+    <span>{{user.username | uppercase }}</span>
+  </div>
+  <button mat-button style="width: 100%;" (click)="logout()">
+    <i class="fa fa-sign-out"></i>
+  </button>
+
+</div>
 

@@ -88,8 +88,8 @@ export class UploadService {
 
   private upload(file: File): Observable<HttpEvent<any>> {
     const formData = new FormData();
-    formData.append('media', file);
-    return this.http.post('http://localhost:3000/api/uploads', formData, {
+    formData.append('file', file);
+    return this.http.post('/api/media/upload', formData, {
       reportProgress: true,
       observe: 'events'
     });

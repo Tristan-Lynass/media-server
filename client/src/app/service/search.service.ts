@@ -13,7 +13,7 @@ export class SearchService {
   public static readonly CHUNK_SIZE = 100;
 
   private readonly resultsSubject = new ReplaySubject<Observable<Media[]>>();
-  private page = 0;
+  private page = -1;
   private finished = false;
   private tags = new Set<string>();
 
@@ -48,10 +48,12 @@ export class SearchService {
     }
 
     return this.http.get('/api/media', options).pipe(
-      map((res: any[]) => res.map(m => new Media(
+      map((res: any) => res._embedded.medias.map(m => new Media(
         m.id,
         m.ext,
         m.filename,
+        m.originalFilename,
+        m.thumbnailFilename,
         DateTime.fromSQL(m.uploadedAt),
         m.width,
         m.height,

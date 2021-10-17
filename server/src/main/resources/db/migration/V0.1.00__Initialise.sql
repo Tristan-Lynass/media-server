@@ -2,7 +2,7 @@ create table if not exists media (
     id text primary key,
     user_id text not null references user(id),
     extension text not null,
-    filename text not null,
+    original_filename text not null,
     uploaded_at datetime not null,
     width integer,
     height integer,

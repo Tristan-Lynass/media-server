@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
-import { catchError, map, shareReplay, switchMap, tap } from 'rxjs/operators';
+import { buffer, bufferCount, map, publish, publishReplay, refCount, share, shareReplay, switchMap, takeWhile, tap, withLatestFrom } from 'rxjs/operators';
 import { isDefined, Nullable } from 'src/app/lang-util';
 import { User } from 'src/app/model/user';
 import { XsrfService } from 'src/app/service/xsrf.service';
@@ -18,11 +18,11 @@ interface Json$User {
 export class SessionService {
 
   // Needs to be replay because of Guard services dynamically subscribing on url change
-  private readonly userSubject = new Subject<Nullable<User>>();
+  // Also needs to be replay so late template subscribers can get the latest value
+  private readonly userSubject = new ReplaySubject<Nullable<User>>(1);
 
   readonly isLoggedIn$ = this.userSubject.pipe(
     map(isDefined),
-    shareReplay(1)
   );
 
   readonly user$ = this.userSubject.asObservable();

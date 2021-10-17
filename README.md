@@ -72,3 +72,7 @@ When you're just starting a new project, so you don't lose motivation or steam, 
 * **ngx-file-drop** - So this is a load of crap. No
 * **ngx-dropzone** - Also doesn't work
 Ended up implementing my own.
+
+
+## Research and Best Practices
+- https://github.com/sgoeschl/java-image-processing-survival-guide
