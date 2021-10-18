@@ -9,8 +9,8 @@ spring:
     locations: classpath:db/migration
   datasource:
     url: jdbc:sqlite:store.db
-  #  username:
-  #  password:
+    # Needed or we get "The database file is locked (database is locked)" https://stackoverflow.com/a/13891889/3616885
+    hikari.maximum-pool-size: 1
     driver-class-name: org.sqlite.JDBC
     hibernate:
       dialect: org.sqlite.hibernate.dialect.SQLiteDialect
@@ -24,3 +24,5 @@ spring:
   data.rest.basePath: /api
 
 server.port: 5000
+
+#logging.level.org.hibernate.SQL: DEBUG

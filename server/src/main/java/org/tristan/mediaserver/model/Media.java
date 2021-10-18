@@ -29,7 +29,7 @@ public class Media {
   private final UUID id;
 
   // TODO Setup Media (M) <---> (1) User relationship
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(/*fetch = FetchType.EAGER*/)
   @JoinColumn(name = "user_id", nullable = false)
   private final User user;
 
@@ -43,16 +43,16 @@ public class Media {
   private final OffsetDateTime uploadedAt;
 
   @Column
-  private final Integer width;
+  private Integer width;
 
   @Column
-  private final Integer height;
+  private Integer height;
 
   @Column(nullable = false)
   private final Long size;
 
-  @Column(nullable = false)
-  private final String md5;
+  @Column
+  private String md5;
 
   @Column(nullable = false)
   private Boolean favourite;
@@ -64,40 +64,28 @@ public class Media {
   private Boolean processed;
 
   @ManyToMany()
-  @JoinTable(name = "media_tag")
+  @JoinTable(name = "media_tag",
+      joinColumns = { @JoinColumn(name = "media_id", referencedColumnName = "id") },
+      inverseJoinColumns = { @JoinColumn(name = "tag_id", referencedColumnName = "id") })
   private final Set<Tag> tags;
 
-  public static Example<Media> example(User user, Optional<Set<Tag>> tags) {
-    var media = new Media(user, null, null, null, null, null, null, null, null, null, null, tags.orElse(null));
+  public static Example<Media> example(Optional<Set<Tag>> tags) {
+    var media = new Media(null, null, null, null, null, null, null, null, null, null, true, tags.orElse(null));
     return Example.of(media);
   }
 
-  private static String md5(MultipartFile file) {
-    try {
-      var md = MessageDigest.getInstance("MD5");
-      try (var is = file.getInputStream(); var dis = new DigestInputStream(is, md)) {
-        dis.readAllBytes();
-      }
-      return new String(Hex.encode(md.digest()));
-    } catch (Exception e) {
-      throw new IllegalArgumentException("Unable to calculate md5 digest.", e);
-    }
-  }
-
-  public static Media from(User user, MultipartFile file) throws IOException {
+  public static Media from(User user, MultipartFile file) {
     var originalFilename = requireNonNull(file.getOriginalFilename(), "Filename cannot be blank");
-
-    var buffer = ImageIO.read(file.getInputStream());
 
     return new Media(
         user,
         getFileExtension(originalFilename),
         originalFilename,
         now(),
-        buffer.getWidth(),
-        buffer.getHeight(),
+        null,
+        null,
         file.getSize(),
-        md5(file),
+        null,
         false,
         false,
         false,
@@ -219,4 +207,15 @@ public class Media {
     return tags;
   }
 
+  public void setWidth(Integer width) {
+    this.width = width;
+  }
+
+  public void setHeight(Integer height) {
+    this.height = height;
+  }
+
+  public void setMd5(String md5) {
+    this.md5 = md5;
+  }
 }

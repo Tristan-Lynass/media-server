@@ -10,7 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class FileStorageService {
@@ -41,11 +40,11 @@ public class FileStorageService {
     }
   }
 
-  public Path getRawPath() {
+  public static Path getRawPath() {
     return root.resolve("raw");
   }
 
-  public Path getThumbnailPath(int size) {
+  public static Path getThumbnailPath(int size) {
     return root.resolve("thumbs-" + size);
   }
 

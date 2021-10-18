@@ -8,22 +8,31 @@ import { Media } from 'src/app/model/media';
 })
 export class MediaService {
 
-  private static readonly HTTP_OPTIONS = {
+  private static readonly JSON = {
     headers: new HttpHeaders({
+      'Accept' : 'application/json',
       'Content-Type': 'application/json'
     })
   };
-
+  private static readonly FORM_DATA = {
+    headers: new HttpHeaders({
+      'Content-Type': 'multipart/form-data'
+    })
+  };
   constructor(private readonly http: HttpClient) {
   }
 
   // FIXME: https://stackoverflow.com/questions/36208732/angular-2-http-post-is-not-sending-the-request
   addTag(media: Media[], tag: string): Observable<any> {
-    return this.http.post('http://localhost:3000/api/media/tag', { media: media.map(m => m.id), tag }, MediaService.HTTP_OPTIONS);
+    const data = new FormData()
+    data.set('media', JSON.stringify(media.map(m => m.id)));
+    data.set('tag', tag);
+
+    return this.http.put('/api/media/tag', { media: media.map(m => m.id), tag }, MediaService.FORM_DATA);
   }
 
   removeTag(media: Media[], tag: string): Observable<any> {
-    return this.http.delete('http://localhost:3000/api/media/tag', {
+    return this.http.delete('/api/media/tag', {
         params: {
           media: media.map(m => m.id),
           tag

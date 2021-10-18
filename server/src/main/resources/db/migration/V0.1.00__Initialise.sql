@@ -7,7 +7,7 @@ create table if not exists media (
     width integer,
     height integer,
     size integer not null,
-    md5 text not null,
+    md5 text,
     favourite integer not null,
     deleted integer not null,
     processed integer not null

@@ -1,15 +1,12 @@
 package org.tristan.mediaserver.controller;
 
-import net.coobird.thumbnailator.Thumbnails;
-import net.coobird.thumbnailator.geometry.Positions;
-import net.coobird.thumbnailator.resizers.Resizer;
-import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.security.core.Authentication;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.tristan.mediaserver.model.Media;
@@ -18,20 +15,16 @@ import org.tristan.mediaserver.repository.MediaRepository;
 import org.tristan.mediaserver.repository.UserRepository;
 import org.tristan.mediaserver.service.FileStorageService;
 
-import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.Optional;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
-import static java.awt.Color.WHITE;
-import static java.awt.image.BufferedImage.TYPE_INT_RGB;
+import static java.util.Objects.requireNonNull;
 
 @RepositoryRestController
-@Transactional
 @RequestMapping("/media")
 public class MediaController {
 
@@ -45,59 +38,71 @@ public class MediaController {
 
   private final FileStorageService fileStoreService;
 
+  private final TransactionTemplate tx;
+
   public MediaController(MediaRepository mediaRepository,
                          UserRepository userRepository,
                          EntityManager entityManager,
-                         FileStorageService fileStoreService
-  ) {
+                         FileStorageService fileStoreService,
+                         TransactionTemplate tx) {
     this.mediaRepository = mediaRepository;
     this.userRepository = userRepository;
     this.entityManager = entityManager;
     this.fileStoreService = fileStoreService;
+    this.tx = tx;
   }
 
-  @GetMapping("/search")
-  public Page<Media> search(Pageable pageable, Authentication authentication, @PathVariable Optional<Set<Tag>> tags) {
+//  @Transactional
+//  @PutMapping("tag")
+//  public void addTag(Authentication authentication, @RequestParam List<Media> media) {
+//    var user = userRepository.findDistinctByUsername(authentication.getName())
+//        .orElseThrow(() -> new IllegalStateException("Unable to find current user"));
+//
+//    // media.stream().map(UUID::fromString).collect(toList())
+//    this.mediaRepository.findAllById(media).stream()
+//        .filter(m -> m.getUser().getId().equals(user.getId()))
+//        .forEach(m -> {
+//          m.getTags().add(tag);
+//          mediaRepository.save(m);
+//        });
+//  }
+
+  @Transactional
+  @DeleteMapping("tag")
+  public void deleteTag(Authentication authentication, @PathVariable List<UUID> media, @PathVariable Tag tag) {
     var user = userRepository.findDistinctByUsername(authentication.getName())
         .orElseThrow(() -> new IllegalStateException("Unable to find current user"));
 
+    this.mediaRepository.findAllById(media).stream()
+        .filter(m -> m.getUser().getId().equals(user.getId()))
+        .forEach(m -> {
+          m.getTags().remove(tag);
+          mediaRepository.save(m);
+        });
+  }
 
-    return this.mediaRepository.findAll(Media.example(user, tags), pageable);
+  @Transactional
+  @GetMapping("/search")
+  public @ResponseBody
+  Page<Media> search(Pageable pageable, Authentication authentication, @ModelAttribute("myValuesInRows") List<Tag> tags) {
+    if (tags == null) {
+      return this.mediaRepository.findAllByUserUsername(authentication.getName(), pageable);
+    }
+    return this.mediaRepository.findAllByUserUsernameAndTagsIn(authentication.getName(), new HashSet<>(tags), pageable);
   }
 
   @PostMapping("/upload")
   public void upload(Authentication authentication, @RequestParam("file") MultipartFile file) throws Exception {
-    var user = userRepository.findDistinctByUsername(authentication.getName())
-        .orElseThrow(() -> new IllegalStateException("Unable to find current user"));
 
+    var media = tx.execute(s -> {
+      var user = userRepository.findDistinctByUsername(authentication.getName())
+          .orElseThrow(() -> new IllegalStateException("Unable to find current user"));
+      return this.mediaRepository.save(Media.from(user, file));
+    });
 
-    // TODO: A cool optimisation is to use each subsequent thumbnail generated, to generate the next smaller one
-    var media = this.mediaRepository.save(Media.from(user, file));
-    this.entityManager.flush();
+    requireNonNull(media, file.getOriginalFilename() + " Could not be read!!!!!");
+
     this.fileStoreService.save(file, media.getFilename());
-    var xxxx = Math.min(media.getWidth(), media.getHeight());
-    Thumbnails.of(fileStoreService.getRawPath().resolve(media.getFilename()).toFile())
-        .outputFormat("jpg")
-        .size(192, 192)
-        .outputQuality(1f)
-        .sourceRegion(Positions.CENTER, xxxx, xxxx)
-        .toFile(fileStoreService.getThumbnailPath(192).resolve(media.getThumbnailFilename()).toFile());
-//    this.fileStoreService.saveThumbnail(thumbnailFor(media.getFilename(), 192), media.getThumbnailFilename(), 192);
   }
 
-  private BufferedImage thumbnailFor(String filename, int targetWidth) throws Exception {
-    var image = ImageIO.read(fileStoreService.getRawPath().resolve(filename).toFile());
-    return removeAlpha(Scalr.resize(image, Scalr.Method.ULTRA_QUALITY, Scalr.Mode.FIT_TO_WIDTH, targetWidth));
-  }
-
-  private static BufferedImage removeAlpha(BufferedImage image) {
-    var rgbBufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), TYPE_INT_RGB);
-    var graphics = rgbBufferedImage.createGraphics();
-    graphics.setColor(WHITE);
-    graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
-    graphics.drawImage(image, 0, 0, null);
-    graphics.dispose();
-
-    return rgbBufferedImage;
-  }
 }

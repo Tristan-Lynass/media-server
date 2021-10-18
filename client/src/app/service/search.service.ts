@@ -47,8 +47,8 @@ export class SearchService {
       options.params.tags = Array.from(this.tags);
     }
 
-    return this.http.get('/api/media', options).pipe(
-      map((res: any) => res._embedded.medias.map(m => new Media(
+    return this.http.get('/api/media/search', options).pipe(
+      map((res: any) => res.content.map(m => new Media(
         m.id,
         m.ext,
         m.filename,
