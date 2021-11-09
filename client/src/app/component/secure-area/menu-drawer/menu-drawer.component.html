@@ -1,36 +1,43 @@
-<a routerLink="/secure/search" routerLinkActive="active">
-  <i class="fa fa-search"></i>
-  <div class="title">search</div>
-</a>
-<a routerLink="/secure/tags" routerLinkActive="active">
-  <i class="fa fa-tag"></i>
-  <div class="title">tags</div>
-</a>
-<a>
-  <i class="fa fa-map-marker"></i>
-  <div class="title">geotemporal</div>
-</a>
-<a>
-  <i class="fa fa-clone"></i>
-  <div class="title">duplicates</div>
-</a>
-<a>
-  <i class="fa fa-trash"></i>
-  <div class="title">bin</div>
-</a>
-<a>
-  <i class="fa fa-cog"></i>
-  <div class="title">settings</div>
-</a>
+<div class="logo-container">
+  <h1 class="logo">oolo<b>ng</b>.</h1>
+</div>
 
-<div style="margin-top: auto" *ngIf="sessionService.user$ | async; let user;">
-  <div style="width: 100%; padding: 10px; box-sizing: border-box; font-size: 12px;">
+<div style="display:flex; flex-direction: column;overflow-y: scroll;height:100%;">
+  <a routerLink="/secure/search" routerLinkActive="active">
+    <i class="fa fa-search"></i>
+    <div class="title">search</div>
+  </a>
+  <a routerLink="/secure/tags" routerLinkActive="active">
+    <i class="fa fa-tag"></i>
+    <div class="title">tags</div>
+  </a>
+  <a>
+    <i class="fa fa-map-marker"></i>
+    <div class="title">geotemporal</div>
+  </a>
+  <a>
+    <i class="fa fa-clone"></i>
+    <div class="title">duplicates</div>
+  </a>
+  <a>
+    <i class="fa fa-trash"></i>
+    <div class="title">bin</div>
+  </a>
+  <a>
+    <i class="fa fa-cog"></i>
+    <div class="title">settings</div>
+  </a>
+</div>
+
+
+<div style="margin-top: auto; background-color: #0000002e;" *ngIf="sessionService.user$ | async; let user;">
+  <div style="width: 100%; padding: 10px; box-sizing: border-box; font-size: 27px;">
     <i class="fa fa-user" *ngIf="!user.isAdmin"></i>
-    <i class="fas fa-user-shield" *ngIf="user.isAdmin"></i> <!-- need to use https://www.npmjs.com/package/@fortawesome/fontawesome-free -->
-    <span>{{user.username | uppercase }}</span>
+    <i class="fas fa-user-shield" *ngIf="user.isAdmin"></i>
+    <span style="font-size: 16px; margin-left: 13px;">{{user.username | uppercase }}</span>
   </div>
-  <button mat-button style="width: 100%;" (click)="logout()">
-    <i class="fa fa-sign-out"></i>
+  <button mat-button (click)="logout()" class="logout">
+    <i class="fa fa-sign-out-alt"></i>
   </button>
 
 </div>

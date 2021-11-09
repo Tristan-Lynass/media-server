@@ -76,3 +76,12 @@ Ended up implementing my own.
 
 ## Research and Best Practices
 - https://github.com/sgoeschl/java-image-processing-survival-guide
+
+
+## Name Ideas
+- `#4c3626` and `#d1ead7`
+- Keywords: Tag, Sky, Sea, Media, Server, Sort, Safe, Fast, Search
+- Ideas
+  - Seaside
+  - Save point
+  - Teas - oolong.

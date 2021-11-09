@@ -3,10 +3,9 @@
   flex-direction: column;
   background-color: #21374c;
   color: white;
-  padding-top: 50px;
+  //padding-top: 50px;
   height: 100%;
   box-sizing: border-box;
-
 
   a {
     padding: 20px 50px;
@@ -27,8 +26,37 @@
     }
   }
 
-  a:hover, a:hover div.title, .active, .active div.title {
+  a:hover, a:hover div.title, .active, .active div.title, a:focus, a:focus div.title {
     opacity: 1;
+  }
+
+  a:focus-visible {
+    outline: none;
+  }
+
+  .logo-container {
+    text-align: center;
+    padding: 10px;
+    background-color: #0000002e;
+    color: #ffffff;
+    //background-color: #4cffb5;
+    //color: #4e4d63;
+    //margin-bottom: 30px;
+    //box-shadow: 1px 3px 16px #000000;
+  }
+
+  .logout {
+    background: #0000002e; // Default Colour
+    background: linear-gradient(to left, #0000002e 50%, salmon 50%) right;
+    background-size: 200%;
+    transition: .3s ease-out;
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .logout:hover, .logout:focus {
+    background-position: left;
+    transition: .2s ease-out;
   }
 
 }

@@ -1,5 +1,6 @@
-$fa-font-path: "~font-awesome/fonts";
-@import "~font-awesome/scss/font-awesome.scss";
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+
 
 /* You can add global styles to this file, and also import other style files */
 html, body {
@@ -80,4 +81,41 @@ button {
   .menu-icon {
     margin-right: 15px;
   }
+}
+
+
+
+
+.logo {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300;
+  letter-spacing: 4px
+
+  //
+  //background: #333;
+  //padding: 30px;
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f100;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  opacity: 0;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:not(:hover) {
+  opacity: 1;
+  transition: opacity 1s;
+  background: #555;
 }
