@@ -16,8 +16,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserModule } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxFilesizeModule } from 'ngx-filesize';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { UiScrollModule } from 'ngx-ui-scroll';
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 import { AppComponent } from 'src/app/component/app.component';
 import { MenuDrawerToggleComponent } from 'src/app/component/secure-area/menu-drawer-toggle/menu-drawer-toggle.component';
@@ -57,9 +55,7 @@ import { SecureAreaComponent } from './component/secure-area/secure-area.compone
     BrowserModule,
     MatInputModule,
     AppRoutingModule,
-    InfiniteScrollModule,
     ScrollingModule,
-    UiScrollModule,
     VirtualScrollerModule,
     FormsModule,
     NoopAnimationsModule,
