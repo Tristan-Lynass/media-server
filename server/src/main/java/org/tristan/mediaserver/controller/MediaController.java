@@ -52,20 +52,24 @@ public class MediaController {
     this.tx = tx;
   }
 
-//  @Transactional
-//  @PutMapping("tag")
-//  public void addTag(Authentication authentication, @RequestParam List<Media> media) {
-//    var user = userRepository.findDistinctByUsername(authentication.getName())
-//        .orElseThrow(() -> new IllegalStateException("Unable to find current user"));
-//
-//    // media.stream().map(UUID::fromString).collect(toList())
-//    this.mediaRepository.findAllById(media).stream()
-//        .filter(m -> m.getUser().getId().equals(user.getId()))
-//        .forEach(m -> {
-//          m.getTags().add(tag);
-//          mediaRepository.save(m);
-//        });
-//  }
+  private static class
+
+  // Sent as [1,2,3,4]
+  // https://stackoverflow.com/questions/17560258/pass-array-data-from-javascript-in-browser-to-spring-mvc-controller-using-ajax
+  @Transactional
+  @PutMapping("tag")
+  public void addTag(Authentication authentication, @RequestParam List<Media> media) {
+    var user = userRepository.findDistinctByUsername(authentication.getName())
+        .orElseThrow(() -> new IllegalStateException("Unable to find current user"));
+
+    // media.stream().map(UUID::fromString).collect(toList())
+    this.mediaRepository.findAllById(media).stream()
+        .filter(m -> m.getUser().getId().equals(user.getId()))
+        .forEach(m -> {
+          m.getTags().add(tag);
+          mediaRepository.save(m);
+        });
+  }
 
   @Transactional
   @DeleteMapping("tag")
