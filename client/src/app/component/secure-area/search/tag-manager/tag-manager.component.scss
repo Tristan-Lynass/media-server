@@ -16,6 +16,7 @@
     transition: .1s;
     flex: 1; // https://stackoverflow.com/a/47030876
     height: 24px;
+    min-width: 90px;
   }
 
   input:focus {
