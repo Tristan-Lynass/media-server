@@ -1,0 +1,33 @@
+{
+  "name": "server-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src\\app.js",
+  "scripts": {
+    "start": "node src\\app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.16.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.0",
+    "connect-session-knex": "^3.0.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "express-fileupload": "^1.4.0",
+    "express-session": "^1.17.3",
+    "image-size": "^1.0.1",
+    "image-thumbnail": "^1.0.15",
+    "knex": "^2.1.0",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
+    "pg": "^8.7.3",
+    "validate.js": "^0.13.1"
+  }
+}
