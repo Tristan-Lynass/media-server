@@ -12,13 +12,31 @@ const KnexSessionStore = require('connect-session-knex')(session);
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
-const { knex, transactional } = require('./transactional-middleware');
+const { v4: uuid } = require('uuid');
+const { knex, transactional } = require('./middleware/transactional-middleware');
 // TODO: https://www.npmjs.com/package/config-yml
 
 const port = 5000;
 const UPLOAD_DIR = 'static/uploads';
 const THUMBS_DIR = `${UPLOAD_DIR}/thumbs`;
 const app = express();
+
+function beforeStartup() {
+  // Bootstrap the admin user (TODO this should probably be in its own transaction)
+  return knex.select().from('core.user').where({ username: 'admin' }).first()
+    .then((user) => {
+      if (!user) {
+        console.log('Creating default admin user. Change password immediately.');
+        return knex.insert({
+          id: uuid(),
+          username: 'admin',
+          password: bcrypt.hashSync('admin', bcrypt.genSaltSync(10), null),
+          is_admin: true,
+        }).into('core.user');
+      }
+      return Promise.resolve();
+    });
+}
 
 // db.schema.createTable('wow.user', (table) => {
 //   table.string('name');
@@ -46,6 +64,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'static')));
 app.use(cors());
 app.use(bodyParser.json());
@@ -58,33 +77,39 @@ app.use(transactional);
 app.use('/api', require('./api-controller'));
 
 passport.use(new LocalStrategy({ usernameField: 'username', passwordField: 'password' }, async (username, password, done) => {
-  const user = await knex.select().from('core.user').where({ username }).limit(1);
+  const user = await knex.select().from('core.user').where({ username }).first();
 
   if (!user) {
     return done(null, false, { message: 'User does not exist' });
   }
-
   if (!bcrypt.compareSync(password, user.password)) {
     return done(null, false, { message: 'Password is not valid.' });
   }
 
-  return done(null, true);
+  return done(null, user);
 }));
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
-passport.deserializeUser(async (user, done) => {
-  const deserializedUser = await knex.select().from('core.user').where(user).limit(1);
+passport.deserializeUser(async (id, done) => {
+  const deserializedUser = await knex.select().from('core.user').where({ id }).first();
   return deserializedUser
     ? done(null, deserializedUser)
     : done(null, false, { message: 'User does not exist' });
 });
 
-app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
+beforeStartup().then(() => app.listen(port, () => console.log(`Listening at http://localhost:${port}`)));
 
 /*
 core.sessions
     "sessions_pkey" PRIMARY KEY, btree (sid)
     "sessions_expired_index" btree (expired)
+
+create table if not exists core.user (
+    id uuid primary key,
+    username text not null,
+    password text not null,
+    is_admin boolean not null
+);
  */

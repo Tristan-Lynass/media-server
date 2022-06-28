@@ -26,7 +26,7 @@ export class XsrfService {
     const xsrf = this.token;
     return xsrf?.trim() !== '' ?? false
       ? of(xsrf)
-      : this.http.get('/api/xsrf').pipe(
+      : this.http.get('/api/auth/xsrf').pipe(
         map(() => this.token),
         catchError(() => this.token) // FIXME: I think this is a workaround to a cookie issue. Needed for when you log out then try logging back in again
       );

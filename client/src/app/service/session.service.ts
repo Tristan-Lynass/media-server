@@ -42,7 +42,7 @@ export class SessionService {
     formData.append('password', password);
 
     return this.xsrfService.xsrf().pipe(
-      switchMap(_ => this.http.post('/api/login', formData)),
+      switchMap(_ => this.http.post('/api/auth/login', formData)),
       switchMap(_ => this.getUser()),
       tap(user => this.userSubject.next(user)),
       switchMap(_ => fromPromise(this.router.navigate([ '/secure' ])))

@@ -1,24 +1,18 @@
 const express = require('express');
 const validateBody = require('../middleware/validate-body');
+const validateQuery = require('../middleware/validate-query');
+const requireLoggedIn = require('../middleware/require-logged-in');
+const requireAdmin = require('../middleware/require-admin');
 
 const router = express.Router();
+router.get('/', requireLoggedIn, async (req, res) => res.send({
+  id: req.user.id,
+  username: req.user.username,
+  is_admin: req.user.is_admin,
+}));
 
-router.get('/', async (req, res) => {
+router.post('/', requireAdmin, async (req, res) => {
   console.log(req);
-
-  // await req.tx('public.testtest').insert({
-  //   id: 'Old Books',
-  //   email: 'wow@gmail.com',
-  // });
-  // res.send({ id: 'g87tg76guy' });
-});
-
-router.post('/', async (req, res) => {
-  console.log(req);
-  // await req.tx('core.user').insert({
-  //   id: 'Old Books',
-  //   email: 'wow@gmail.com',
-  // });
   res.send({ id: 'g87tg76guy' });
 });
 
