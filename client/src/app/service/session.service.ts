@@ -50,7 +50,7 @@ export class SessionService {
   }
 
   public logout(): Observable<boolean> {
-    return this.http.post('/api/logout', '').pipe(
+    return this.http.post('/api/auth/logout', '').pipe(
       // catchError(err => console.log('Could not log out:', err)),
       tap(() => this.userSubject.next(null)),
       switchMap(_ => fromPromise(this.router.navigate([ 'login' ])))

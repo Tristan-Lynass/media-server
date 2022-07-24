@@ -6,19 +6,21 @@ const fileUpload = require('express-fileupload');
 const cors = require('cors');
 // import sizeOf from 'image-size';
 const bodyParser = require('body-parser');
-
+const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const KnexSessionStore = require('connect-session-knex')(session);
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 const { v4: uuid } = require('uuid');
-const { knex, transactional } = require('./middleware/transactional-middleware');
-// TODO: https://www.npmjs.com/package/config-yml
+const csurf = require('csurf');
+const { knex, transactional } = require('./db');
 
+// TODO: https://www.npmjs.com/package/config-yml
 const port = 5000;
 const UPLOAD_DIR = 'static/uploads';
 const THUMBS_DIR = `${UPLOAD_DIR}/thumbs`;
+
 const app = express();
 
 function beforeStartup() {
@@ -38,12 +40,6 @@ function beforeStartup() {
     });
 }
 
-// db.schema.createTable('wow.user', (table) => {
-//   table.string('name');
-//   table.integer('age');
-// });
-// console.log(db);
-
 if (!(fs.existsSync('static'))) {
   fs.mkdirSync('static');
 }
@@ -62,9 +58,9 @@ app.use(session({
   saveUninitialized: true,
   store: new KnexSessionStore({ knex, tablename: 'session', createtable: true }),
 }));
+app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'static')));
 app.use(cors());
 app.use(bodyParser.json());
@@ -72,7 +68,15 @@ app.use(fileUpload({
   useTempFiles: true, tempFileDir: './tmp/',
 }));
 
-app.use(transactional);
+app.use(transactional); // Could be a bit much, but for now better to have. May circle back to this
+
+// https://github.com/expressjs/csurf#ignoremethods GET,HEAD,OPTIONS are not secured
+app.use(csurf({ cookie: { httpOnly: true } }));
+
+app.use((req, res, next) => {
+  res.cookie('XSRF-TOKEN', req.csrfToken());
+  next();
+});
 
 app.use('/api', require('./api-controller'));
 
