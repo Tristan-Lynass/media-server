@@ -24,7 +24,10 @@ const THUMBS_DIR = `${UPLOAD_DIR}/thumbs`;
 const app = express();
 
 function beforeStartup() {
-  // Bootstrap the admin user (TODO this should probably be in its own transaction)
+  // Bootstrap the admin user TODO (this should probably be in its own transaction)
+
+  // Written this weird way with promises because I couldn't figure out how to invoke
+  // with async in this part of the app.
   return knex.select().from('core.user').where({ username: 'admin' }).first()
     .then((user) => {
       if (!user) {
@@ -104,16 +107,3 @@ passport.deserializeUser(async (id, done) => {
 });
 
 beforeStartup().then(() => app.listen(port, () => console.log(`Listening at http://localhost:${port}`)));
-
-/*
-core.sessions
-    "sessions_pkey" PRIMARY KEY, btree (sid)
-    "sessions_expired_index" btree (expired)
-
-create table if not exists core.user (
-    id uuid primary key,
-    username text not null,
-    password text not null,
-    is_admin boolean not null
-);
- */
