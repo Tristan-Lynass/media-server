@@ -71,7 +71,10 @@ app.use(fileUpload({
   useTempFiles: true, tempFileDir: './tmp/',
 }));
 
-app.use(transactional); // Could be a bit much, but for now better to have. May circle back to this
+// FIXME: Blindly wrapping every request in a txn is generally not a great idea.
+//  You might have a long running task or IO operation that could tank database performance.
+//  Permissible for now, may require future investigation
+// app.use(transactional);
 
 // https://github.com/expressjs/csurf#ignoremethods GET,HEAD,OPTIONS are not secured
 app.use(csurf({ cookie: { httpOnly: true } }));
