@@ -5,6 +5,9 @@ import { Observable, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Media } from 'src/app/model/media';
 
+/**
+ * Needs to be a stateful service, because multiple de-coupled components need to use this.
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -12,12 +15,13 @@ export class SearchService {
 
   public static readonly CHUNK_SIZE = 100;
 
-  private readonly resultsSubject = new ReplaySubject<Observable<Media[]>>();
-  private page = -1;
-  private finished = false;
-  private tags = new Set<string>();
+  private readonly resultsSubject = new ReplaySubject<Observable<Media[]>>(1);
+  private page: number;
+  private tags: Set<string>;
 
-  constructor(private readonly http: HttpClient) { }
+  constructor(private readonly http: HttpClient) {
+    this.setTags(new Set<string>());
+  }
 
   public setTags(tags: Set<string>): void {
     this.page = 0;
@@ -48,13 +52,11 @@ export class SearchService {
     }
 
     return this.http.get('/api/media/search', options).pipe(
-      map((res: any) => res.content.map(m => new Media(
+      map((res: any) => res.map(m => new Media(
         m.id,
-        m.ext,
-        m.filename,
-        m.originalFilename,
-        m.thumbnailFilename,
-        DateTime.fromSQL(m.uploadedAt),
+        m.extension,
+        m.original_filename,
+        DateTime.fromISO(m.created_at),
         m.width,
         m.height,
         m.size,

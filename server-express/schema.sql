@@ -14,7 +14,7 @@ CREATE SCHEMA IF NOT EXISTS core;
 
 create table if not exists core.user (
     id uuid primary key,
-    username text not null,
+    username text not null unique,
     password text not null,
     is_admin boolean not null
 );

@@ -15,29 +15,18 @@ import { SearchService } from 'src/app/service/search.service';
 export class SearchResultTableComponent implements OnDestroy {
 
   private readonly destroyed = new Subject();
-
   results: ResultItem[] = [];
-
   tags = []; // FIXME: Watch out for this with subscriptions
-
   isLoading = true;
-
   private allResultsLoaded = false;
-
   readonly selectionController = new SelectionController();
-
   selectedMedia: Media[] = [];
 
   constructor(private readonly searchService: SearchService,
               private readonly cd: ChangeDetectorRef) {
-    const original = this.searchService.results();
-
-    original.pipe(
-      // tap(x => console.log('hi')),
-      tap(() => this.isLoading = true),
+    this.searchService.results().pipe(
       switchMap(x => x),
-      // tap(x => console.log('hi2'))
-      // takeUntil(original)
+      takeUntil(this.destroyed)
     ).subscribe(result => {
       this.results = result.map((v, i) => new ResultItem(i, v));
       this.isLoading = false;

@@ -5,11 +5,16 @@
     (click)="onClick(item.index, $event)"
     [class.selected]="selectionController.isSelected(item.index)"></app-result-item>
 </virtual-scroller>
-<div *ngIf="results.length === 0 && !isLoading" id="info">
-  <div *ngIf="tags.length !== 0">No results</div>
-  <div *ngIf="tags.length === 0" id="nothing-found">
-    <i class="fa fa-upload"></i>
-    <span>Nothing found on your server! Drag media here to upload</span>
+<div *ngIf="results.length === 0" id="info">
+  <div *ngIf="!isLoading">
+    <div *ngIf="tags.length !== 0">No results</div>
+    <div *ngIf="tags.length === 0" id="nothing-found">
+      <i class="fa fa-upload"></i>
+      <span>Nothing found on your server! Drag media here to upload</span>
+    </div>
+  </div>
+  <div *ngIf="isLoading">
+    LOADING
   </div>
 </div>
 <!-- TODO: Use a SelectionService and move this somewhere more global -->
