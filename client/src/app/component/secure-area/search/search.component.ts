@@ -1,6 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatDrawer } from '@angular/material/sidenav';
-import { MenuDrawerService } from 'src/app/component/secure-area/menu-drawer/menu-drawer.service';
+import { Component } from '@angular/core';
 import { SearchService } from 'src/app/service/search.service';
 
 @Component({

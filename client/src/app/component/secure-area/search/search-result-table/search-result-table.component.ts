@@ -16,21 +16,20 @@ export class SearchResultTableComponent implements OnDestroy {
 
   private readonly destroyed = new Subject();
   results: ResultItem[] = [];
-  tags = []; // FIXME: Watch out for this with subscriptions
   isLoading = true;
   private allResultsLoaded = false;
   readonly selectionController = new SelectionController();
-  selectedMedia: Media[] = [];
+  selectedMedia: Media[] = []; // We store which media are selected instead of just their indices, so we can pass it to the media-manager component
 
   constructor(private readonly searchService: SearchService,
               private readonly cd: ChangeDetectorRef) {
     this.searchService.results().pipe(
       switchMap(x => x),
       takeUntil(this.destroyed)
-    ).subscribe(result => {
-      this.results = result.map((v, i) => new ResultItem(i, v));
-      this.isLoading = false;
-      this.cd.markForCheck();
+    ).subscribe(results => {
+      this.results = [];
+      this.clearSelection();
+      this.appendResults(results)
     });
   }
 
@@ -42,17 +41,19 @@ export class SearchResultTableComponent implements OnDestroy {
       this.isLoading = true;
       this.searchService.nextPage().pipe(
         takeUntil(this.destroyed) // fucken review
-      ).subscribe(result => {
-        if (result.length < SearchService.CHUNK_SIZE) {
-          this.allResultsLoaded = true;
-        }
-
-        const maxIndex = this.results.length;
-        this.results = this.results.concat(result.map((v, i) => new ResultItem(maxIndex + i, v)));
-        this.cd.markForCheck();
-        this.isLoading = false; // TODO: Why is this after markForCheck?
-      });
+      ).subscribe(nextPage => this.appendResults(nextPage));
     }
+  }
+
+  private appendResults(results: Media[]): void {
+    if (results.length < SearchService.CHUNK_SIZE) {
+      this.allResultsLoaded = true;
+    }
+
+    const maxIndex = this.results.length;
+    this.results = this.results.concat(results.map((v, i) => new ResultItem(maxIndex + i, v)));
+    this.isLoading = false;
+    this.cd.markForCheck();
   }
 
   // FIXME: This is whole method is pre dodge, probably worth while *trying* to clean up once this feature works
@@ -84,7 +85,7 @@ export class SearchResultTableComponent implements OnDestroy {
 
   }
 
-  onClose(): void {
+  clearSelection(): void {
     this.selectionController.clear();
     this.selectedMedia = [];
     this.cd.markForCheck();

@@ -37,7 +37,7 @@ create table if not exists core.media (
 
 create table if not exists core.tag (
     id uuid primary key,
-    name text not null
+    name text not null unique
 );
 
 create table if not exists core.media_tag (
