@@ -1,6 +1,9 @@
 const knex = require('knex');
-// const { v4: uuid } = require('uuid');
-// const bcrypt = require('bcryptjs');
+const pg = require('pg');
+
+// Otherwise knex turns numeric into a JS string. This is probably unsafe, because numeric
+// could under/overflow a JS number.
+pg.types.setTypeParser(pg.types.builtins.NUMERIC, Number);
 
 // FIXME: Actually configure DB
 const db = knex({
